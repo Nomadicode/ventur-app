@@ -1,0 +1,26 @@
+.list {
+  height: calc(100vh - 170px);
+  width: 100%;
+  overflow-y: auto;
+
+  .loading-icon {
+    width: 4rem;
+    opacity: 0.75;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    text-align: center;
+  }
+
+  .empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-100%);
+    text-align: center;
+    font-style: italic;
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+}
