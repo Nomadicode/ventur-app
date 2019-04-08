@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.nomadicode.driftr" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="AppCenterShared">
+        <param name="onload" value="true" />
+        <param name="android-package" value="com.microsoft.azure.mobile.cordova.AppCenterSharedPlugin" />
+    </feature>
+    <feature name="AppCenterAnalytics">
+        <param name="onload" value="true" />
+        <param name="android-package" value="com.microsoft.azure.mobile.cordova.AppCenterAnalyticsPlugin" />
+    </feature>
+    <feature name="AppCenterCrashes">
+        <param name="onload" value="true" />
+        <param name="android-package" value="com.microsoft.azure.mobile.cordova.AppCenterCrashesPlugin" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <name>Driftr</name>
+    <description>
+        Driftr is a tool to connect users with activities in their current area. It aids travellers in finding things to do that may be less tourist focused and
+        fit their criteria. It also aids locals in finding things to do near their home that they may not hear about.
+    </description>
+    <author email="dev@nomadicode.com" href="https://nomadicode.com">
+        Nomadicode Dev Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <icon background="static/android/background.xml" density="mdpi" foreground="static/android/foreground.xml" src="static/android/mdpi.png" />
+    <icon background="static/android/background.xml" density="hdpi" foreground="static/android/foreground.xml" src="static/android/hdpi.png" />
+    <icon background="static/android/background.xml" density="xhdpi" foreground="static/android/foreground.xml" src="static/android/xhdpi.png" />
+    <icon background="static/android/background.xml" density="xxhdpi" foreground="static/android/foreground.xml" src="static/android/xxhdpi.png" />
+    <icon background="static/android/background.xml" density="xxxhdpi" foreground="static/android/foreground.xml" src="static/android/xxxhdpi.png" />
+    <allow-intent href="market:*" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="orientation" value="portrait" />
+    <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />
+</widget>

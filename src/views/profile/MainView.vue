@@ -1,7 +1,6 @@
 <template>
   <div class="main-container">
     <router-view></router-view>
-    <profile-footer></profile-footer>
   </div>
 </template>
 

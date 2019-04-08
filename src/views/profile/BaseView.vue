@@ -3,7 +3,7 @@
     class="position--relative"
     light
     column>
-    <edit-field 
+    <edit-field
       v-model="user.name"
       containerCls="horizontal-center"
       fieldCls="field-header inline-block"
@@ -12,7 +12,7 @@
     <!-- <h1 class="space-top--half pad-half horizontal-center">Profile Info</h1> -->
 
     <div class="flex horizontal-center">
-      <v-img 
+      <v-img
         :src="user.profile_picture"
         class="inline profile-picture">
         <el-upload
@@ -32,20 +32,20 @@
         :containerCls="'space-left--half inline'"
         :fieldCls="'field-header inline-block'"
         :editCls="'inline-block'"
-        v-model="user.name" 
+        v-model="user.name"
         :showLabel="false"></edit-field> -->
     </div>
-    
-    <edit-field 
-      label="Email" 
+
+    <edit-field
+      label="Email"
       v-model="user.email"></edit-field>
-    
-    <edit-field 
-      label="Handle" 
+
+    <edit-field
+      label="Handle"
       v-model="user.handle"></edit-field>
 
-    <edit-field 
-      label="Date of Birth" 
+    <edit-field
+      label="Date of Birth"
       type="date"
       v-model="user.date_of_birth"></edit-field>
   </v-layout>
@@ -77,22 +77,22 @@ export default {
     ...mapGetters('UserModule', ['fullName', 'data'])
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
     },
-    beforeAvatarUpload(file) {
-      const isLt2M = file.size / 1024 / 1024 < 2;
+    beforeAvatarUpload (file) {
+      const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isLt2M) {
-        this.$message.error('Avatar picture size can not exceed 2MB!');
+        this.$message.error('Avatar picture size can not exceed 2MB!')
       }
-      return isLt2M;
+      return isLt2M
     },
     parsePicture (file, fileList) {
       var self = this
       const reader = new FileReader()
       reader.readAsDataURL(file.raw)
-      reader.onloadend = function(readerEvt) {
+      reader.onloadend = function (readerEvt) {
         var binaryString = readerEvt.target.result
         self.user.profile_picture = binaryString
       }
@@ -123,6 +123,7 @@ export default {
         self.toggleEditMode()
       }).catch((error) => {
         // Show error
+        console.error(error)
       })
     }
   },

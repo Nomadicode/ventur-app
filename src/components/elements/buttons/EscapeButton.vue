@@ -2,7 +2,7 @@
   <img
     alt="Shuffle Button"
     class="escape-btn"
-    src="@/assets/images/escape_button.png" />
+    src="@/assets/images/escape_btn.svg" />
 </template>
 
 <script>

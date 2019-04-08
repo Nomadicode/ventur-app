@@ -29,12 +29,12 @@
       </v-img>
 
       <v-card-title class="position--relative">
-        <h4 class="card-title">{{ activity.name }}</h4>
+        <h4 class="title">{{ activity.name }}</h4>
 
         <div class="details">
-          <div v-if="activity && activity.location" class="card-address">{{ activity.location.address }}</div>
-          <span class="item-price">{{ price }}</span>
-          <span class="item-duration">{{ activityDuration }}</span>
+          <div v-if="activity && activity.location" class="location">{{ activity.location.address }}</div>
+          <span class="price">{{ price }}</span>
+          <span class="duration">{{ activityDuration }}</span>
         </div>
         <restriction-box
           class="space-left--neg-5"
@@ -52,6 +52,7 @@
           color="error"
           round
           outline
+          small
           fab
           @click="reject()"
           ><v-icon>close</v-icon></v-btn>
@@ -67,6 +68,7 @@
           color="secondary"
           round
           outline
+          small
           fab
           @click="accept()"
           ><v-icon>check</v-icon></v-btn>

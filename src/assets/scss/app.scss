@@ -31,6 +31,16 @@
   border-radius: 20px 0 0 20px;
 }
 
+.theme--light.v-list {
+  background: none;
+  padding: 0;
+}
+
+.v-list>div {
+  margin: 5px 0;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
 // End Vuetify overrides
 
 .main-container {

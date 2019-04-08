@@ -1,5 +1,5 @@
 <template>
-  <v-layout    
+  <v-layout
     light
     column>
     Test Preferences

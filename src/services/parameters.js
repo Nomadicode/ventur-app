@@ -1,3 +1,3 @@
 export default {
-  'baseUrl': 'http://localhost:8000/'
+  'baseUrl': 'https://api-dev.getdriftr.com/'
 }

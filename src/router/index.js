@@ -18,6 +18,12 @@ import FriendListView from '@/views/friends/FriendView.vue'
 import GroupListView from '@/views/friends/GroupView.vue'
 import FriendFooter from '@/components/layouts/footers/FriendFooter.vue'
 
+import ProfileMainView from '@/views/profile/MainView.vue'
+import ProfileAccountView from '@/views/profile/AccountView.vue'
+import ProfileBaseView from '@/views/profile/BaseView.vue'
+import ProfileHistoryView from '@/views/profile/HistoryView.vue'
+import ProfileFooter from '@/components/layouts/footers/ProfileFooter.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -84,6 +90,27 @@ export default new Router({
         }, {
           path: '',
           redirect: { name: 'friend-list' }
+        }
+      ]
+    }, {
+      path: '/profile',
+      components: {header: FullHeader, default: ProfileMainView, footer: ProfileFooter},
+      children: [
+        {
+          path: 'base',
+          name: 'profile-base',
+          component: ProfileBaseView
+        }, {
+          path: 'account',
+          name: 'profile-account',
+          component: ProfileAccountView
+        }, {
+          path: 'history',
+          name: 'profile-history',
+          component: ProfileHistoryView
+        }, {
+          path: '',
+          redirect: { name: 'profile-base' }
         }
       ]
     }
