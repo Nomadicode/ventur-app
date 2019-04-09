@@ -8,21 +8,23 @@
       :src="DefaultImage">
 
       <direction-button
-        v-if="isOpen && item && item.location"
+        v-if="expanded && item && item.location"
         class="position--bottom-right"
         :latitude="item.location.latitude"
         :longitude="item.location.longitude"></direction-button>
     </v-img>
 
-    <v-card-title class="summary">
+    <v-card-title class="header">
       <h4 class="title">{{ item.name }}</h4>
       <div class="details">
-        <div v-if="item && item.location" class="item-address">{{ item.location.address }}</div>
-        <span class="item-price">{{ price }}</span>
-        <span class="item-duration">{{ duration }}</span>
+        <div v-if="item && item.location" class="location">{{ item.location.address }}</div>
+        <v-layout>
+          <div class="price">{{ price }}</div>
+          <v-spacer />
+          <div class="duration">{{ duration }}</div>
+        </v-layout>
       </div>
       <restriction-box
-        class="space-left--neg-5"
         :over18="item.over18"
         :over21="item.over21"
         :kidFriendly="item.kidFriendly"
@@ -35,15 +37,6 @@
         v-html="item.description"></v-card-text>
 
       <v-card-actions class="fill-width">
-        <v-btn
-          color="error"
-          round
-          outline
-          fab
-          small
-          @click="reject()"
-          ><v-icon>close</v-icon></v-btn>
-        <v-spacer></v-spacer>
         <v-btn
           class="report-btn"
           color="error"
@@ -69,6 +62,8 @@
       <v-icon v-if="!expanded">expand_more</v-icon>
       <v-icon v-if="expanded">expand_less</v-icon>
     </v-btn>
+
+    <report-modal :activityId="parseInt(item.id)" :open="showReportMenu" @close="toggleReportMenu()"></report-modal>
   </v-card>
 </template>
 
@@ -76,6 +71,7 @@
 import DefaultImage from '@/assets/images/default_activity.jpg'
 import DirectionButton from '@/components/elements/buttons/DirectionButton'
 import RestrictionBox from '@/components/elements/RestrictionBox'
+import ReportModal from '@/components/modals/ReportModal'
 
 export default {
   name: 'Activity',
@@ -83,7 +79,8 @@ export default {
   data () {
     return {
       DefaultImage: DefaultImage,
-      expanded: false
+      expanded: false,
+      showReportMenu: false
     }
   },
   computed: {
@@ -105,10 +102,15 @@ export default {
   methods: {
     toggleFullView () {
       this.expanded = !this.expanded
+    },
+    toggleReportMenu () {
+      this.showReportMenu = !this.showReportMenu
+      this.showMenu = false
     }
   },
   components: {
     DirectionButton,
+    ReportModal,
     RestrictionBox
   }
 }

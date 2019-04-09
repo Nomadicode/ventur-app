@@ -15,7 +15,7 @@
   background-size: cover; 
 }
 
-.v-btn--bottom:not(.v-btn--absolute) {
+.v-btn--bottom:not(.v-btn--absolute), .v-speed-dial--bottom:not(.v-speed-dial--absolute) {
   bottom: 70px !important;
 }
 
@@ -121,4 +121,14 @@ h6 { font-size: 0.75rem; font-weight: bold; }
 .field-label {
   display: block;
   color: rgba(65,65,65,0.8);
+}
+
+.rounded-input {
+  .v-input__control {
+    .v-input__slot {
+      font-size: 12px !important;
+      min-height: 35px !important;
+      border-radius: 40px !important;
+    }
+  }
 }

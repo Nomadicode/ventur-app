@@ -1,11 +1,16 @@
 <template>
-  <div class="main-container">
+  <v-layout
+    align-center
+    justify-center>
     <router-view></router-view>
     <v-speed-dial
-      v-model="fab"
-      absolute
-      right
+      color="primary"
+      class="primary-action"
       bottom
+      right
+      fab
+      fixed
+      v-model="fab"
       :direction="'top'"
       :transition="'slide-y-reverse-transition'"
     >
@@ -50,7 +55,7 @@
     </v-btn> -->
     <friend-footer></friend-footer>
     <friend-modal></friend-modal>
-  </div>
+  </v-layout>
 </template>
 
 <script>

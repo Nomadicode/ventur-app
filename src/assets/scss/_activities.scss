@@ -20,38 +20,6 @@
     .full-image {
       height: 8rem;
     }
-    
-    .summary {
-      padding: 10px 15px;
-
-      .title {
-        font-size: 1.1rem !important;
-        font-weight: 500;
-//     position: relative;
-      }
-
-      .details {
-        clear: both;
-        width: 100%;
-
-        .item-address {
-          font-size: 0.9rem;
-          font-weight: 300;
-          margin: 5px 0;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-        }
-        .item-price {
-          font-size: 14px;
-          color: rgba(0,0,0,0.6);
-        }
-        .item-duration {
-          float: right;
-          color: rgba(0,0,0,0.6);
-        }
-      }
-    }
 
     .expand-btn {
       opacity: 0.3;
@@ -59,10 +27,57 @@
       padding: 0;
       height: 30px;
       width: 100%;
-    }    
+    } 
+    
+    .header {
+      padding: 10px 15px 5px 15px;
+  
+      .title {
+        font-size: 1rem !important;
+        font-weight: 500;
+      }
+    
+      .details {
+        width: 100%;
+        clear: both;
 
+        .location {
+          font-size: 0.7rem;
+          font-weight: 300;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          font-style: italic;
+          margin: 3px 0;
+        }
+    
+        .price {
+          font-size: 0.8rem;
+          color: rgba(0, 0, 0, 0.6);
+        }
+    
+        .duration {
+          font-size: 0.8rem;
+          color: rgba(0, 0, 0, 0.6);
+        }
+      }
+  
+      .restriction-box {
+        margin-left: -5px;
+  
+        .v-chip {
+          color: $accent-color !important;
+        }
+      }
+    }
+  
     .body {
-      min-height: 40px;
+      max-height: calc(100vh - 420px);
+      min-height: calc(100vh - 500px);
+      overflow: auto;
+      padding: 0 15px;
+      font-size: 0.8rem;
+      font-weight: 200;
     }
   }
 
@@ -90,92 +105,126 @@
 
 .activity-card {
   font-family: 'Roboto', sans-serif !important;
-  .title {
-    font-size: 1.2rem;
-    font-weight: 500;
+  
+  .header {
+    padding: 10px 15px 5px 15px;
+
+    .title {
+      font-size: 1.15rem !important;
+      font-weight: 500;
+    }
+  
+    .details {
+      width: 100%;
+      clear: both;
+      
+      .location {
+        font-size: 0.8rem;
+        font-weight: 300;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-style: italic;
+        margin: 5px 0;
+      }
+  
+      .price {
+        font-size: 0.85rem;
+        color: rgba(0, 0, 0, 0.6);
+      }
+  
+      .duration {
+        font-size: 0.85rem;
+        color: rgba(0, 0, 0, 0.6);
+      }
+    }
+
+    .restriction-box {
+      margin-left: -5px;
+
+      .v-chip {
+        color: $accent-color !important;
+      }
+    }
   }
 
-  .details {
+  .body {
+    max-height: calc(100vh - 420px);
+    overflow: auto;
+    padding: 0 15px;
+    font-size: 0.8rem;
+    font-weight: 200;
+  }
+}
+
+.report-menu {
+  position: relative;
+  height: 90vh;
+
+  .modal-header {
+    position: fixed;
+    font-size: 1rem;
+    z-index: 5;
+    width: calc(100% - 48px);
+    box-shadow: 0 0 1px #000;
+  }
+
+  .modal-body {
+    height: calc(100% - 53px);
+    padding: 80px 0;
+    overflow: auto;
+  }
+
+  .modal-bottom {
+    position: absolute;
+    bottom: 0;
+    z-index: 5;
+    box-shadow: 0 0 1px #000;
     width: 100%;
-    clear: both;
-    padding: 5px 0;
+  }
 
-    .location {
-      font-size: 0.8rem;
-      font-weight: 300;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      margin-bottom: 10px;
-      font-style: italic;
-    }
+  .menu-options {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+    height: calc(100vh - 125px);
 
-    .price {
-      font-size: 14px;
-      color: rgba(0, 0, 0, 0.6);
-    }
+    li {
+      padding: 10px;
+      position: relative;
 
-    .duration {
-      float: right;
-      color: rgba(0, 0, 0, 0.6);
+      .details {
+        padding-left: 30px;
+
+        h4 {
+          font-size: 0.85rem;
+        }
+        
+        p {
+          font-size: 0.75rem;
+          color: rgba(0,0,0,0.4);
+          margin-bottom: 0;
+        }
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+      }
+
+      .selected-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 1px solid rgba(0,0,0,0.3);
+        border-radius: 30px;
+        width: 20px;
+        height: 20px;
+      }
+
+      .selected {
+        background: #009888;
+      }
     }
   }
 }
-// .activity-list-item {
-//   background: #ffffff;
-//   color: #4e4e4e;
-//   margin: 5px 0 10px 0;
-//   border-radius: 5px;
-//   box-shadow: 0 0 3px #999;
-//   position: relative;
-//   min-height: 100px;
-
-//   .pad-less {
-//     padding: 10px 15px;
-//   }
-
-//   .list-image {
-//     height: 10px;
-//   }
-
-//   .full-image {
-//     height: 12rem;
-
-//     .menu-btn {
-//       position: absolute;
-//       right: 0;
-//     }
-//   }
-
-//   h4 {
-//     font-size: 1.25rem;
-//     font-weight: 500;
-//     position: relative;
-//   }
-
-//   .details {
-//     clear: both;
-//     width: 100%;
-
-//     .item-address {
-//       font-size: 0.9rem;
-//       font-weight: 300;
-//       margin: 5px 0;
-//       white-space: nowrap;
-//       text-overflow: ellipsis;
-//       overflow: hidden;
-//     }
-//     .item-price {
-//       font-size: 14px;
-//       color: rgba(0,0,0,0.6);
-//     }
-//     .item-duration {
-//       float: right;
-//       color: rgba(0,0,0,0.6);
-//     }
-//   }
-
-//   .item-body {
-//     min-height: 40px;
-//   }
-// }

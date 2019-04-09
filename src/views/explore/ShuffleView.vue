@@ -13,7 +13,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import ActivityCard from '@/components/elements/ActivityCard'
+import ActivityCard from '@/components/activities/ActivityCard'
 import EscapeButton from '@/components/elements/buttons/EscapeButton'
 
 export default {
