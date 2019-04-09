@@ -9,7 +9,7 @@
     <div class='navigation-profile'>
       <v-img
         class="profile-image"
-        :src="data.profile_picture"/>
+        :src="profilePicture"/>
     </div>
 
     <v-list
@@ -45,6 +45,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import DefaultProfile from '@/assets/images/avatar.svg'
 
 export default {
   name: 'NavDrawer',
@@ -55,7 +56,10 @@ export default {
   },
   computed: {
     ...mapGetters('AppState', ['drawer']),
-    ...mapGetters('UserModule', ['data'])
+    ...mapGetters('UserModule', ['data']),
+    profilePicture () {
+      return this.data.profilePicture ? this.data.profilePicture : DefaultProfile
+    }
   },
   methods: {
     isActive (pageName) {
@@ -91,56 +95,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.navigation-drawer {
-  text-align: center;
 
-  .navigation-profile {
-    padding: 20px 0;
-    margin-left: 50%;
-    transform: translateX(-63%);
-
-    .profile-image {
-      border-radius: 50%;
-      height: 125px;
-      width: 125px;
-      box-shadow: 0 0 3px #aeaeae;
-    }
-  }
-
-  .navigation-list {
-    text-align: left;
-
-    li {
-      padding: 10px 25px;
-      font-size: 18px;
-
-      .nav-icon {
-        font-size: 25px;
-        display: inline-block;
-      }
-
-      p {
-        margin: 1px 16px;
-        font-size: 18px;
-        vertical-align: top;
-        display: inline-block;
-      }
-    }
-
-    .active {
-      background: #009888;
-    }
-  }
-
-  .navigation-bottom {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-
-    li {
-      font-size: 12px;
-      padding: 5px;
-    }
-  }
-}
 </style>

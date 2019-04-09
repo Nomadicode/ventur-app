@@ -13,20 +13,17 @@
       @click="$store.commit('AppState/OPEN_ACTIVITY_MODAL')">
       <v-icon>add</v-icon>
     </v-btn>
-    <!-- <activity-modal></activity-modal> -->
-    <!-- <explore-footer></explore-footer> -->
+    <activity-add-modal></activity-add-modal>
   </v-layout>
 </template>
 
 <script>
-// import ActivityModal from '@/components/modals/ActivityModal'
-import ExploreFooter from '@/components/layouts/footers/ExploreFooter'
+import ActivityAddModal from '@/components/activities/ActivityAddModal'
 
 export default {
   name: 'ExploreCommonView',
   components: {
-    // ActivityModal,
-    ExploreFooter
+    ActivityAddModal
   }
 }
 </script>

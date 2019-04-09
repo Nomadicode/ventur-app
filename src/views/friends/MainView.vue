@@ -17,7 +17,7 @@
       <template v-slot:activator>
         <v-btn
           v-model="fab"
-          color="blue darken-2"
+          color="primary"
           dark
           small
           fab
@@ -30,7 +30,8 @@
         fab
         dark
         small
-        color="green"
+        color="blue"
+        @click="$store.commit('AppState/OPEN_ADD_FRIEND_MODAL')"
       >
         <v-icon>people_outline</v-icon>
       </v-btn>
@@ -38,21 +39,11 @@
         fab
         dark
         small
-        color="red"
+        color="green"
       >
         <v-icon>group_work</v-icon>
       </v-btn>
     </v-speed-dial>
-    <!-- <v-btn
-      color="primary"
-      class="primary-action"
-      absolute
-      small
-      right
-      fab
-      @click="$store.commit('AppState/OPEN_ADD_FRIEND_MODAL')">
-      <v-icon>add</v-icon>
-    </v-btn> -->
     <friend-footer></friend-footer>
     <friend-modal></friend-modal>
   </v-layout>

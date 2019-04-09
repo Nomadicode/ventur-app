@@ -7,7 +7,7 @@
 @import 'friends';
 @import 'profile';
 
-// Vuetify overrides
+// #region Vuetify overrides
 .theme--dark.application, .theme--light.application {
   background: -webkit-linear-gradient(-45deg, from(#4AC1BB), color-stop(60%, #9DDDB6), to(#D1ECB5));
   background: linear-gradient(135deg, #4AC1BB 0%, #9DDDB6 60%, #D1ECB5 100%);
@@ -41,7 +41,7 @@
   background: #FFFFFF;
   border-radius: 5px;
 }
-// End Vuetify overrides
+// #endregion
 
 .main-container {
   height: calc(100vh - 136px);
@@ -60,6 +60,61 @@ h3 { font-size: 1.50rem; font-weight: bold; }
 h4 { font-size: 1.25rem; font-weight: bold; }
 h5 { font-size: 1.00rem; font-weight: bold; }
 h6 { font-size: 0.75rem; font-weight: bold; }
+
+// #region Navigation Drawer
+.navigation-drawer {
+  text-align: center;
+
+  .navigation-profile {
+    padding: 20px 0;
+    margin-left: 50%;
+    transform: translateX(-63%);
+
+    .profile-image {
+      border-radius: 50%;
+      height: 125px;
+      width: 125px;
+      box-shadow: 0 0 3px #aeaeae;
+    }
+  }
+
+  .navigation-list {
+    text-align: left;
+
+    li {
+      padding: 8px 25px;
+      font-size: 18px;
+
+      .nav-icon {
+        font-size: 25px;
+        display: inline-block;
+      }
+
+      p {
+        margin: 0 16px;
+        font-size: 18px;
+        vertical-align: top;
+        display: inline-block;
+      }
+    }
+
+    .active {
+      background: #009888;
+    }
+  }
+
+  .navigation-bottom {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+
+    li {
+      font-size: 12px;
+      padding: 5px;
+    }
+  }
+}
+// #endregion
 
 .menu-header {
   .logo {
@@ -120,7 +175,8 @@ h6 { font-size: 0.75rem; font-weight: bold; }
 
 .field-label {
   display: block;
-  color: rgba(65,65,65,0.8);
+  font-size: 0.8rem;
+  color: rgba(65,65,65,0.7);
 }
 
 .rounded-input {
@@ -130,5 +186,34 @@ h6 { font-size: 0.75rem; font-weight: bold; }
       min-height: 35px !important;
       border-radius: 40px !important;
     }
+  }
+}
+
+.image-uploader {
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  text-align: center;
+  color: $accent-color;
+  padding: 10px 0;
+  min-height: 125px;
+  font-size: 0.8rem;
+
+  .upload-button {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .change-upload-button {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .image {
+    height: 25%;
   }
 }
