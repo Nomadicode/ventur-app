@@ -9,6 +9,7 @@
         class="primary-background accent-color modal-header"
         primary-title>
         Feedback
+        <v-spacer />
         <v-icon
           class="close"
           @click="close()">close</v-icon>

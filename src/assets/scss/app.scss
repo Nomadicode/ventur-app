@@ -2,6 +2,7 @@
 @import 'color';
 @import 'alignments';
 @import 'buttons';
+@import 'forms';
 
 @import 'activities';
 @import 'friends';
@@ -40,6 +41,10 @@
   margin: 5px 0;
   background: #FFFFFF;
   border-radius: 5px;
+}
+
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+  width: inherit;
 }
 // #endregion
 
@@ -144,15 +149,14 @@ h6 { font-size: 0.75rem; font-weight: bold; }
 
   .modal-header {
     position: relative;
-    font-size: 20px;
-    padding: 10px 16px;
-    
+    font-size: 1rem;
+    padding: 10px 12px 8px 15px;
+    box-shadow: 0 0 3px #BEBEBE;
+
     .close {
       display: block;
-      position: absolute;
-      right: 10px;
       color: #FFFFFF;
-      font-size: 30px;
+      font-size: 25px;
     }
   }
 }
@@ -216,4 +220,31 @@ h6 { font-size: 0.75rem; font-weight: bold; }
   .image {
     height: 25%;
   }
+}
+
+.section-header {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid $secondary-text-color;
+  color: $secondary-text-color;
+  line-height:0.1em; 
+  margin:10px 0 20px;
+  font-weight: 200;
+  text-transform: uppercase;
+  margin: 30px 0 15px;
+
+  span {
+    background: #F5F5F5;
+    padding:0 10px;
+  }
+}
+
+.section-subheader {
+  margin-top: -5px;
+  font-weight: 100;
+  font-size: 0.7rem;
+  margin-bottom: 20px;
+  color: $secondary-text-color;
+  display: block;
+  text-align: center;
 }

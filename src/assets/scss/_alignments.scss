@@ -32,6 +32,14 @@ $base-spacing: 20px;
 .pad-bottom--double { padding-bottom: ($base-padding * 2); }
 .pad-bottom--quad { padding-bottom: ($base-padding * 4); }
 
+.pad-none { padding: 0; }
+.pad-top--none { padding-top: 0; }
+.pad-bottom--none { padding-bottom: 0;}
+.pad-left--none { padding-left: 0; }
+.pad-right--none { padding-right: 0; }
+.pad-sides--none { padding-left: 0; padding-right: 0;}
+.pad-ends--none { padding-top: 0; padding-bottom: 0; }
+
 .space { margin: $base-spacing; }
 .space-quarter { margin: ($base-spacing / 4); }
 .space-half { margin: ($base-spacing / 2); }
@@ -116,10 +124,13 @@ $base-spacing: 20px;
   position: absolute;
   top:50%;
 }
+
 .fix-bottom {
   position: absolute;
   bottom: 0;
+  z-index: 5;
 }
+
 .inline {
   display: inline-block;
   width:40%;
@@ -130,4 +141,13 @@ $base-spacing: 20px;
   top: 45%;
   right: 50%;
   transform: translate(50%, -50%);
+}
+
+.aside {
+  font-size: 0.7rem;
+  margin-top: 3px;
+  font-style: italic;
+  font-weight: lighter;
+  display: block;
+  float: right;
 }

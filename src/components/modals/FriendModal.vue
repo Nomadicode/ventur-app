@@ -8,6 +8,7 @@
         class="primary-background accent-color modal-header"
         primary-title>
         Add Friend
+        <v-spacer />
         <v-icon
           class="close"
           @click="close()">close</v-icon>

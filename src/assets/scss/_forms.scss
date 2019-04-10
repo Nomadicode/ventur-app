@@ -1,0 +1,32 @@
+.day-select {
+  input {
+    display: none;
+  }
+
+  label {
+    margin: 5px;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    color: $placeholder-text-color;
+    text-align: center;
+    font-size: 0.75rem;
+    border: 1px solid $placeholder-text-color;
+    border-radius: 20px;
+    line-height: 40px;
+    cursor: pointer
+  }
+}
+
+
+
+#MO:checked ~ label[for="MO"],
+#TU:checked ~ label[for="TU"],
+#WE:checked ~ label[for="WE"],
+#TH:checked ~ label[for="TH"],
+#FR:checked ~ label[for="FR"],
+#SA:checked ~ label[for="SA"],
+#SU:checked ~ label[for="SU"] {
+  background: $secondary-color;
+  color: $accent-color;
+}

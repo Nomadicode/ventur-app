@@ -19,7 +19,6 @@
           class="position--top-right space-right--half warning-text"
           @click="toggleReportMenu()">
           report
-          <!-- <v-icon class="accent-color">more_vert</v-icon> -->
         </el-button>
         <direction-button
           v-if="activity && activity.location"
