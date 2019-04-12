@@ -85,9 +85,15 @@ export default {
   },
   computed: {
     duration () {
+      if (!this.item.duration) {
+        return null
+      }
       var duration = (this.item.duration >= 60) ? this.item.duration / 60 : this.item.duration
       var interval = (this.item.duration / 60 >= 1) ? 'h' : 'm'
 
+      if (duration > 3 && interval === 'h') {
+        duration = '>3'
+      }
       return duration + interval
     },
 

@@ -20,32 +20,20 @@
           <image-uploader v-model="activity.media"></image-uploader>
 
           <div class="pad-sides pad-top--half pad-bottom--quad">
+          <!-- #region Core Data -->
             <label class="pad-bottom--quarter field-label">Activity Name</label>
             <el-input
               v-model="activity.name"
               placeholder="House party"></el-input>
 
             <label class="pad-top--half pad-bottom--quarter field-label">Location</label>
-            <v-container class="pad-none" fluid grid-list-sm>
-              <v-layout row wrap>
-                <v-flex xs9>
-                  <vue-google-autocomplete
+            <vue-google-autocomplete
                     id="map"
                     classname="el-input__inner"
                     placeholder="Enter location"
                     v-on:placechanged="getAddressData"
                     suffix-icon="el-icon-location"
                     enable-geolocation></vue-google-autocomplete>
-                </v-flex>
-                <v-spacer />
-                <v-flex xs2>
-                  <el-button
-                    v-if="locationAvailable"
-                    icon="el-icon-location"
-                    @click="getLocation()"></el-button>
-                </v-flex>
-              </v-layout>
-            </v-container>
 
             <label class="pad-top--half pad-bottom--quarter field-label">Provide a little more detail <span class="aside">optional</span></label>
             <el-input
@@ -70,7 +58,9 @@
                 :value="item.name">
               </el-option>
             </el-select>
+          <!-- #endregion -->
 
+          <!-- #region Scheduling -->
             <h6 class="section-header">
               <span>Schedule</span>
             </h6>
@@ -81,44 +71,10 @@
               v-model="setSchedule"></el-switch>
 
             <v-container v-if="setSchedule" class="pad-none pad-top--quarter" fluid grid-list-sm>
-              <v-layout row wrap>
-                <v-flex xs6>
-                  <label class="pad-top--half pad-bottom--quarter field-label">Start date</label>
-                  <el-date-picker
-                    type="date"
-                    placeholder="Pick start date">
-                  </el-date-picker>
-                </v-flex>
-                <v-spacer />
-                <v-flex xs5>
-                  <label class="pad-top--half pad-bottom--quarter field-label">Start time</label>
-                  <el-time-select
-                    placeholder="Start time"
-                    :picker-options="{
-                      selectableRange: '00:00:00 - 23:59:59'
-                    }">
-                  </el-time-select>
-                </v-flex>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs6>
-                  <label class="pad-top--half pad-bottom--quarter field-label">End date</label>
-                  <el-date-picker
-                    type="date"
-                    placeholder="Pick end date">
-                  </el-date-picker>
-                </v-flex>
-                <v-spacer />
-                <v-flex xs5>
-                  <label class="pad-top--half pad-bottom--quarter field-label">End time</label>
-                  <el-time-select
-                    placeholder="End time"
-                    :picker-options="{
-                      selectableRange: '00:00:00 - 23:59:59'
-                    }">
-                  </el-time-select>
-                </v-flex>
-              </v-layout>
+              <date-time-select v-model="activity.startDatetime" dateLabel="Start Date" timeLabel="Start Time"></date-time-select>
+
+              <date-time-select v-model="activity.endDatetime" :min="activity.startDatetime" dateLabel="End Date" timeLabel="End Time"></date-time-select>
+
               <v-layout row wrap>
                 <v-flex xs6>
                   <label class="pad-top--half pad-bottom--quarter field-label">Frequency</label>
@@ -142,7 +98,9 @@
                 </v-flex>
               </v-layout>
             </v-container>
+          <!-- #endregion -->
 
+          <!-- #region Accessibility -->
             <h6 class="section-header"><span>Accessibility</span></h6>
             <v-container class="pad-none pad-top--half" fluid grid-list-sm>
               <v-layout row wrap>
@@ -205,6 +163,7 @@
                 </v-flex>
               </v-layout>
             </v-container>
+          <!-- #endregion -->
           </div>
 
           <el-button
@@ -224,6 +183,7 @@ import { mapGetters } from 'vuex'
 import DURATIONS_ENUMS from '@/enums/durationEnum.js'
 import REPEAT_ENUMS from '@/enums/repeatEnum.js'
 
+import DateTimeSelect from '@/components/elements/inputs/DateTimeSelect'
 import DaySelect from '@/components/elements/inputs/DaySelect'
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
@@ -289,13 +249,40 @@ export default {
         endDatetime: null,
         frequency: null,
         interval: null,
-        days: []
+        days: null
       }
     }
   },
   methods: {
     close () {
+      this.activity = {
+        name: null,
+        description: null,
+        address: null,
+        latitude: null,
+        longitude: null,
+        categories: null,
+        media: null,
+        price: null,
+        duration: null,
+        kidFriendly: false,
+        handicapFriendly: false,
+        over18: false,
+        over21: false,
+        startDatetime: null,
+        endDatetime: null,
+        frequency: null,
+        interval: null,
+        days: []
+      }
       this.$store.commit('AppState/CLOSE_ACTIVITY_MODAL')
+    },
+    toggleSchedule () {
+      this.activity.startDatetime = null
+      this.activity.endDatetime = null
+      this.activity.frequency = null
+      this.activity.interval = null
+      this.activity.days = []
     },
     getLocation () {
       if (navigator.geolocation) {
@@ -313,12 +300,13 @@ export default {
     save () {
       var self = this
       var data = Object.assign({}, self.activity)
-      data.categories = data.categories.join(',')
+      data.categories = data.categories ? data.categories.join(',') : null
+      data.days = data.days ? data.days.join(',') : null
 
       this.$apollo.mutate({
         mutation: gql`mutation ($name: String!, $description: String, $categories: String!, $duration: Int, $price: Float, $kidFriendly: Boolean,
                     $handicapFriendly: Boolean, $over18: Boolean, $over21: Boolean, $address: String, $latitude: Float, $longitude: Float,
-                    $startDatetime: DateTime, $endDatetime: DateTime, $frequency: Int, $interval: Int, $days: String) {
+                    $startDatetime: String, $endDatetime: String, $frequency: Int, $interval: Int, $days: String) {
           addActivity(name: $name, description: $description, categories: $categories, duration: $duration, price: $price, kidFriendly: $kidFriendly,
               handicapFriendly: $handicapFriendly, over18: $over18, over21: $over21, address: $address, latitude: $latitude, longitude: $longitude,
               startDatetime: $startDatetime, endDatetime: $endDatetime, frequency: $frequency, interval: $interval, days: $days) {
@@ -362,9 +350,13 @@ export default {
         this.activity.kidFriendly = false
         this.activity.over18 = false
       }
+    },
+    setSchedule () {
+      this.toggleSchedule()
     }
   },
   components: {
+    DateTimeSelect,
     DaySelect,
     ImageUploader,
     VueGoogleAutocomplete

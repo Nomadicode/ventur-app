@@ -36,6 +36,7 @@ export default {
           handicapFriendly
           price
           duration
+          media
           location {
             address
             latitude

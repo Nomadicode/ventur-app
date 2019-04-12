@@ -130,6 +130,9 @@ export default {
   computed: {
     ...mapGetters('AppState', ['activityCard']),
     activityDuration () {
+      if (!this.activity.duration) {
+        return null
+      }
       var duration = (this.activity.duration >= 60) ? this.activity.duration / 60 : this.activity.duration
       var interval = (this.activity.duration / 60 >= 1) ? 'h' : 'm'
 
