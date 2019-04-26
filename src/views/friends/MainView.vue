@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import FriendModal from '@/components/modals/FriendModal'
+import FriendModal from '@/components/friends/FriendModal'
 import FriendFooter from '@/components/layouts/footers/FriendFooter'
 
 export default {

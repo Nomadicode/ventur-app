@@ -1,16 +1,16 @@
 <template>
-    <ul class="friend-list">
-        <friend-item v-for="friend of friends" :key="friend.id" :item="friend"></friend-item>
-
-        <li v-if="(!friends || friends.length === 0) && !loading" class="lighter-text empty-list">No friends found
-            <el-button
-                class="white-text add-btn"
-                type="text"
-                @click="$store.commit('AppState/OPEN_ADD_FRIEND_MODAL')">
-                add a friend
-            </el-button>
-        </li>
-    </ul>
+ <div class="list">
+    <div v-if="(!friends || friends.length === 0) && !loading" class="empty">
+      <p>No friends found</p>
+      <el-button
+        class="extra-light-text add-btn"
+        type="text"
+        @click="$store.commit('AppState/OPEN_ADD_FRIEND_MODAL')">
+        add a friend
+      </el-button>
+    </div>
+    <loading-icon v-if="loading"></loading-icon>
+  </div>
 </template>
 
 <script>

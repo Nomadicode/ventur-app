@@ -1,9 +1,5 @@
 <template>
   <div>
-    <el-button
-      size="mini"
-      class="fill-width space-ends--quarter"
-      @click="addGroup">Add Group</el-button>
     <div v-if="(!groups || groups.length === 0) && !loading" class="lighter-text empty-list">No groups found
       <el-button
         class="white-text add-btn"
@@ -93,11 +89,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.group-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-</style>

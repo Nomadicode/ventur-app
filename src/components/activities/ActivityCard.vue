@@ -89,8 +89,8 @@ export default {
   name: 'ActivityCard',
   apollo: {
     randomActivity: {
-      query: gql`query {
-        randomActivity {
+      query: gql`query randomActivity($latitude: Float, $longitude: Float){ 
+        randomActivity (latitude: $latitude, longitude: $longitude) {
           id
           name
           price
@@ -107,6 +107,12 @@ export default {
           }
         }
       }`,
+      variables () {
+        return {
+          latitude: this.latitude,
+          longitude: this.longitude
+        }
+      },
       result ({ data, loading, networkStatus }) {
         this.activity = data.randomActivity
         this.loading = false
@@ -118,12 +124,15 @@ export default {
   },
   mounted () {
     this.modal = this.activityCard
+    this.getLocation()
   },
   data () {
     return {
       DefaultActivityImage: DefaultActivityImage,
       modal: false,
       showReportMenu: false,
+      latitude: null,
+      longitude: null,
       activity: {}
     }
   },
@@ -181,6 +190,15 @@ export default {
     close () {
       this.activity = {}
       this.$store.commit('AppState/CLOSE_ACTIVITY_CARD')
+    },
+    getLocation () {
+      if (navigator.geolocation) {
+        var self = this
+        navigator.geolocation.getCurrentPosition(function (location) {
+          self.latitude = location.coords.latitude
+          self.longitude = location.coords.longitude
+        })
+      }
     },
     fetchActivity () {
       this.$apollo.queries.randomActivity.refetch()

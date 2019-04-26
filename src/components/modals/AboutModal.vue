@@ -423,6 +423,8 @@ export default {
   },
   methods: {
     close () {
+      this.showPrivacyPolicy = false
+      this.showTermsOfService = false
       this.$store.commit('AppState/CLOSE_ABOUT_MODAL')
     }
   },

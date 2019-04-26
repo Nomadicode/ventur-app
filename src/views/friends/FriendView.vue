@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import FriendList from '@/components/elements/lists/FriendList'
+import FriendList from '@/components/friends/FriendList'
 
 export default {
   name: 'FriendListView',

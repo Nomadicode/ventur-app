@@ -1,3 +1,3 @@
 export default {
-  'baseUrl': 'https://api-dev.getdriftr.com/'
+  'baseUrl': 'http://127.0.0.1:8000/'
 }

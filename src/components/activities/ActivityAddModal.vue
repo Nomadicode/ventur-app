@@ -28,12 +28,11 @@
 
             <label class="pad-top--half pad-bottom--quarter field-label">Location</label>
             <vue-google-autocomplete
-                    id="map"
-                    classname="el-input__inner"
-                    placeholder="Enter location"
-                    v-on:placechanged="getAddressData"
-                    suffix-icon="el-icon-location"
-                    enable-geolocation></vue-google-autocomplete>
+              id="map"
+              classname="el-input__inner"
+              placeholder="Enter location"
+              v-on:placechanged="getAddressData"
+              enable-geolocation></vue-google-autocomplete>
 
             <label class="pad-top--half pad-bottom--quarter field-label">Provide a little more detail <span class="aside">optional</span></label>
             <el-input
@@ -294,6 +293,7 @@ export default {
       }
     },
     getAddressData ($evt) {
+      console.log($evt)
       this.activity.latitude = $evt.latitude
       this.activity.longitude = $evt.longitude
     },

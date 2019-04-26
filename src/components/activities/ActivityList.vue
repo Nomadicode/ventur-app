@@ -21,12 +21,13 @@ export default {
     }
   },
   mounted () {
+    this.getLocation()
     this.loading = true
   },
   apollo: {
     activities: {
-      query: gql`query { 
-        activities {
+      query: gql`query Activities($latitude: Float!, $longitude: Float!){ 
+        activities (latitude: $latitude, longitude: $longitude) {
           id
           name
           description
@@ -44,6 +45,12 @@ export default {
           }
         }
       }`,
+      variables () {
+        return {
+          latitude: this.latitude,
+          longitude: this.longitude
+        }
+      },
       result ({ data, loading, networkStatus }) {
         this.items = data.activities
         this.loading = false
@@ -57,7 +64,20 @@ export default {
     return {
       selected: [2],
       activities: [],
-      loading: false
+      loading: false,
+      latitude: null,
+      longitude: null
+    }
+  },
+  methods: {
+    getLocation () {
+      if (navigator.geolocation) {
+        var self = this
+        navigator.geolocation.getCurrentPosition(function (location) {
+          self.latitude = location.coords.latitude
+          self.longitude = location.coords.longitude
+        })
+      }
     }
   },
   components: {

@@ -1,0 +1,51 @@
+.el-message-box {
+    width: 95% !important;
+}
+
+.qr-code {
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+    border-bottom: 1px solid #efefef;
+}
+.handle-search {
+    .handle {
+        border-bottom: 1px solid $placeholder-text-color;
+        text-align: center;
+
+        p {
+            font-weight: lighter;
+            font-size: 1.25rem;
+            color: $primary-text-color;
+        }
+
+        label {
+            color: $secondary-text-color;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+    }
+
+    .search {
+        
+    }
+}
+.people-search {
+    margin: 20px 0;
+}
+
+.result-list {
+  h6 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .result {
+    background: $accent-color;
+    box-shadow: 0 0 3px $placeholder-text-color;
+    border-radius: 5px;
+    height: 80px;
+    width: 100%;
+  }
+}
