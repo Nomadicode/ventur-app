@@ -8,44 +8,82 @@
     text-align: center;
     border-bottom: 1px solid #efefef;
 }
+
 .handle-search {
-    .handle {
-        border-bottom: 1px solid $placeholder-text-color;
-        text-align: center;
+  .handle {
+    border-bottom: 1px solid $placeholder-text-color;
+    text-align: center;
 
-        p {
-            font-weight: lighter;
-            font-size: 1.25rem;
-            color: $primary-text-color;
-        }
-
-        label {
-            color: $secondary-text-color;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
+    p {
+      font-weight: lighter;
+      font-size: 1.25rem;
+      color: $primary-text-color;
     }
 
-    .search {
-        
+    label {
+      color: $secondary-text-color;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      font-weight: 600;
     }
+  }
+
+  .search {
+      
+  }
 }
+
 .people-search {
     margin: 20px 0;
 }
 
-.result-list {
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  .empty {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 300;
+  }
+}
+
+.friend-list {
   h6 {
     font-size: 0.7rem;
     text-transform: uppercase;
   }
 
-  .result {
+  .empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 0.85rem;
+    color: $placeholder-text-color;
+    font-weight: 200;
+  }
+
+  .friend {
+    margin: 5px 0 10px 0;
     background: $accent-color;
     box-shadow: 0 0 3px $placeholder-text-color;
     border-radius: 5px;
-    height: 80px;
+    height: 60px;
     width: 100%;
+    color: $regular-text-color;
+
+    .suggest-reason {
+      font-size: 0.6rem;
+      font-weight: 200;
+      color: $warning-color;
+      font-style: italic;
+    }
   }
 }

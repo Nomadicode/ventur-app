@@ -5,7 +5,8 @@
     v-model="modal">
     <v-card class="activity-card">
       <v-img
-        :src="DefaultActivityImage"
+        :gradient="'rgba(0,0,0,0.4), rgba(0,0,0,0)'"
+        :src="activityImage"
         :height="175">
         <v-btn
           dark
@@ -93,6 +94,7 @@ export default {
         randomActivity (latitude: $latitude, longitude: $longitude) {
           id
           name
+          media
           price
           duration
           description
@@ -113,17 +115,30 @@ export default {
           longitude: this.longitude
         }
       },
+      manual: false,
       result ({ data, loading, networkStatus }) {
-        this.activity = data.randomActivity
-        this.loading = false
+        if (data.randomActivity) {
+          this.activity = data.randomActivity
+          this.loading = false
+        } else {
+          this.$message({
+            type: 'error',
+            message: 'Error: Unable to fetch activity.'
+          })
+          this.close()
+        }
       },
       error (err) {
         console.log(err)
+        this.$message({
+          type: 'error',
+          message: 'Error: Unable to fetch activity.'
+        })
+        this.close()
       }
     }
   },
   mounted () {
-    this.modal = this.activityCard
     this.getLocation()
   },
   data () {
@@ -138,6 +153,9 @@ export default {
   },
   computed: {
     ...mapGetters('AppState', ['activityCard']),
+    activityImage () {
+      return this.activity.media ? this.activity.media : DefaultActivityImage
+    },
     activityDuration () {
       if (!this.activity.duration) {
         return null
@@ -145,6 +163,9 @@ export default {
       var duration = (this.activity.duration >= 60) ? this.activity.duration / 60 : this.activity.duration
       var interval = (this.activity.duration / 60 >= 1) ? 'h' : 'm'
 
+      if (duration > 3 && interval === 'h') {
+        duration = '>3'
+      }
       return duration + interval
     },
     price () {

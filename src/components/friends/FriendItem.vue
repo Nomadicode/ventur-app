@@ -1,90 +1,99 @@
 <template>
-  <li class="friend-item">
-    <img :src="DefaultAvatar" />
-    <h4>{{ item.name }}</h4>
-
-    <v-btn
-      class="friend-menu-toggle"
-      icon
-      absolute
-      right
-      dark
-      @click="toggleMenu()">
-      <v-icon>more_vert</v-icon>
-    </v-btn>
-
-    <ul v-if="showMenu" class="friend-menu">
-      <li>Send Message</li>
-      <li>Remove Friend</li>
-    </ul>
-  </li>
+  <v-layout class="friend" row wrap>
+    <v-flex
+      class="base-light-background pad-quarter"
+      xs3
+      align-self-top>
+      <v-img
+        :src="avatarImage"
+        aspect-ratio="1"
+        height="50"
+        contain
+      />
+    </v-flex>
+    <v-flex xs8>
+      <div class="pad-sides--half pad-top--quarter">
+        <h6>{{ friend.name }}</h6>
+        <v-layout
+          class="pad-top--quarter"
+          row
+          wrap>
+          <v-flex xs5>
+            <!-- <p class="suggest-reason">6 shared activities</p> -->
+          </v-flex>
+          <v-flex xs4>
+            <el-button
+              class="warning-text"
+              type="text"
+              size="mini"
+              @click="rejectFriend">Reject</el-button>
+          </v-flex>
+          <v-flex xs3>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="acceptFriend">Accept</el-button>
+          </v-flex>
+        </v-layout>
+      </div>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
-import DefaultAvatar from '@/assets/images/avatar.svg'
+import gql from 'graphql-tag'
+import AvatarImage from '@/assets/images/avatar.svg'
 
 export default {
   name: 'FriendItem',
-  props: ['item'],
+  props: ['friend'],
   data () {
     return {
-      DefaultAvatar: DefaultAvatar,
-      showMenu: false
+    }
+  },
+  computed: {
+    avatarImage () {
+      return this.friend.profilePicture ? this.friend.profilePicture : AvatarImage
     }
   },
   methods: {
-    toggleMenu () {
-      this.showMenu = !this.showMenu
+    acceptFriend () {
+      var self = this
+      this.$apollo.mutate({
+        mutation: gql`mutation AcceptFriendRequest ($handle: String!) {
+          acceptFriendRequest (handle: $handle) {
+            success
+            error
+          }
+        }`,
+        variables: {
+          handle: this.friend.handle
+        }
+      }).then((response) => {
+        self.$emit('refresh')
+        console.log(response.data)
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    rejectFriend () {
+      this.$apollo.mutate({
+        mutation: gql`mutation RejectFriendRequest ($handle: String!) {
+          rejectFriendRequest (handle: $handle) {
+            success
+            error
+          }
+        }`,
+        variables: {
+          handle: this.friend.handle
+        }
+      }).then((response) => {
+        self.$emit('refresh')
+        console.log(response.data)
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .friend-item {
-    display: inline-block;
-    vertical-align: top;
-    margin: 10px;
-    width: calc(33.333% - 20px);
-    text-align: center;
-    position: relative;
-
-    h4 {
-      font-size: 12px;
-    }
-
-    .friend-menu-toggle {
-      position: absolute;
-      top: -8px;
-      right: -20px;
-    }
-
-    .friend-menu {
-      display: block;
-      position: absolute;
-      top: 30px;
-      width: 100px;
-      background: #f8f8f8;
-      box-shadow: 0 0 5px #000;
-      list-style-type: none;
-      padding-left: 0;
-      margin-left: 0;
-      border-radius: 5px;
-      z-index: 100;
-
-      li {
-        padding: 10px 5px;
-        font-size: 13px;
-        color: rgba(0,0,0,0.5);
-
-        &:not(:last-child) {
-          border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-
-        &:last-child {
-          color: #FF5252;
-        }
-      }
-    }
-  }
-</style>

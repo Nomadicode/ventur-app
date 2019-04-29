@@ -5,7 +5,7 @@
     <v-img
       class="small-image"
       :class="{'full-image': expanded}"
-      :src="DefaultImage">
+      :src="activityImage">
 
       <direction-button
         v-if="expanded && item && item.location"
@@ -48,11 +48,9 @@
         <v-btn
           color="secondary"
           round
-          outline
-          fab
-          small
+          flat
           @click="accept()"
-          ><v-icon>check</v-icon></v-btn>
+          ><v-icon>far fa-heart</v-icon></v-btn>
       </v-card-actions>
     </div>
     <v-btn
@@ -84,6 +82,9 @@ export default {
     }
   },
   computed: {
+    activityImage () {
+      return this.item.media ? this.item.media : DefaultImage
+    },
     duration () {
       if (!this.item.duration) {
         return null
@@ -96,7 +97,6 @@ export default {
       }
       return duration + interval
     },
-
     price () {
       if (this.item.price) {
         return '$' + parseFloat(Math.round(this.item.price * 100) / 100).toFixed(2)

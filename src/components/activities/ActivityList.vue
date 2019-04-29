@@ -26,6 +26,7 @@ export default {
   },
   apollo: {
     activities: {
+      pollInterval: 5000,
       query: gql`query Activities($latitude: Float!, $longitude: Float!){ 
         activities (latitude: $latitude, longitude: $longitude) {
           id
