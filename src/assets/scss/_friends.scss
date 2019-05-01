@@ -38,25 +38,21 @@
 }
 
 .list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-
-  .empty {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-size: 1rem;
-      font-weight: 300;
-  }
+  height: calc(100vh - 175px);
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 80px;
 }
 
 .friend-list {
   h6 {
     font-size: 0.7rem;
     text-transform: uppercase;
+  }
+  
+  p {
+    font-weight: lighter;
+    color: $bg-accent-color;
   }
 
   .empty {
@@ -65,8 +61,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    font-size: 0.85rem;
-    color: $placeholder-text-color;
+    font-size: 1.35rem;
+    color: white;
     font-weight: 200;
   }
 
@@ -86,4 +82,26 @@
       font-style: italic;
     }
   }
+}
+
+.group-list {
+  p {
+    font-weight: lighter;
+    color: $bg-accent-color;
+  }
+
+  .empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 1.35rem;
+    color: white;
+    font-weight: 200;
+  }
+}
+
+.manage-list-item {
+  font-size: 0.8rem;
 }

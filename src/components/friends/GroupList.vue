@@ -1,20 +1,19 @@
 <template>
-  <div>
-    <div v-if="(!groups || groups.length === 0) && !loading" class="lighter-text empty-list">No groups found
-      <el-button
-        class="white-text add-btn"
-        type="text"
-        @click="addGroup">
-        add a new group
-      </el-button>
+  <div class="list">
+    <div class="group-list">
+      <group-item v-for="group of groups" :key="group.id" :item="group"></group-item>
+
+      <div v-if="(!groups || groups.length === 0) && !loading" class="empty">
+        <p>No groups found</p>
+        <el-button
+          class="extra-light-text add-btn"
+          type="text"
+          @click="addGroup">
+          add a group
+        </el-button>
+      </div>
     </div>
 
-    <v-expansion-panel
-      expand
-      popout
-      light>
-      <group-item v-for="group of groups" :key="group.id" :item="group"></group-item>
-    </v-expansion-panel>
   </div>
 </template>
 

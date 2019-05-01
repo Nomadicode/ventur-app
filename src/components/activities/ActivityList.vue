@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="activity-list">
     <activity v-for="activity of activities" :key="activity.title" :item="activity"></activity>
 
     <div v-if="activities.length === 0 && !loading" class="empty">No activities near you</div>

@@ -51,8 +51,8 @@ export default {
       var self = this
       if (this.query) {
         this.$apollo.query({
-          query: gql`query getUserByHandle($handle: String!){
-              getUserByHandle(handle: $handle) {
+          query: gql`query searchUsers($query: String!){
+              searchUsers(query: $query) {
                 id
                 name
                 handle
@@ -60,10 +60,10 @@ export default {
               }
           }`,
           variables: {
-            handle: self.query
+            query: self.query
           }
         }).then((response) => {
-          self.results = response.data.getUserByHandle
+          self.results = response.data.searchUsers
         }).catch((error) => {
           console.log(error)
         })

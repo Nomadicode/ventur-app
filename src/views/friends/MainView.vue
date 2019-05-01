@@ -45,7 +45,6 @@
         <v-icon>group_work</v-icon>
       </v-btn>
     </v-speed-dial>
-    <friend-footer></friend-footer>
     <friend-modal></friend-modal>
   </v-layout>
 </template>

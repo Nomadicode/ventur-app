@@ -33,7 +33,7 @@
                 fixed
                 hideDetails
                 v-model="searchQuery"
-                class="rounded-input"
+                class="rounded-input pad-bottom--half"
                 append-icon="search"
                 placeholder="Search by handle, name, email"></v-text-field>
             </div>

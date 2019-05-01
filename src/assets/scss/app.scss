@@ -46,6 +46,14 @@
 .el-date-editor.el-input, .el-date-editor.el-input__inner {
   width: inherit;
 }
+
+.theme--dark.v-divider {
+  border-color: #DFDFDF;
+}
+
+.v-text-field.v-text-field--solo .v-input__control {
+  min-height: inherit;
+}
 // #endregion
 
 .main-container {

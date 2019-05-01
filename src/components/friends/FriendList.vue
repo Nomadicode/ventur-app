@@ -1,13 +1,37 @@
 <template>
-  <div>
+  <div class="list">
     <div v-if="friendRequests.length !== 0" class="friend-list">
-      <h6>Friend Requests</h6>
+      <v-layout
+        class="pad-top--quarter"
+        row
+        wrap>
+        <v-flex
+          xs11
+          align-self-center>
+          <h6>Friend Requests</h6>
+        </v-flex>
+        <v-flex xs1>
+          <el-button
+            class="white-text"
+            type="text"
+            size="mini"
+            @click="showFriendRequests = !showFriendRequests"
+            icon="el-icon-plus"></el-button>
+        </v-flex>
+      </v-layout>
 
-      <friend-item v-for="friend of friendRequests" :key="friend.id" :friend="friend.fromUser" @refresh="refetch()"></friend-item>
+      <div v-if="showFriendRequests">
+        <friend-item v-for="friend of friendRequests" :key="friend.id" :friend="friend.fromUser" :isRequest="true" @refresh="refetch()"></friend-item>
+      </div>
     </div>
 
-    <div class="friend-list">
-      <h6>Friends</h6>
+    <v-divider
+      v-if="friendRequests.length !== 0"
+      class="pad-quarter" />
+
+    <div
+      class="friend-list">
+      <h6 v-if="friends.length !== 0">Friends</h6>
 
       <friend-item v-for="friend of friends" :key="friend.id" :friend="friend"></friend-item>
 
@@ -38,6 +62,7 @@ export default {
         friendships {
           id
           name
+          handle
           profilePicture
         }
       }`,
@@ -73,6 +98,7 @@ export default {
   data () {
     return {
       loading: false,
+      showFriendRequests: true,
       friendRequests: [],
       friends: []
     }

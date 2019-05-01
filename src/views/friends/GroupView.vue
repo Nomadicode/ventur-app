@@ -1,19 +1,17 @@
 <template>
-  <v-layout
-    light
-    column>
+  <div class="fill-width">
     <v-text-field
       solo-inverted
       flat
       fill-width
       fixed
-      hideDetails
-      class="pad-top--half rounded-input"
+      hide-details
+      class="pad-ends--quarter rounded-input"
       append-icon="search"
       placeholder="Search groups"></v-text-field>
 
-      <group-list></group-list>
-  </v-layout>
+    <group-list></group-list>
+  </div>
 </template>
 
 <script>

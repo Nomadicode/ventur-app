@@ -1,44 +1,44 @@
 $base-padding: 20px;
 $base-spacing: 20px;
 
-.pad { padding: $base-padding; }
-.pad-quarter { padding: ($base-padding / 4); }
-.pad-half { padding: ($base-padding / 2); }
-.pad-double { padding: ($base-padding * 2); }
-.pad-quad { padding: ($base-padding * 4); }
+.pad { padding: $base-padding !important; }
+.pad-quarter { padding: ($base-padding / 4) !important; }
+.pad-half { padding: ($base-padding / 2) !important; }
+.pad-double { padding: ($base-padding * 2) !important; }
+.pad-quad { padding: ($base-padding * 4) !important; }
 
-.pad-sides { padding-right: $base-padding; padding-left: $base-padding; }
-.pad-sides--quarter { padding-right: ($base-padding / 4); padding-left: ($base-padding / 4); }
-.pad-sides--half { padding-right: ($base-padding / 2); padding-left: ($base-padding / 2); }
-.pad-sides--double { padding-right: ($base-padding * 2); padding-left: ($base-padding * 2); }
-.pad-sides--quad { padding-right: ($base-padding * 4); padding-left: ($base-padding * 4); }
+.pad-sides { padding-right: $base-padding !important; padding-left: $base-padding !important; }
+.pad-sides--quarter { padding-right: ($base-padding / 4) !important; padding-left: ($base-padding / 4) !important; }
+.pad-sides--half { padding-right: ($base-padding / 2) !important; padding-left: ($base-padding / 2) !important; }
+.pad-sides--double { padding-right: ($base-padding * 2) !important; padding-left: ($base-padding * 2) !important; }
+.pad-sides--quad { padding-right: ($base-padding * 4) !important; padding-left: ($base-padding * 4) !important; }
 
-.pad-ends { padding-top: $base-padding; padding-bottom: $base-padding; }
-.pad-ends--quarter { padding-top: ($base-padding / 4); padding-bottom: ($base-padding / 4); }
-.pad-ends--half { padding-top: ($base-padding / 2); padding-bottom: ($base-padding / 2); }
-.pad-ends--double { padding-top: ($base-padding * 2); padding-bottom: ($base-padding * 2); }
-.pad-ends--quad { padding-top: ($base-padding * 4); padding-bottom: ($base-padding * 4); }
+.pad-ends { padding-top: $base-padding !important; padding-bottom: $base-padding !important; }
+.pad-ends--quarter { padding-top: ($base-padding / 4) !important; padding-bottom: ($base-padding / 4) !important; }
+.pad-ends--half { padding-top: ($base-padding / 2) !important; padding-bottom: ($base-padding / 2) !important; }
+.pad-ends--double { padding-top: ($base-padding * 2) !important; padding-bottom: ($base-padding * 2) !important; }
+.pad-ends--quad { padding-top: ($base-padding * 4) !important; padding-bottom: ($base-padding * 4) !important; }
 
 .pad-top { padding-top: $base-padding !important; }
-.pad-top--quarter { padding-top: ($base-padding / 4); }
+.pad-top--quarter { padding-top: ($base-padding / 4) !important; }
 .pad-top--half { padding-top: ($base-padding / 2) !important; }
-.pad-top--double { padding-top: ($base-padding * 2); }
-.pad-top--quad { padding-top: ($base-padding * 4); }
-.pad-top--none { padding-top: 0; }
+.pad-top--double { padding-top: ($base-padding * 2) !important; }
+.pad-top--quad { padding-top: ($base-padding * 4) !important; }
+.pad-top--none { padding-top: 0 !important; }
 
-.pad-bottom { padding-bottom: $base-padding; }
-.pad-bottom--quarter { padding-bottom: ($base-padding / 4); }
-.pad-bottom--half { padding-bottom: ($base-padding / 2); }
-.pad-bottom--double { padding-bottom: ($base-padding * 2); }
-.pad-bottom--quad { padding-bottom: ($base-padding * 4); }
+.pad-bottom { padding-bottom: $base-padding !important; }
+.pad-bottom--quarter { padding-bottom: ($base-padding / 4) !important; }
+.pad-bottom--half { padding-bottom: ($base-padding / 2) !important; }
+.pad-bottom--double { padding-bottom: ($base-padding * 2) !important; }
+.pad-bottom--quad { padding-bottom: ($base-padding * 4) !important; }
 
-.pad-none { padding: 0; }
-.pad-top--none { padding-top: 0; }
-.pad-bottom--none { padding-bottom: 0;}
-.pad-left--none { padding-left: 0; }
-.pad-right--none { padding-right: 0; }
-.pad-sides--none { padding-left: 0; padding-right: 0;}
-.pad-ends--none { padding-top: 0; padding-bottom: 0; }
+.pad-none { padding: 0 !important; }
+.pad-top--none { padding-top: 0 !important; }
+.pad-bottom--none { padding-bottom: 0 !important;}
+.pad-left--none { padding-left: 0 !important; }
+.pad-right--none { padding-right: 0 !important; }
+.pad-sides--none { padding-left: 0 !important; padding-right: 0 !important;}
+.pad-ends--none { padding-top: 0 !important; padding-bottom: 0 !important; }
 
 .space { margin: $base-spacing; }
 .space-quarter { margin: ($base-spacing / 4); }

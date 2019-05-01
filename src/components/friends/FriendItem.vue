@@ -15,6 +15,7 @@
       <div class="pad-sides--half pad-top--quarter">
         <h6>{{ friend.name }}</h6>
         <v-layout
+          v-if="isRequest"
           class="pad-top--quarter"
           row
           wrap>
@@ -35,8 +36,28 @@
               @click="acceptFriend">Accept</el-button>
           </v-flex>
         </v-layout>
+        <v-layout
+          v-if="!isRequest"
+          class="pad-top--quarter"
+          row
+          wrap>
+          <v-flex xs10>
+            <!-- <p class="suggest-reason">6 shared activities</p> -->
+          </v-flex>
+          <v-flex xs2>
+            <el-button
+              size="mini"
+              @click="showMore"
+              icon="el-icon-more"></el-button>
+          </v-flex>
+        </v-layout>
       </div>
     </v-flex>
+    <manage-friend-modal
+      :handle="friend.handle"
+      :show="showManageModal"
+      @close="closeModal"
+      @refresh="refresh"></manage-friend-modal>
   </v-layout>
 </template>
 
@@ -44,11 +65,22 @@
 import gql from 'graphql-tag'
 import AvatarImage from '@/assets/images/avatar.svg'
 
+import ManageFriendModal from '@/components/friends/ManageModal'
+
 export default {
   name: 'FriendItem',
-  props: ['friend'],
+  props: {
+    friend: {
+      type: Object
+    },
+    isRequest: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
+      showManageModal: false
     }
   },
   computed: {
@@ -71,12 +103,12 @@ export default {
         }
       }).then((response) => {
         self.$emit('refresh')
-        console.log(response.data)
       }).catch((error) => {
         console.log(error)
       })
     },
     rejectFriend () {
+      var self = this
       this.$apollo.mutate({
         mutation: gql`mutation RejectFriendRequest ($handle: String!) {
           rejectFriendRequest (handle: $handle) {
@@ -89,11 +121,23 @@ export default {
         }
       }).then((response) => {
         self.$emit('refresh')
-        console.log(response.data)
       }).catch((error) => {
         console.log(error)
       })
+    },
+    showMore () {
+      this.showManageModal = true
+    },
+    closeModal () {
+      this.showManageModal = false
+    },
+    refresh () {
+      this.$emit('refresh')
+      this.closeModal()
     }
+  },
+  components: {
+    ManageFriendModal
   }
 }
 </script>
