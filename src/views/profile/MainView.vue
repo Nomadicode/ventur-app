@@ -1,16 +1,13 @@
 <template>
-  <div class="main-container">
+  <v-layout
+    align-center
+    justify-center>
     <router-view></router-view>
-  </div>
+  </v-layout>
 </template>
 
 <script>
-import ProfileFooter from '@/components/layouts/footers/ProfileFooter'
-
 export default {
-  name: 'ProfileMainView',
-  components: {
-    ProfileFooter
-  }
+  name: 'ProfileMainView'
 }
 </script>

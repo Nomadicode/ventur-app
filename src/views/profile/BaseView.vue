@@ -1,61 +1,112 @@
 <template>
-  <v-layout
-    class="position--relative"
-    light
-    column>
-    <edit-field
-      v-model="user.name"
-      containerCls="horizontal-center"
-      fieldCls="field-header inline-block"
-      editCls="space-left--quarter inline-block"
-      :showLabel="false"></edit-field>
-    <!-- <h1 class="space-top--half pad-half horizontal-center">Profile Info</h1> -->
+  <div class="profile-container">
+    <el-input
+      v-if="editName"
+      class="header-edit"
+      v-model="user.name">
+    </el-input>
 
-    <div class="flex horizontal-center">
-      <v-img
-        :src="user.profile_picture"
-        class="inline profile-picture">
-        <el-upload
-          class="field-input avatar-uploader"
-          :on-change="parsePicture"
-          action=""
-          :auto-upload="false"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <span class="profile-edit-btn avatar-uploader-icon">edit</span>
-        </el-upload>
-      </v-img>
+    <v-layout
+      v-if="!editName"
+      row
+      wrap>
+      <v-flex xs11>
+        <h3
+          class="horizontal-center">{{ user.name }}</h3>
+      </v-flex>
+      <v-flex xs1>
+        <el-button
+          v-if="!editName"
+          type="text"
+          @click="toggleEditName()">
+          <v-icon :size="16">edit</v-icon>
+        </el-button>
+      </v-flex>
+    </v-layout>
 
-      <!-- <edit-field
-        :containerCls="'space-left--half inline'"
-        :fieldCls="'field-header inline-block'"
-        :editCls="'inline-block'"
-        v-model="user.name"
-        :showLabel="false"></edit-field> -->
+    <v-layout
+      v-if="editName"
+      row
+      wrap>
+      <v-flex xs1>
+        <el-button
+          class="secondary-text"
+          size="mini"
+          type="text"
+          plain
+          @click="toggleEditName()">
+          <v-icon
+            :size="18">close</v-icon>
+        </el-button>
+      </v-flex>
+
+      <v-spacer />
+
+      <v-flex xs1>
+        <el-button
+          size="mini"
+          type="text"
+          @click="save('name')"
+          plain>
+          <v-icon
+            :size="18">check</v-icon>
+        </el-button>
+      </v-flex>
+    </v-layout>
+
+    <image-uploader
+      class="horizontal-center"
+      v-model="editedUser.profilePicture"
+      round
+      :size="125"></image-uploader>
+
+    <div>
+      <label class="block pad-top--half pad-bottom--quarter">Email</label>
+      <el-input
+        v-model="editedUser.email">
+        <el-button
+          v-if="editedUser.email !== user.email"
+          slot="append"
+          icon="el-icon-check"
+          @click="save('email')"></el-button>
+      </el-input>
     </div>
 
-    <edit-field
-      label="Email"
-      v-model="user.email"></edit-field>
+    <div>
+      <label class="block pad-top--half pad-bottom--quarter">Handle</label>
+      <el-input
+        v-model="editedUser.handle">
+        <template slot="prepend">@</template>
+        <el-button
+          v-if="editedUser.handle !== user.handle"
+          slot="append"
+          icon="el-icon-check"
+          @click="save('handle')"></el-button>
+      </el-input>
+    </div>
 
-    <edit-field
-      label="Handle"
-      v-model="user.handle"></edit-field>
-
-    <edit-field
-      label="Date of Birth"
-      type="date"
-      v-model="user.date_of_birth"></edit-field>
-  </v-layout>
+    <div>
+      <label class="block pad-top--half pad-bottom--quarter">Date of Birth</label>
+      <el-input
+        v-model="editedUser.dateOfBirth"
+        v-inputmask
+        data-inputmask="'mask': '9999-99-99', 'greedy': 'false'"
+        placeholder="yyyy-mm-dd">
+        <el-button
+          v-if="editedUser.dateOfBirth && editedUser.dateOfBirth !== user.dateOfBirth"
+          slot="append"
+          icon="el-icon-check"
+          @click="save('dateOfBirth')"></el-button>
+      </el-input>
+    </div>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import gql from 'graphql-tag'
-import moment from 'moment'
-import EditField from '@/components/elements/inputs/EditField'
+
+import ImageUploader from '@/components/elements/inputs/ImageUploader'
 
 export default {
   name: 'BaseView',
@@ -65,11 +116,8 @@ export default {
   data () {
     return {
       editName: false,
-      editEmail: false,
-      editHandle: false,
-      editDateOfBirth: false,
-      edit: false,
       user: {},
+      editedUser: {},
       imageUrl: ''
     }
   },
@@ -77,30 +125,15 @@ export default {
     ...mapGetters('UserModule', ['fullName', 'data'])
   },
   methods: {
-    handleAvatarSuccess (res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
+    toggleEditName () {
+      this.editName = !this.editName
     },
-    beforeAvatarUpload (file) {
-      const isLt2M = file.size / 1024 / 1024 < 2
+    save (field) {
+      var fields = {}
+      fields[field] = this.editedUser[field]
 
-      if (!isLt2M) {
-        this.$message.error('Avatar picture size can not exceed 2MB!')
-      }
-      return isLt2M
-    },
-    parsePicture (file, fileList) {
-      var self = this
-      const reader = new FileReader()
-      reader.readAsDataURL(file.raw)
-      reader.onloadend = function (readerEvt) {
-        var binaryString = readerEvt.target.result
-        self.user.profile_picture = binaryString
-      }
-    },
-    save () {
-      var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation ($name: String, $email: String, $dateOfBirth: Date, $profilePicture: String){
+        mutation: gql`mutation UpdateProfile ($name: String, $email: String, $dateOfBirth: Date, $profilePicture: String){
           updateProfile(name: $name, email: $email, dateOfBirth: $dateOfBirth, profilePicture: $profilePicture) {
             success
             error
@@ -108,83 +141,33 @@ export default {
               id
               name
               email
+              handle
               profilePicture
               dateOfBirth
             }
           }
         }`,
-        variables: {
-          name: this.user.name,
-          email: this.user.email,
-          dateOfBirth: moment(this.user.date_of_birth).format('YYYY-MM-DD'),
-          profilePicture: (this.user.profile_picture.includes('http')) ? null : this.user.profile_picture
-        }
+        variables: fields
       }).then((data) => {
-        self.toggleEditMode()
+        console.log(data)
       }).catch((error) => {
         // Show error
         console.error(error)
       })
     }
   },
+  watch: {
+    user () {
+      this.editedUser = Object.assign({}, this.user)
+    },
+    'editedUser.profilePicture' () {
+      if (this.editedUser.profilePicture && this.editedUser.profilePicture.indexOf('http') === -1) {
+        this.save('profilePicture')
+      }
+    }
+  },
   components: {
-    EditField
+    ImageUploader
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .buttons-box {
-    text-align: right;
-    width: 100%;
-  }
-  .profile-picture {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-
-    .profile-edit-btn {
-      display: block;
-      text-align: center;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 25px;
-      background: rgba(0,0,0,0.4);
-    }
-  }
-  .avatar-uploader {
-    .el-upload {
-      border: 1px dashed #d9d9d9;
-      border-radius: 6px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      padding: 20px;
-    }
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    color: #d9d9d9;
-    text-align: center;
-  }
-  .field {
-    color: #FFFFFF;
-
-    .field-label {
-      font-size: 16px;
-      font-weight: 600;
-      color: rgba(250,250,250,1);
-    }
-    .field-input {
-      margin: 5px 0 20px;
-    }
-    .field-data {
-      font-size: 20px;
-      font-weight: 300;
-    }
-  }
-</style>

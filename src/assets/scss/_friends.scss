@@ -45,6 +45,9 @@
 }
 
 .friend-list {
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+  
   h6 {
     font-size: 0.7rem;
     text-transform: uppercase;

@@ -13,7 +13,7 @@ import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 import apolloProvider from './services/apollo'
 
-import VueQriously from 'vue-qriously'
+import Inputmask from 'inputmask'
 
 // #region Style Imports
 import Vuetify from 'vuetify'
@@ -67,7 +67,16 @@ Vue.use(VueAuthenticate, {
 
 Vue.config.productionTip = false
 
-Vue.use(VueQriously)
+Vue.directive('inputmask', {
+  bind: function (el, binding) {
+    var inputs = el.getElementsByTagName('INPUT')
+    var input = inputs[0]
+    if (inputs.length > 1) {
+      input = inputs[inputs.length - 1]
+    }
+    new Inputmask(binding.value).mask(input)
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

@@ -107,6 +107,7 @@ $base-spacing: 20px;
   width: 95%;
   margin: auto;
 }
+
 .large-font{
   font-size: 25px;
 
@@ -134,6 +135,10 @@ $base-spacing: 20px;
 .inline {
   display: inline-block;
   width:40%;
+}
+
+.block {
+  display: block;
 }
 
 .center--absolute {

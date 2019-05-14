@@ -121,32 +121,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-    .field {
-        .field-label {
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.6);
-            margin-bottom: 10px;
-            color: #FFFFFF;
-            font-size: 1.2rem;
-            font-weight: 300;
-            position: relative;
-
-            .edit-buttons {
-                position: absolute;
-                right: 0;
-                top: 0;
-                font-size: 12px !important;
-            }
-        }
-        .field-data {
-            font-weight: bolder;
-            font-size: 1rem;
-        }
-        .field-header {
-            font-size: 1.8rem;
-            margin-bottom: 0;
-        }
-    }
-</style>

@@ -1,0 +1,13 @@
+.profile-container {
+  width: 100%;
+  height: calc(100vh - 137px);
+  padding-bottom: 40px;
+  overflow: auto;
+}
+
+.header-edit {
+  font-size: 18px;
+  .el-input__inner {
+    text-align: center;
+  }
+}

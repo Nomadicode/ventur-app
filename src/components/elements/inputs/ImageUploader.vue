@@ -3,7 +3,11 @@
     :src="image"
     :maxHeight="125"
     :gradient="'rgba(0,0,0,0), rgba(0,0,0,0.6)'"
-    class="image-uploader">
+    class="image-uploader"
+    :style="{
+      'border-radius': round ? '50%' : '0',
+      'width': size + 'px'
+    }">
     <el-upload
       :on-change="parsePicture"
       action=""
@@ -26,7 +30,19 @@
 <script>
 export default {
   name: 'ImageUploader',
-  props: ['value'],
+  props: {
+    value: {
+      default: ''
+    },
+    round: {
+      default: false,
+      type: Boolean
+    },
+    size: {
+      default: null,
+      type: Number
+    }
+  },
   data () {
     return {
       imageUrl: '',

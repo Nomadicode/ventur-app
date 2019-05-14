@@ -1,7 +1,5 @@
 <template>
-  <v-layout
-    light
-    column>
+  <div class="fill-width">
     <h1 class="horizontal-center">Account Settings</h1>
     <!-- <el-button size="large" plain>Change Password</el-button> -->
     <div class="space-top">
@@ -26,7 +24,7 @@
       class="full-width space-left-none delete-button-bottom space-top"
       type="danger"
       @click="deleteAccount()">Delete Account</el-button>
-  </v-layout>
+  </div>
 </template>
 
 <script>

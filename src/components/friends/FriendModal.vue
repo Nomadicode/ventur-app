@@ -23,7 +23,7 @@
           </div> -->
           <div class="handle-search">
             <div class="handle pad-bottom--half" v-if="data && data.handle">
-              <p>{{ data.handle }}</p>
+              <p>@{{ data.handle }}</p>
               <label>My Handle</label>
             </div>
             <div class="search pad-top--half">
