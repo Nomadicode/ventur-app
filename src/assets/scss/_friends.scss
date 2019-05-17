@@ -48,9 +48,15 @@
   max-height: calc(100vh - 200px);
   overflow: auto;
   
-  h6 {
+  .toggle-btn {
     font-size: 0.7rem;
     text-transform: uppercase;
+    color: $secondary-text-color;
+  }
+
+  .toggle-btn.active {
+    color: $primary-text-color;
+    font-weight: 600;
   }
   
   p {
@@ -65,7 +71,7 @@
     transform: translate(-50%, -50%);
     text-align: center;
     font-size: 1.35rem;
-    color: white;
+    color: $regular-text-color;
     font-weight: 200;
   }
 
@@ -102,6 +108,35 @@
     font-size: 1.35rem;
     color: white;
     font-weight: 200;
+  }
+
+  .group-card {
+    margin: 10px 0;
+
+    .v-card__title {
+      position: relative;
+      padding: 5px 10px;
+      font-weight: 600;
+      color: $secondary-color;
+      font-size: 0.8rem;
+      box-shadow: 0 1px 2px #8e8e8e;
+    }
+
+    .v-card__text {
+      padding: 0;
+
+      .v-list > div {
+        margin: 1px 0;
+        color: $primary-text-color;
+        background: $lighter-color;
+        border-radius: 0;
+
+        .v-list__tile__title {
+          font-size: 0.85rem;
+          font-weight: 600;
+        }
+      }
+    }
   }
 }
 

@@ -1,4 +1,9 @@
 .reset-link {
-    color: $accent-color;
-    text-decoration: none;
+  color: $accent-color;
+  text-decoration: none;
+}
+
+.remove-btn {
+  color: $accent-color;
+  background: $warning-color !important;
 }

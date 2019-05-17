@@ -1,14 +1,18 @@
 <template>
   <div class="list">
     <div class="group-list">
-      <group-item v-for="group of groups" :key="group.id" :item="group"></group-item>
+      <group-item
+        v-for="group of groups"
+        :key="group.id"
+        :item="group"
+        @refresh="refetch"></group-item>
 
       <div v-if="(!groups || groups.length === 0) && !loading" class="empty">
         <p>No groups found</p>
         <el-button
           class="extra-light-text add-btn"
           type="text"
-          @click="addGroup">
+          @click="$store.commit('AppState/OPEN_ADD_GROUP_MODAL')">
           add a group
         </el-button>
       </div>
@@ -25,11 +29,14 @@ export default {
   name: 'GroupList',
   apollo: {
     friendGroups: {
+      pollInterval: 10000,
       query: gql`query {
         friendGroups {
+          pk
           id
           name
           friends {
+            id
             name
             profilePicture
           }
@@ -53,7 +60,7 @@ export default {
   methods: {
     addGroup () {
       var self = this
-      this.$prompt('Give your group a name', 'Create a group', {
+      this.$prompt('', 'Create a group', {
         confirmButtonText: 'Create Group',
         cancelButtonText: 'Cancel'
       }).then((value) => {
@@ -64,14 +71,15 @@ export default {
       var self = this
       this.$apollo.mutate({
         mutation: gql`mutation CreateFriendGroup($name: String!){
-            createFriendGroup(name: $name) {
-                success
-                error
-                group {
-                    id
-                    name
-                }
+          createFriendGroup(name: $name) {
+            success
+            error
+            group {
+              pk
+              id
+              name
             }
+          }
         }`,
         variables: {
           name: value.value
@@ -81,6 +89,9 @@ export default {
       }).catch((error) => {
         console.log(error)
       })
+    },
+    refetch () {
+      this.$apollo.queries.friendGroups.refetch()
     }
   },
   components: {

@@ -13,6 +13,9 @@ const UserModule = {
     LOGOUT_USER (state) {
       state.user = null
       state.token = null
+    },
+    UPDATE_USER (state, userData) {
+      state.user = userData
     }
   },
   getters: {

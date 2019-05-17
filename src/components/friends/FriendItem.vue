@@ -36,6 +36,7 @@
               @click="acceptFriend">Accept</el-button>
           </v-flex>
         </v-layout>
+
         <v-layout
           v-if="!isRequest"
           class="pad-top--quarter"
@@ -45,19 +46,34 @@
             <!-- <p class="suggest-reason">6 shared activities</p> -->
           </v-flex>
           <v-flex xs2>
-            <el-button
-              size="mini"
-              @click="showMore"
-              icon="el-icon-more"></el-button>
+            <v-menu light left offset-x>
+              <template v-slot:activator="{ on }">
+                <el-button
+                  v-on="on"
+                  size="mini"
+                  icon="el-icon-more"></el-button>
+              </template>
+              <v-list class="more-menu">
+                <v-list-tile
+                  @click="showGroupAddModal">
+                  <v-list-tile-title>add to group</v-list-tile-title>
+                </v-list-tile>
+                <v-divider />
+                <v-list-tile
+                  class="remove-btn"
+                  @click="removeFriend">
+                  <v-list-tile-title>remove friend</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
           </v-flex>
         </v-layout>
       </div>
     </v-flex>
-    <manage-friend-modal
-      :handle="friend.handle"
-      :show="showManageModal"
-      @close="closeModal"
-      @refresh="refresh"></manage-friend-modal>
+    <group-add-modal
+      :friendId="friend.pk"
+      :show="groupModalVisible"
+      @close="closeGroupAddModal"></group-add-modal>
   </v-layout>
 </template>
 
@@ -65,7 +81,7 @@
 import gql from 'graphql-tag'
 import AvatarImage from '@/assets/images/avatar.svg'
 
-import ManageFriendModal from '@/components/friends/ManageModal'
+import GroupAddModal from './GroupAddModal'
 
 export default {
   name: 'FriendItem',
@@ -80,7 +96,7 @@ export default {
   },
   data () {
     return {
-      showManageModal: false
+      groupModalVisible: false
     }
   },
   computed: {
@@ -125,19 +141,37 @@ export default {
         console.log(error)
       })
     },
-    showMore () {
-      this.showManageModal = true
+    closeGroupAddModal () {
+      this.groupModalVisible = false
     },
-    closeModal () {
-      this.showManageModal = false
+    showGroupAddModal () {
+      this.groupModalVisible = true
     },
-    refresh () {
-      this.$emit('refresh')
-      this.closeModal()
+    removeFriend () {
+      var self = this
+      this.$apollo.mutate({
+        mutation: gql`mutation RemoveFriend ($handle: String!) {
+          removeFriend (handle: $handle) {
+            success
+            error
+          }
+        }`,
+        variables: {
+          handle: this.friend.handle
+        }
+      }).then((response) => {
+        self.$emit('refresh')
+      }).catch((error) => {
+        console.log(error)
+      })
     }
+    // refresh () {
+    //   this.$emit('refresh')
+    //   this.closeModal()
+    // }
   },
   components: {
-    ManageFriendModal
+    GroupAddModal
   }
 }
 </script>

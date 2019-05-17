@@ -5,24 +5,17 @@
   >
     <v-card>
       <v-card-text
-        class="manage-list-item pad-half regular-text horizontal-center">
+        class="manage-list-item pad-half regular-text horizontal-center"
+        @click="addToGroup">
         add to group
       </v-card-text>
 
       <v-divider></v-divider>
 
       <v-card-text
-        class="manage-list-item pad-half warning-text horizontal-center"
+        class="manage-list-item pad-half warning-background white-text horizontal-center"
         @click="removeFriend">
         remove friend
-      </v-card-text>
-
-      <v-divider></v-divider>
-
-      <v-card-text
-        class="manage-list-item pad-half warning-background white-text horizontal-center"
-        @click="blockUser">
-        block user
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -49,23 +42,8 @@ export default {
     }
   },
   methods: {
-    blockUser () {
-      var self = this
-      this.$apollo.mutate({
-        mutation: gql`mutation BlockUser ($handle: String!) {
-          blockUser (handle: $handle) {
-            success
-            error
-          }
-        }`,
-        variables: {
-          handle: this.handle
-        }
-      }).then((response) => {
-        self.$emit('refresh')
-      }).catch((error) => {
-        console.log(error)
-      })
+    addToGroup () {
+
     },
     removeFriend () {
       var self = this

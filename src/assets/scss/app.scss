@@ -256,3 +256,22 @@ h6 { font-size: 0.75rem; font-weight: bold; }
   display: block;
   text-align: center;
 }
+
+.more-menu {
+  & > div {
+    margin: 0;
+    border-radius: 0;
+
+    .v-list__tile {
+      font-size: 0.8rem;
+      height: 40px;
+    }
+  }
+}
+
+.group-add-modal {
+  .v-card__title {
+    padding: 0 10px;
+    border-bottom: 1px solid #efefef;
+  }
+}

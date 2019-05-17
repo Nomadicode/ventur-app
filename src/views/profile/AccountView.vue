@@ -1,6 +1,6 @@
 <template>
-  <div class="fill-width">
-    <h1 class="horizontal-center">Account Settings</h1>
+  <div class="profile-container">
+    <h5>Security</h5>
     <!-- <el-button size="large" plain>Change Password</el-button> -->
     <div class="space-top">
       <label class="field-label accent-color">Current Password</label>

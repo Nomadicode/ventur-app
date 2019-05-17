@@ -40,20 +40,19 @@
         dark
         small
         color="green"
-        @click="addGroup"
+        @click="$store.commit('AppState/OPEN_ADD_GROUP_MODAL')"
       >
         <v-icon>group_work</v-icon>
       </v-btn>
     </v-speed-dial>
     <friend-modal></friend-modal>
+    <group-create-modal></group-create-modal>
   </v-layout>
 </template>
 
 <script>
-import gql from 'graphql-tag'
-
 import FriendModal from '@/components/friends/FriendModal'
-import FriendFooter from '@/components/layouts/footers/FriendFooter'
+import GroupCreateModal from '@/components/friends/groups/GroupCreateModal'
 
 export default {
   name: 'FriendMainView',
@@ -62,42 +61,9 @@ export default {
       fab: false
     }
   },
-  methods: {
-    addGroup () {
-      var self = this
-      this.$prompt('Give your group a name', 'Create a group', {
-        confirmButtonText: 'Create Group',
-        cancelButtonText: 'Cancel'
-      }).then((value) => {
-        self.createGroup(value)
-      }).catch(() => {})
-    },
-    createGroup (value) {
-      var self = this
-      this.$apollo.mutate({
-        mutation: gql`mutation CreateFriendGroup($name: String!){
-            createFriendGroup(name: $name) {
-                success
-                error
-                group {
-                    id
-                    name
-                }
-            }
-        }`,
-        variables: {
-          name: value.value
-        }
-      }).then((response) => {
-        self.$apollo.queries.friendGroups.refetch()
-      }).catch((error) => {
-        console.log(error)
-      })
-    }
-  },
   components: {
-    FriendFooter,
-    FriendModal
+    FriendModal,
+    GroupCreateModal
   }
 }
 </script>

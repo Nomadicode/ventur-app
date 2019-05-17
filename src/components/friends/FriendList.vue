@@ -16,7 +16,7 @@
             type="text"
             size="mini"
             @click="showFriendRequests = !showFriendRequests"
-            icon="el-icon-plus"></el-button>
+            :icon="showFriendRequests ? 'el-icon-minus' : 'el-icon-plus'"></el-button>
         </v-flex>
       </v-layout>
 
@@ -57,9 +57,10 @@ export default {
   name: 'FriendList',
   apollo: {
     friendships: {
-      pollInterval: 5000,
+      pollInterval: 10000,
       query: gql`query friendships { 
         friendships {
+          pk
           id
           name
           handle
@@ -75,7 +76,7 @@ export default {
       }
     },
     pendingFriendRequests: {
-      pollInterval: 5000,
+      pollInterval: 10000,
       query: gql`query pendingFriendRequests { 
         pendingFriendRequests {
           id

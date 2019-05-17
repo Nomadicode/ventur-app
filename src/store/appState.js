@@ -8,7 +8,8 @@ const AppState = {
     activityCard: false,
     activityModal: false,
     randomModal: false,
-    addFriendModal: false
+    addFriendModal: false,
+    addGroupModal: false
   },
   mutations: {
     RESET (state) {
@@ -62,6 +63,15 @@ const AppState = {
     TOGGLE_ADD_FRIEND_MODAL (state) {
       state.addFriendModal = !state.addFriendModal
     },
+    OPEN_ADD_GROUP_MODAL (state) {
+      state.addGroupModal = true
+    },
+    CLOSE_ADD_GROUP_MODAL (state) {
+      state.addGroupModal = false
+    },
+    TOGGLE_ADD_GROUP_MODAL (state) {
+      state.addGroupModal = !state.addGroupModal
+    },
     OPEN_ACTIVITY_MODAL (state) {
       state.activityModal = true
     },
@@ -90,6 +100,9 @@ const AppState = {
     },
     addFriendModal: state => {
       return state.addFriendModal
+    },
+    addGroupModal: state => {
+      return state.addGroupModal
     },
     activityCard: state => {
       return state.activityCard

@@ -1,12 +1,40 @@
 <template>
   <div class="friend-list">
-    <h6
-      v-if="!query"
-      class="pad-bottom--quarter">Suggested friends</h6>
+    <v-layout
+      row
+      wrap>
+      <v-flex xs8>
+        <el-button
+          type="text"
+          class="toggle-btn"
+          :class="{'active': !sentActive}"
+          v-if="!query"
+          @click="sentActive = false">Suggested friends</el-button>
+        <el-button
+          type="text"
+          class="toggle-btn"
+          :class="{'active': !sentActive}"
+          v-if="query"
+          @click="sentActive = false">Search results</el-button>
+      </v-flex>
+      <v-divider />
+      <v-flex xs4>
+        <el-button
+          class="toggle-btn"
+          :class="{'active': sentActive}"
+          type="text"
+          @click="sentActive = true">Sent requests</el-button>
+      </v-flex>
+    </v-layout>
 
-    <search-result v-for="result of results" :key="result.id" :result="result"></search-result>
+    <search-result
+      v-for="result of results"
+      :key="result.id"
+      :result="result"
+      :cancelable="sentActive"
+      @refresh="refresh"></search-result>
 
-    <div v-if="results.length === 0" class="empty">No users found matching your query</div>
+    <div v-if="results.length === 0" class="empty">No users found</div>
   </div>
 </template>
 
@@ -31,10 +59,27 @@ export default {
           name
           profilePicture
         }
+      }`
+    },
+    sentFriendRequests: {
+      pollInterval: 10000,
+      query: gql`query {
+        sentFriendRequests {
+          id
+          toUser {
+            pk
+            id
+            name
+            handle
+            profilePicture
+          }
+        }
       }`,
       result ({ data, loading, networkStatus }) {
-        this.results = data.friendSuggestions
-        this.loading = false
+        this.sentRequests = []
+        for (var request of data.sentFriendRequests) {
+          this.sentRequests.push(request.toUser)
+        }
       },
       error (err) {
         console.log(err)
@@ -43,7 +88,22 @@ export default {
   },
   data () {
     return {
-      results: []
+      queryResults: [],
+      sentActive: false,
+      sentRequests: []
+    }
+  },
+  computed: {
+    results () {
+      if (this.query) {
+        return this.queryResults
+      }
+
+      if (this.sentActive) {
+        return this.sentRequests
+      }
+
+      return this.friendSuggestions
     }
   },
   methods: {
@@ -63,13 +123,17 @@ export default {
             query: self.query
           }
         }).then((response) => {
-          self.results = response.data.searchUsers
+          self.queryResults = response.data.searchUsers
         }).catch((error) => {
           console.log(error)
         })
       } else {
         this.$apollo.queries.friendSuggestions.refetch()
       }
+    },
+    refresh () {
+      this.$apollo.queries.friendSuggestions.refetch()
+      this.$apollo.queries.sentFriendRequests.refetch()
     }
   },
   components: {

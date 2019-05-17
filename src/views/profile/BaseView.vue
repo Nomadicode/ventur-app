@@ -3,7 +3,7 @@
     <el-input
       v-if="editName"
       class="header-edit"
-      v-model="user.name">
+      v-model="editedUser.name">
     </el-input>
 
     <v-layout
@@ -131,10 +131,10 @@ export default {
     save (field) {
       var fields = {}
       fields[field] = this.editedUser[field]
-
+      var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation UpdateProfile ($name: String, $email: String, $dateOfBirth: Date, $profilePicture: String){
-          updateProfile(name: $name, email: $email, dateOfBirth: $dateOfBirth, profilePicture: $profilePicture) {
+        mutation: gql`mutation UpdateProfile ($name: String, $email: String, $handle: String, $dateOfBirth: Date, $profilePicture: String){
+          updateProfile(name: $name, email: $email, handle: $handle, dateOfBirth: $dateOfBirth, profilePicture: $profilePicture) {
             success
             error
             user {
@@ -144,12 +144,17 @@ export default {
               handle
               profilePicture
               dateOfBirth
+              isActive
+              isStaff
+              isSuperuser
+              lastLogin
             }
           }
         }`,
         variables: fields
       }).then((data) => {
-        console.log(data)
+        self.$store.commit('UserModule/UPDATE_USER', data.data.updateProfile.user)
+        self.editName = false
       }).catch((error) => {
         // Show error
         console.error(error)
@@ -159,6 +164,9 @@ export default {
   watch: {
     user () {
       this.editedUser = Object.assign({}, this.user)
+    },
+    data () {
+      this.user = Object.assign({}, this.data)
     },
     'editedUser.profilePicture' () {
       if (this.editedUser.profilePicture && this.editedUser.profilePicture.indexOf('http') === -1) {

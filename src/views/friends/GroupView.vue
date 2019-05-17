@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import GroupList from '@/components/friends/GroupList'
+import GroupList from '@/components/friends/groups/GroupList'
 
 export default {
   name: 'GroupListView',
