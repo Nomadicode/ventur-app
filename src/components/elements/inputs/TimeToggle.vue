@@ -2,9 +2,10 @@
     <el-radio-group
         v-model="selected"
         size="mini">
-        <el-radio-button label="Today"></el-radio-button>
-        <el-radio-button label="This week"></el-radio-button>
-        <el-radio-button label="This month"></el-radio-button>
+        <el-radio-button
+          v-for="label of labels"
+          :key="label"
+          :label="label"></el-radio-button>
     </el-radio-group>
 </template>
 
@@ -13,8 +14,12 @@ export default {
   name: 'TimeToggle',
   props: {
     value: {
-      default: 'Today',
+      default: '',
       type: String
+    },
+    labels: {
+      default: () => ([]),
+      type: Array
     }
   },
   created () {
@@ -26,6 +31,9 @@ export default {
     }
   },
   watch: {
+    selected () {
+      this.$emit('input', this.selected)
+    },
     value () {
       this.selected = this.value
     }

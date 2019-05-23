@@ -111,8 +111,8 @@ export default {
       }`,
       variables () {
         return {
-          latitude: this.latitude,
-          longitude: this.longitude
+          latitude: this.currentLocation.latitude,
+          longitude: this.currentLocation.longitude
         }
       },
       manual: false,
@@ -138,21 +138,17 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getLocation()
-  },
   data () {
     return {
       DefaultActivityImage: DefaultActivityImage,
       modal: false,
       showReportMenu: false,
-      latitude: null,
-      longitude: null,
       activity: {}
     }
   },
   computed: {
     ...mapGetters('AppState', ['activityCard']),
+    ...mapGetters('UserModule', ['currentLocation']),
     activityImage () {
       return this.activity.media ? this.activity.media : DefaultActivityImage
     },
@@ -211,15 +207,6 @@ export default {
     close () {
       this.activity = {}
       this.$store.commit('AppState/CLOSE_ACTIVITY_CARD')
-    },
-    getLocation () {
-      if (navigator.geolocation) {
-        var self = this
-        navigator.geolocation.getCurrentPosition(function (location) {
-          self.latitude = location.coords.latitude
-          self.longitude = location.coords.longitude
-        })
-      }
     },
     fetchActivity () {
       this.$apollo.queries.randomActivity.refetch()

@@ -1,35 +1,52 @@
 <template>
   <div class="activity-list">
-    <activity v-for="activity of activities" :key="activity.title" :item="activity"></activity>
+    <activity
+      v-for="activity of activities"
+      :key="activity.title"
+      :item="activity"
+      @refresh="refresh"></activity>
 
-    <div v-if="activities.length === 0 && !loading" class="empty">No activities near you</div>
-    <loading-icon v-if="loading"></loading-icon>
+    <div
+      v-if="activities && activities.length === 0 && !$apollo.loading"
+      class="empty">
+        No activities near you
+    </div>
+
+    <loading-icon v-if="$apollo.loading"></loading-icon>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import { mapGetters } from 'vuex'
+
 import Activity from '@/components/activities/Activity'
 import LoadingIcon from '@/components/elements/LoadingIcon'
 
 export default {
   name: 'ActivityList',
   props: {
+    startDate: {
+      type: String,
+      default: null
+    },
+    endDate: {
+      type: String,
+      default: null
+    },
     saved: {
       type: Boolean,
       default: false
     }
   },
-  mounted () {
-    this.getLocation()
-    this.loading = true
-  },
   apollo: {
     activities: {
       pollInterval: 10000,
-      query: gql`query Activities($latitude: Float!, $longitude: Float!){ 
-        activities (latitude: $latitude, longitude: $longitude) {
+      query: gql`query Activities($latitude: Float!, $longitude: Float!, $startDate: DateTime, $endDate: DateTime, $saved: Boolean){ 
+        activities (latitude: $latitude, longitude: $longitude, startDate: $startDate, endDate: $endDate, saved: $saved) {
+          pk
           id
+          saved
           name
           description
           over18
@@ -48,37 +65,54 @@ export default {
       }`,
       variables () {
         return {
-          latitude: this.latitude,
-          longitude: this.longitude
+          latitude: this.currentLocation.latitude,
+          longitude: this.currentLocation.longitude,
+          startDate: this.startDate,
+          endDate: this.endDate,
+          saved: this.saved
         }
-      },
-      result ({ data, loading, networkStatus }) {
-        this.items = data.activities
-        this.loading = false
-      },
-      error (err) {
-        console.log(err)
       }
     }
+  },
+  mounted () {
+    this.loading = true
   },
   data () {
     return {
       selected: [2],
-      activities: [],
-      loading: false,
-      latitude: null,
-      longitude: null
+      loading: false
     }
   },
+  computed: {
+    ...mapGetters('UserModule', ['currentLocation'])
+  },
   methods: {
-    getLocation () {
-      if (navigator.geolocation) {
-        var self = this
-        navigator.geolocation.getCurrentPosition(function (location) {
-          self.latitude = location.coords.latitude
-          self.longitude = location.coords.longitude
-        })
-      }
+    refresh () {
+      this.$apollo.queries.activities.refetch()
+    }
+  },
+  watch: {
+    startDate () {
+      // this.$apollo.queries.activities.refetch(
+      //   {
+      //     latitude: this.currentLocation.latitude,
+      //     longitude: this.currentLocation.longitude,
+      //     startDate: this.startDate,
+      //     endDate: this.endDate,
+      //     saved: this.saved
+      //   }
+      // )
+    },
+    endDate () {
+      // this.$apollo.queries.activities.refetch(
+      //   {
+      //     latitude: this.currentLocation.latitude,
+      //     longitude: this.currentLocation.longitude,
+      //     startDate: this.startDate,
+      //     endDate: this.endDate,
+      //     saved: this.saved
+      //   }
+      // )
     }
   },
   components: {

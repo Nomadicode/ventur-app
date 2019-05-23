@@ -1,27 +1,79 @@
 <template>
   <div class="profile-container">
+    <h5>Preferences</h5>
+    <div class="space-bottom--double">
+      <label class="field-label accent-color space-ends--quarter">Maximum distance to travel (miles)</label>
+      <el-input
+        class="space-bottom--half"
+        placeholder="10"
+        v-model="input2">
+        <template slot="append">miles</template>
+      </el-input>
+      <label class="field-label accent-color space-ends--quarter">Maximum activity price (USD)</label>
+      <el-input
+        class="space-bottom--half"
+        placeholder="100"
+        v-model="input2">
+        <template slot="prepend">$</template>
+        <template slot="append">USD</template>
+      </el-input>
+
+      <label class="field-label accent-color space-ends--quarter">Accessibility Settings</label>
+      <v-container class="pad-sides--none" fluid grid-list-sm>
+        <v-layout row wrap>
+          <v-flex xs7>
+            <el-switch
+              v-model="kidFriendly"
+              active-text="Kid Friendly">
+            </el-switch>
+          </v-flex>
+          <v-spacer />
+          <v-flex xs5>
+            <el-switch
+              v-model="over18"
+              active-text="Over 18">
+            </el-switch>
+          </v-flex>
+        </v-layout>
+        <v-layout row wrap>
+          <v-flex xs7>
+            <el-switch
+              v-model="handicapFriendly"
+              active-text="Handicap Friendly">
+            </el-switch>
+          </v-flex>
+          <v-spacer />
+          <v-flex xs5>
+            <el-switch
+              v-model="over21"
+              active-text="Over 21">
+            </el-switch>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </div>
+
     <h5>Security</h5>
-    <!-- <el-button size="large" plain>Change Password</el-button> -->
-    <div class="space-top">
-      <label class="field-label accent-color">Current Password</label>
+    <div>
+      <label class="field-label accent-color space-ends--quarter">Current Password</label>
       <el-input
         v-model="currentPassword"
         type="password"
         placeholder="current password"></el-input>
 
-      <label class="field-label accent-color space-top--half">New Password</label>
+      <label class="field-label accent-color space-top space-ends--quarter">New Password</label>
       <el-input
         v-model="newPassword"
         type="password"
         placeholder="new password"></el-input>
     </div>
     <el-button
-      class="full-width space-top"
+      class="fill-width space-top"
       type="default"
       @click="changePassword()">Change Password</el-button>
 
     <el-button
-      class="full-width space-left-none delete-button-bottom space-top"
+      class="fill-width space-left--none delete-button-bottom space-top--quad"
       type="danger"
       @click="deleteAccount()">Delete Account</el-button>
   </div>
@@ -41,7 +93,7 @@ export default {
     ...mapGetters('UserModule', ['token']),
     headers () {
       return {
-        Authorization: 'JWT ' + this.token
+        'Authorization': 'JWT ' + this.token
       }
     }
   },
@@ -55,7 +107,8 @@ export default {
           'new_password2': this.newPassword
         }
 
-        this.$http.post('/auth/password/change/', data, { headers: this.headers }).then(function (result) {
+        console.log(this.headers)
+        this.$http.post('/auth/password/change/', data, {headers: this.headers}).then(function (result) {
           self.currentPassword = ''
           self.newPassword = ''
           self.$message({

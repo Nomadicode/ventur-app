@@ -4,8 +4,9 @@
   "name": "Driftr",
   "short_name": "Driftr",
   "version": "com.nomadicode.driftr",
-  "description": "Driftr is a tool to connect users with activities in their current area. It aids travellers in finding things to do that may be less tourist focused and\n        fit their criteria. It also aids locals in finding things to do near their home that they may not hear about.",
+  "description": "Driftr is a tool to connect users with activities in their current area. It aids travellers in finding things to do that may be less tourist focused and\r\n        fit their criteria. It also aids locals in finding things to do near their home that they may not hear about.",
   "author": "Nomadicode Dev Team",
   "icons": [],
+  "orientation": "portrait",
   "start_url": "index.html"
 }

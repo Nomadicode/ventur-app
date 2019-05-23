@@ -15,7 +15,7 @@
           @click="close()">close</v-icon>
       </v-card-title>
 
-      <v-card-text class="body">
+      <v-card-text class="body small-text">
         <v-layout column>
           <image-uploader v-model="activity.media"></image-uploader>
 
@@ -101,6 +101,22 @@
 
           <!-- #region Accessibility -->
             <h6 class="section-header"><span>Accessibility</span></h6>
+            <label class="pad-bottom--quarter field-label">Restrict to group(s) <span class="aside">optional</span></label>
+            <el-select
+              v-model="activity.groups"
+              class="fill-width space-bottom--half"
+              multiple
+              filterable
+              default-first-option
+              placeholder="select group(s)">
+              <el-option
+                v-for="item in friendGroups"
+                :key="item.pk"
+                :label="item.name"
+                :value="item.pk">
+              </el-option>
+            </el-select>
+
             <v-container class="pad-none pad-top--half" fluid grid-list-sm>
               <v-layout row wrap>
                 <v-flex xs5>
@@ -129,8 +145,7 @@
               </v-layout>
             </v-container>
 
-            <label class="pad-bottom--quarter pad-top field-label">What restrictions should be placed?</label>
-            <v-container class="pad-none" fluid grid-list-sm>
+            <v-container class="pad-top--half pad-bottom--quarter pad-sides--none" fluid grid-list-sm>
               <v-layout row wrap>
                 <v-flex xs7>
                   <el-switch
@@ -196,13 +211,15 @@ export default {
           pk
           name
         }
-      }`,
-      result ({ data, loading, networkStatus }) {
-        this.categories = data.categories
-      },
-      error (err) {
-        console.error(err)
-      }
+      }`
+    },
+    friendGroups: {
+      query: gql`query {
+        friendGroups {
+          pk
+          name
+        }
+      }`
     }
   },
   created () {
@@ -248,7 +265,8 @@ export default {
         endDatetime: null,
         frequency: null,
         interval: null,
-        days: null
+        days: null,
+        groups: []
       }
     }
   },
@@ -292,8 +310,7 @@ export default {
         })
       }
     },
-    getAddressData ($evt) {
-      console.log($evt)
+    getAddressData ($evt, place, id) {
       this.activity.latitude = $evt.latitude
       this.activity.longitude = $evt.longitude
     },

@@ -3,7 +3,7 @@
     <v-layout
       row
       wrap>
-      <v-flex xs8>
+      <v-flex xs7>
         <el-button
           type="text"
           class="toggle-btn"
@@ -18,7 +18,9 @@
           @click="sentActive = false">Search results</el-button>
       </v-flex>
       <v-divider />
-      <v-flex xs4>
+      <v-flex
+        class="align-right"
+        xs5>
         <el-button
           class="toggle-btn"
           :class="{'active': sentActive}"

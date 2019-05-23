@@ -82,12 +82,15 @@ $base-spacing: 20px;
 .space-left--half { margin-left: ($base-spacing / 2); }
 .space-left--double { margin-left: ($base-spacing * 2); }
 .space-left--quad { margin-left: ($base-spacing * 4); }
+.space-left--none { margin-left: 0 !important; }
 
 .space-percent { margin-top: 15%; }
 
 .float-right { float: right; }
 
 .fill-width { width: 100%; }
+
+.align-right { text-align: right; }
 
 .position--relative { position: relative; }
 

@@ -23,12 +23,26 @@ import FeedbackModal from '@/components/modals/FeedbackModal'
 
 export default {
   name: 'App',
-  components: {
-    MainHeader,
-    NavDrawer,
+  created () {
+    this.getLocation()
 
+    window.setInterval(this.getLocation, 15000)
+  },
+  methods: {
+    getLocation () {
+      if (navigator.geolocation) {
+        var self = this
+        navigator.geolocation.getCurrentPosition(function (location) {
+          self.$store.commit('UserModule/SET_LOCATION', location.coords)
+        })
+      }
+    }
+  },
+  components: {
     AboutModal,
-    FeedbackModal
+    FeedbackModal,
+    MainHeader,
+    NavDrawer
   }
 }
 </script>

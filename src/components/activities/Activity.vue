@@ -49,8 +49,11 @@
           color="secondary"
           round
           flat
-          @click="accept()"
-          ><v-icon>far fa-heart</v-icon></v-btn>
+          @click="toggleSave()"
+          >
+            <v-icon v-if="item.saved">fas fa-heart</v-icon>
+            <v-icon v-else>far fa-heart</v-icon>
+          </v-btn>
       </v-card-actions>
     </div>
     <v-btn
@@ -61,11 +64,16 @@
       <v-icon v-if="expanded">expand_less</v-icon>
     </v-btn>
 
-    <report-modal :activityId="parseInt(item.id)" :open="showReportMenu" @close="toggleReportMenu()"></report-modal>
+    <report-modal
+      :activityId="parseInt(item.id)"
+      :open="showReportMenu"
+      @close="toggleReportMenu()"></report-modal>
   </v-card>
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 import DefaultImage from '@/assets/images/default_activity.jpg'
 import DirectionButton from '@/components/elements/buttons/DirectionButton'
 import RestrictionBox from '@/components/elements/RestrictionBox'
@@ -106,6 +114,54 @@ export default {
     }
   },
   methods: {
+    toggleSave () {
+      if (this.item.saved) {
+        this.unsaveActivity()
+      } else {
+        this.saveActivity()
+      }
+    },
+    saveActivity () {
+      var self = this
+      this.$apollo.mutate({
+        mutation: gql`mutation SaveActivity ($activity: Int!) {
+          saveActivity (activity: $activity) {
+            success
+            error
+            activity {
+              activity {
+                name
+              }
+            }
+          }
+        }`,
+        variables: {
+          activity: this.item.pk
+        }
+      }).then((response) => {
+        self.$emit('refresh')
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    unsaveActivity () {
+      var self = this
+      this.$apollo.mutate({
+        mutation: gql`mutation UnsaveActivity ($activity: Int!) {
+          unsaveActivity (activity: $activity) {
+            success
+            error
+          }
+        }`,
+        variables: {
+          activity: this.item.pk
+        }
+      }).then((response) => {
+        self.$emit('refresh')
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
     toggleFullView () {
       this.expanded = !this.expanded
     },

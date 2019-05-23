@@ -74,6 +74,8 @@ h4 { font-size: 1.25rem; font-weight: bold; }
 h5 { font-size: 1.00rem; font-weight: bold; }
 h6 { font-size: 0.75rem; font-weight: bold; }
 
+.small-text { font-size: 0.8rem; }
+
 // #region Navigation Drawer
 .navigation-drawer {
   text-align: center;
@@ -167,6 +169,10 @@ h6 { font-size: 0.75rem; font-weight: bold; }
       font-size: 25px;
     }
   }
+}
+
+.el-radio-button__inner {
+  color: $secondary-text-color;
 }
 
 .escape-btn {

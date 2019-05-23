@@ -3,7 +3,8 @@ const UserModule = {
 
   state: {
     token: null,
-    user: null
+    user: null,
+    location: null
   },
   mutations: {
     LOGIN_USER (state, userData) {
@@ -13,9 +14,16 @@ const UserModule = {
     LOGOUT_USER (state) {
       state.user = null
       state.token = null
+      state.location = null
     },
     UPDATE_USER (state, userData) {
       state.user = userData
+    },
+    SET_LOCATION (state, locationData) {
+      state.location = {
+        latitude: locationData.latitude,
+        longitude: locationData.longitude
+      }
     }
   },
   getters: {
@@ -36,6 +44,9 @@ const UserModule = {
     },
     profilePicture: state => {
       return (state.user) ? state.user.profile_picture : null
+    },
+    currentLocation: state => {
+      return (state.location) ? state.location : null
     }
   }
 }

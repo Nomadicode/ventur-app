@@ -56,6 +56,7 @@ Vue.use(VueAuthenticate, {
   baseUrl: CONSTANTS.baseUrl,
   loginUrl: 'auth/login/',
   registerUrl: 'auth/register/',
+  tokenType: 'JWT',
   providers: {
     facebook: {
       scope: ['public_profile', 'email'],
