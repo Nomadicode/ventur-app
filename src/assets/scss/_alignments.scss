@@ -32,6 +32,20 @@ $base-spacing: 20px;
 .pad-bottom--double { padding-bottom: ($base-padding * 2) !important; }
 .pad-bottom--quad { padding-bottom: ($base-padding * 4) !important; }
 
+.pad-right { padding-right: $base-spacing; }
+.pad-right--quarter { padding-right: ($base-spacing / 4); }
+.pad-right--half { padding-right: ($base-spacing / 2); }
+.pad-right--double { padding-right: ($base-spacing * 2); }
+.pad-right--quad { padding-right: ($base-spacing * 4); }
+
+.pad-left { padding-left: $base-spacing; }
+.pad-left--quarter { padding-left: ($base-spacing / 4); }
+.pad-left--15 { padding-left: 15px; }
+.pad-left--half { padding-left: ($base-spacing / 2); }
+.pad-left--double { padding-left: ($base-spacing * 2); }
+.pad-left--quad { padding-left: ($base-spacing * 4); }
+.pad-left--none { padding-left: 0 !important; }
+
 .pad-none { padding: 0 !important; }
 .pad-top--none { padding-top: 0 !important; }
 .pad-bottom--none { padding-bottom: 0 !important;}

@@ -36,7 +36,7 @@
       :cancelable="sentActive"
       @refresh="refresh"></search-result>
 
-    <div v-if="results.length === 0" class="empty">No users found</div>
+    <div v-if="results && results.length === 0" class="empty">No users found</div>
   </div>
 </template>
 

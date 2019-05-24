@@ -92,6 +92,7 @@ export default {
           name: this.newName
         }
       }).then((response) => {
+        self.$emit('refresh')
         self.close()
       }).catch((error) => {
         console.log(error)
@@ -99,6 +100,7 @@ export default {
     },
     close () {
       this.modal = false
+      this.$emit('close')
     }
   },
   watch: {
@@ -107,7 +109,7 @@ export default {
     },
     modal () {
       if (!this.modal) {
-        this.$emit('close')
+        this.close()
       }
     },
     groupName () {

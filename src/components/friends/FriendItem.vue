@@ -1,80 +1,83 @@
 <template>
-  <v-layout class="friend" row wrap>
-    <v-flex
-      class="base-light-background pad-quarter"
-      xs3
-      align-self-top>
-      <v-img
-        :src="avatarImage"
-        aspect-ratio="1"
-        height="50"
-        contain
-      />
-    </v-flex>
-    <v-flex xs8>
-      <div class="pad-sides--half pad-top--quarter">
-        <h6>{{ friend.name }}</h6>
-        <v-layout
-          v-if="isRequest"
-          class="pad-top--quarter"
-          row
-          wrap>
-          <v-flex xs5>
-            <!-- <p class="suggest-reason">6 shared activities</p> -->
-          </v-flex>
-          <v-flex xs4>
-            <el-button
-              class="warning-text"
-              type="text"
-              size="mini"
-              @click="rejectFriend">Reject</el-button>
-          </v-flex>
-          <v-flex xs3>
-            <el-button
-              type="primary"
-              size="mini"
-              @click="acceptFriend">Accept</el-button>
-          </v-flex>
-        </v-layout>
-
-        <v-layout
-          v-if="!isRequest"
-          class="pad-top--quarter"
-          row
-          wrap>
-          <v-flex xs10>
-            <!-- <p class="suggest-reason">6 shared activities</p> -->
-          </v-flex>
-          <v-flex xs2>
-            <v-menu light left offset-x>
-              <template v-slot:activator="{ on }">
+  <v-flex
+    xs12
+    class="friend">
+    <v-card
+      light>
+      <v-layout>
+        <v-flex xs3>
+          <v-img
+            :src="avatarImage"
+            width="70"
+            height="70"
+          ></v-img>
+        </v-flex>
+        <v-flex xs9>
+          <v-card-text class="pad-left--quarter">
+            <div class="name">{{ friend.name }}</div>
+            <v-layout
+              v-if="isRequest"
+              class="pad-top--quarter"
+              row
+              wrap>
+              <v-flex xs5>
+                <p class="suggest-reason">{{ friend.suggestionReason }}</p>
+              </v-flex>
+              <v-flex xs4>
                 <el-button
-                  v-on="on"
+                  class="warning-text"
+                  type="text"
                   size="mini"
-                  icon="el-icon-more"></el-button>
-              </template>
-              <v-list class="more-menu">
-                <v-list-tile
-                  @click="showGroupAddModal">
-                  <v-list-tile-title>add to group</v-list-tile-title>
-                </v-list-tile>
-                <v-divider />
-                <v-list-tile
-                  class="remove-btn"
-                  @click="removeFriend">
-                  <v-list-tile-title>remove friend</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
-          </v-flex>
-        </v-layout>
-      </div>
-    </v-flex>
+                  @click="rejectFriend">Reject</el-button>
+              </v-flex>
+              <v-flex xs3>
+                <el-button
+                  type="primary"
+                  size="mini"
+                  @click="acceptFriend">Accept</el-button>
+              </v-flex>
+            </v-layout>
+
+            <v-layout
+              v-if="!isRequest"
+              class="pad-top--quarter"
+              row
+              wrap>
+              <v-flex xs9>
+                <p class="suggest-reason">{{ friend.suggestionReason }}</p>
+              </v-flex>
+              <v-flex xs3>
+                <v-menu light left offset-x>
+                  <template v-slot:activator="{ on }">
+                    <el-button
+                      v-on="on"
+                      size="mini"
+                      icon="el-icon-more"></el-button>
+                  </template>
+                  <v-list class="more-menu">
+                    <v-list-tile
+                      @click="showGroupAddModal">
+                      <v-list-tile-title>add to group</v-list-tile-title>
+                    </v-list-tile>
+                    <v-divider />
+                    <v-list-tile
+                      class="remove-btn"
+                      @click="removeFriend">
+                      <v-list-tile-title>remove friend</v-list-tile-title>
+                    </v-list-tile>
+                  </v-list>
+                </v-menu>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+        </v-flex>
+      </v-layout>
+    </v-card>
     <group-add-modal
       :friendId="friend.pk"
       :show="groupModalVisible"
       @close="closeGroupAddModal"></group-add-modal>
-  </v-layout>
+  </v-flex>
 </template>
 
 <script>

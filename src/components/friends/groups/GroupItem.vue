@@ -57,7 +57,8 @@
       :groupId="item.pk"
       :groupName="item.name"
       :show="showMenu"
-      @close="refresh"></group-edit-modal>
+      @refresh="refresh"
+      @close="closeModal"></group-edit-modal>
   </v-card>
 </template>
 
@@ -91,29 +92,6 @@ export default {
         }`,
         variables: {
           pk: this.item.pk
-        }
-      }).then((response) => {
-        self.$emit('refresh')
-      }).catch((error) => {
-        console.log(error)
-      })
-    },
-    renameGroup () {
-      var self = this
-      this.$apollo.mutate({
-        mutation: gql`mutation UpdateFriendGroup ($pk: Int!, $name: String!) {
-          updateFriendGroup (pk: $pk, name: $name) {
-            success
-            error
-            group {
-              pk
-              name
-            }
-          }
-        }`,
-        variables: {
-          pk: this.item.pk,
-          name: this.newName
         }
       }).then((response) => {
         self.$emit('refresh')

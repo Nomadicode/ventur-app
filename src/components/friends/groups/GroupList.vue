@@ -51,6 +51,13 @@ export default {
       }
     }
   },
+  created () {
+    this.$store.subscribe(mutation => {
+      if (mutation.type === 'AppState/CLOSE_ADD_GROUP_MODAL') {
+        this.refetch()
+      }
+    })
+  },
   data () {
     return {
       loading: false,
@@ -58,38 +65,6 @@ export default {
     }
   },
   methods: {
-    addGroup () {
-      var self = this
-      this.$prompt('', 'Create a group', {
-        confirmButtonText: 'Create Group',
-        cancelButtonText: 'Cancel'
-      }).then((value) => {
-        self.createGroup(value)
-      }).catch(() => {})
-    },
-    createGroup (value) {
-      var self = this
-      this.$apollo.mutate({
-        mutation: gql`mutation CreateFriendGroup($name: String!){
-          createFriendGroup(name: $name) {
-            success
-            error
-            group {
-              pk
-              id
-              name
-            }
-          }
-        }`,
-        variables: {
-          name: value.value
-        }
-      }).then((response) => {
-        self.$apollo.queries.friendGroups.refetch()
-      }).catch((error) => {
-        console.log(error)
-      })
-    },
     refetch () {
       this.$apollo.queries.friendGroups.refetch()
     }

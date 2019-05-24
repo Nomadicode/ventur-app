@@ -76,13 +76,23 @@
   }
 
   .friend {
-    margin: 5px 0 10px 0;
+    margin: 5px 0 5px 0;
     background: $accent-color;
-    box-shadow: 0 0 3px $placeholder-text-color;
     border-radius: 5px;
-    height: 60px;
-    width: 100%;
     color: $regular-text-color;
+
+    .v-image {
+      background: $placeholder-text-color;
+    }
+
+    .v-card__text {
+      padding: 5px 0 0 5px;
+
+      .name {
+        font-size: 0.86rem;
+        font-weight: bold;
+      }
+    }
 
     .suggest-reason {
       font-size: 0.6rem;

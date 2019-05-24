@@ -9,7 +9,7 @@
     <div
       v-if="activities && activities.length === 0 && !$apollo.loading"
       class="empty">
-        No activities near you
+        {{ emptyMessage }}
     </div>
 
     <loading-icon v-if="$apollo.loading"></loading-icon>
@@ -37,6 +37,10 @@ export default {
     saved: {
       type: Boolean,
       default: false
+    },
+    emptyMessage: {
+      type: String,
+      default: 'No activities near you'
     }
   },
   apollo: {

@@ -9,7 +9,8 @@
     <activity-list
       :startDate="startDate"
       :endDate="endDate"
-      :saved="true"></activity-list>
+      :saved="true"
+      :emptyMessage="emptyMessage"></activity-list>
   </div>
 </template>
 
@@ -33,6 +34,9 @@ export default {
   computed: {
     currentDate () {
       return moment().format('YYYY-MM-DDTHH:mm:ss')
+    },
+    emptyMessage () {
+      return this.selectedTimeFrame === 'Upcoming' ? 'No upcoming saved activities' : 'No past saved activities'
     }
   },
   methods: {

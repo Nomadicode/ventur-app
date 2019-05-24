@@ -1,38 +1,51 @@
 <template>
   <v-dialog
     light
+    scrollable
     v-model="open">
     <v-card class="report-menu">
-      <v-card-title class="modal-header extra-light-background">
+      <v-card-title class="extra-light-background">
         Why are you reporting this activity?
       </v-card-title>
 
-      <v-card-text class="modal-body">
+      <v-card-text>
         <ul class="menu-options">
           <li
             v-for="reason of reasons"
             :key="reason.id"
             @click="setOption(reason.id)">
             <div class="details">
-              <h4>{{ reason.name }}</h4>
+              <h6>{{ reason.name }}</h6>
               <p>{{ reason.detail }}</p>
             </div>
             <div
               class="selected-icon"
               :class="{'selected': reason.id === selected}">
+              <v-icon v-if="reason.id === selected">check</v-icon>
             </div>
           </li>
         </ul>
       </v-card-text>
 
-      <v-card-actions class="modal-bottom extra-light-background">
-        <el-button
-          type="text"
-          class="secondary-text"
-          @click="$emit('close')">cancel</el-button>
-        <el-button
-          class="warning-background white-text"
-          @click="submitReport">Submit Report</el-button>
+      <v-card-actions class="extra-light-background">
+        <v-layout
+          row
+          wrap>
+          <v-flex
+            xs6
+            align-self-center>
+            <el-button
+              type="text"
+              class="secondary-text"
+              @click="$emit('close')">cancel</el-button>
+          </v-flex>
+          <v-divider />
+          <v-flex xs6>
+            <el-button
+              class="warning-background white-text"
+              @click="submitReport">Submit Report</el-button>
+          </v-flex>
+        </v-layout>
       </v-card-actions>
     </v-card>
   </v-dialog>

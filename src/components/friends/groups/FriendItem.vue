@@ -2,7 +2,8 @@
   <v-list-tile
     avatar>
     <v-list-tile-avatar>
-      <img :src="item.profilePicture ? item.profilePicture : profilePicture">
+      <v-img
+        :src="item.profilePicture ? item.profilePicture : profilePicture"></v-img>
     </v-list-tile-avatar>
 
     <v-list-tile-content>

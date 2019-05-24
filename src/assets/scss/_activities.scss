@@ -160,27 +160,15 @@
 .report-menu {
   position: relative;
   height: 90vh;
-
-  .modal-header {
-    position: fixed;
-    font-size: 1rem;
-    z-index: 5;
-    width: calc(100% - 48px);
-    box-shadow: 0 0 1px #000;
+  
+  .v-card__title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 0 8px $regular-text-color;
   }
 
-  .modal-body {
-    height: calc(100% - 53px);
-    padding: 80px 0;
-    overflow: auto;
-  }
-
-  .modal-bottom {
-    position: absolute;
-    bottom: 0;
-    z-index: 5;
-    box-shadow: 0 0 1px #000;
-    width: 100%;
+  .v-card__text {
+    padding: 0;
   }
 
   .menu-options {
@@ -196,9 +184,9 @@
       .details {
         padding-left: 30px;
 
-        h4 {
-          font-size: 0.85rem;
-        }
+        // h4 {
+        //   font-size: 0.85rem;
+        // }
         
         p {
           font-size: 0.75rem;
@@ -218,14 +206,23 @@
         transform: translateY(-50%);
         border: 1px solid rgba(0,0,0,0.3);
         border-radius: 30px;
-        width: 20px;
-        height: 20px;
+        width: 23px;
+        height: 23px;
+        
+        & > .v-icon {
+          font-size: 20px;
+          color: $accent-color;
+        }
       }
 
       .selected {
-        background: #009888;
+        background: $warning-color;
       }
     }
+  }
+
+  .v-card__actions {
+    box-shadow: 0 0 8px $regular-text-color;
   }
 }
 

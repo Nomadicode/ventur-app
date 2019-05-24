@@ -20,9 +20,12 @@
         </v-flex>
       </v-layout>
 
-      <div v-if="showFriendRequests">
+      <v-layout
+        v-if="showFriendRequests"
+        row
+        wrap>
         <friend-item v-for="friend of friendRequests" :key="friend.id" :friend="friend.fromUser" :isRequest="true" @refresh="refetch()"></friend-item>
-      </div>
+      </v-layout>
     </div>
 
     <v-divider
@@ -33,7 +36,11 @@
       class="friend-list">
       <h6 v-if="friends.length !== 0">Friends</h6>
 
-      <friend-item v-for="friend of friends" :key="friend.id" :friend="friend"></friend-item>
+      <v-layout
+        row
+        wrap>
+        <friend-item v-for="friend of friends" :key="friend.id" :friend="friend"></friend-item>
+      </v-layout>
 
       <div v-if="(!friends || friends.length === 0) && !loading" class="empty">
         <p>No friends found</p>
