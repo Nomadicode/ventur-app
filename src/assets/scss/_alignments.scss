@@ -22,13 +22,16 @@ $base-spacing: 20px;
 .pad-top { padding-top: $base-padding !important; }
 .pad-top--quarter { padding-top: ($base-padding / 4) !important; }
 .pad-top--half { padding-top: ($base-padding / 2) !important; }
+.pad-top--three-quarters { padding-top: ($base-padding * 0.75) !important; }
 .pad-top--double { padding-top: ($base-padding * 2) !important; }
+.pad-top--3x { padding-top: ($base-padding * 3) !important; }
 .pad-top--quad { padding-top: ($base-padding * 4) !important; }
 .pad-top--none { padding-top: 0 !important; }
 
 .pad-bottom { padding-bottom: $base-padding !important; }
 .pad-bottom--quarter { padding-bottom: ($base-padding / 4) !important; }
 .pad-bottom--half { padding-bottom: ($base-padding / 2) !important; }
+.pad-bottom--three-quarters { padding-bottom: ($base-padding * 0.75) !important; }
 .pad-bottom--double { padding-bottom: ($base-padding * 2) !important; }
 .pad-bottom--quad { padding-bottom: ($base-padding * 4) !important; }
 

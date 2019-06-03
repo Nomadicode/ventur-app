@@ -82,16 +82,24 @@
     color: $regular-text-color;
 
     .v-image {
-      background: $placeholder-text-color;
+      background: $base-light-color;
     }
+    
+    .name {
+      font-size: 0.74rem;
+      font-weight: bold;
 
-    .v-card__text {
-      padding: 5px 0 0 5px;
-
-      .name {
-        font-size: 0.86rem;
-        font-weight: bold;
+      .handle {
+        font-size: 0.64rem;
+        font-weight: 200;
       }
+    }
+    
+    .actions {
+      display: block;
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
     }
 
     .suggest-reason {

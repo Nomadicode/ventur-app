@@ -36,30 +36,26 @@
         font-size: 1rem !important;
         font-weight: 500;
       }
-    
-      .details {
-        width: 100%;
-        clear: both;
 
-        .location {
-          font-size: 0.7rem;
-          font-weight: 300;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          font-style: italic;
-          margin: 3px 0;
-        }
-    
-        .price {
-          font-size: 0.8rem;
-          color: rgba(0, 0, 0, 0.6);
-        }
-    
-        .duration {
-          font-size: 0.8rem;
-          color: rgba(0, 0, 0, 0.6);
-        }
+      .location {
+        font-size: 0.7rem;
+        font-weight: 300;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-style: italic;
+        margin: 3px 0;
+      }
+      
+      .date {
+        font-size: 0.85rem;
+        text-align: center;
+        font-style: oblique;
+      }
+
+      .detail {
+        font-size: 0.8rem;
+        color: $secondary-text-color;
       }
   
       .restriction-box {
@@ -113,30 +109,25 @@
       font-size: 1.15rem !important;
       font-weight: 500;
     }
-  
-    .details {
-      width: 100%;
-      clear: both;
-      
-      .location {
-        font-size: 0.8rem;
-        font-weight: 300;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        font-style: italic;
-        margin: 5px 0;
-      }
-  
-      .price {
-        font-size: 0.85rem;
-        color: rgba(0, 0, 0, 0.6);
-      }
-  
-      .duration {
-        font-size: 0.85rem;
-        color: rgba(0, 0, 0, 0.6);
-      }
+    .detail {
+      font-size: 0.8rem;
+      color: $secondary-text-color;
+    }
+
+    .location {
+      font-size: 0.7rem;
+      font-weight: 300;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      font-style: italic;
+      margin: 3px 0;
+    }
+    
+    .date {
+      font-size: 0.85rem;
+      text-align: center;
+      font-style: oblique;
     }
 
     .restriction-box {

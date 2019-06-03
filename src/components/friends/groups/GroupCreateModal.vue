@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     light
-    v-model="modal"
+    v-model="addGroupModal"
     :content-class="'group-add-modal'"
   >
     <v-card light>
@@ -57,12 +57,8 @@ export default {
       type: Boolean
     }
   },
-  created () {
-    this.modal = this.addGroupModal
-  },
   data () {
     return {
-      modal: false,
       name: ''
     }
   },
@@ -88,25 +84,16 @@ export default {
         }
       }).then((response) => {
         self.$emit('refresh')
+        self.name = ''
         self.close()
       }).catch((error) => {
         console.log(error)
       })
     },
     close () {
+      this.name = ''
       this.$store.commit('AppState/CLOSE_ADD_GROUP_MODAL')
-    }
-  },
-  watch: {
-    addGroupModal () {
-      this.modal = this.addGroupModal
-    },
-    modal () {
-      if (this.modal === false) {
-        this.$store.commit('AppState/CLOSE_ADD_GROUP_MODAL')
-      } else {
-        this.$store.commit('AppState/OPEN_ADD_GROUP_MODAL')
-      }
+      this.$emit('refresh')
     }
   }
 }

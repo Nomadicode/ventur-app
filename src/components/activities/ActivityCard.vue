@@ -7,20 +7,50 @@
       <v-img
         :gradient="'rgba(0,0,0,0.4), rgba(0,0,0,0)'"
         :src="activityImage"
-        :height="175">
-        <v-btn
-          dark
-          icon
-          @click="close()">
-          <v-icon>close</v-icon></v-btn>
+        :height="175"
+        :width="'100%'">
+        <v-layout row fill-height>
+          <v-flex xs2>
+            <v-btn
+              dark
+              icon
+              @click="close">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex
+            class="align-right"
+            xs2>
+            <v-menu
+              light
+              left
+              offset-x
+              z-index="205">
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  flat
+                  icon
+                  color="white"
+                  v-on="on">
+                  <v-icon>more_vert</v-icon>
+                </v-btn>
+              </template>
+              <v-list class="more-menu">
+                <v-list-tile>
+                  <v-list-tile-title
+                    class="secondary-text">hide</v-list-tile-title>
+                </v-list-tile>
+                <v-list-tile
+                  class="remove-btn"
+                  @click="toggleReportMenu">
+                  <v-list-tile-title>report</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </v-flex>
+        </v-layout>
 
-        <el-button
-          type="text"
-          size="medium"
-          class="position--top-right space-right--half warning-text"
-          @click="toggleReportMenu()">
-          report
-        </el-button>
         <direction-button
           v-if="activity && activity.location"
           class="position--bottom-right"
@@ -29,58 +59,83 @@
       </v-img>
 
       <v-card-title class="header position--relative">
-        <h4 class="title">{{ activity.name }}</h4>
-
-        <div class="details">
-          <div v-if="activity && activity.location" class="location">{{ activity.location.address }}</div>
-          <v-layout>
-            <div class="price">{{ price }}</div>
+        <v-container class="pad-none" fluid>
+          <v-layout
+            row
+            wrap>
+            <v-flex xs9>
+              <h4 class="title">{{ activity.name }}</h4>
+              <div v-if="activity && activity.location" class="location">{{ activity.location.address }}</div>
+            </v-flex>
             <v-spacer />
-            <div class="duration">{{ activityDuration }}</div>
+            <v-flex xs2 class="date">
+              <div class="detail">{{ price }}</div>
+            </v-flex>
           </v-layout>
-        </div>
-        <restriction-box
-          :over18="activity.over18"
-          :over21="activity.over21"
-          :kidFriendly="activity.kidFriendly"
-          :handicapFriendly="activity.handicapFriendly"></restriction-box>
+
+          <v-layout
+            row>
+            <v-flex xs6>
+              <div class="detail">{{ date }}</div>
+            </v-flex>
+            <v-spacer />
+            <v-flex xs1>
+              <div class="detail">{{ duration }}</div>
+            </v-flex>
+          </v-layout>
+          <restriction-box
+            :over18="activity.over18"
+            :over21="activity.over21"
+            :kidFriendly="activity.kidFriendly"
+            :handicapFriendly="activity.handicapFriendly"></restriction-box>
+        </v-container>
       </v-card-title>
 
       <v-card-text class="body" v-html="activity.description">
       </v-card-text>
 
-      <v-card-actions class="fix-bottom pad-bottom--half fill-width">
-        <v-btn
-          color="error"
-          round
-          outline
-          fab
-          @click="reject()"
-          ><v-icon>close</v-icon></v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="muted"
-          flat
-          @click="fetchActivity()"
-          ><v-icon>shuffle</v-icon></v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="secondary"
-          round
-          outline
-          fab
-          @click="accept()"
-          ><v-icon>check</v-icon></v-btn>
+      <v-card-actions class="fix-bottom fill-width pad-bottom--three-quarters">
+        <v-layout row fill-height>
+          <v-flex
+            class="activity-btn"
+            xs2>
+            <v-btn
+              flat
+              color="secondary"
+              @click="toggleSave">
+              <v-icon v-if="activity.saved">fas fa-heart</v-icon>
+              <v-icon v-else>far fa-heart</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex
+            class="activity-btn align-right"
+            xs2>
+            <v-btn
+              color="muted"
+              flat
+              @click="fetchActivity">
+              <v-icon>shuffle</v-icon>
+            </v-btn>
+          </v-flex>
+        </v-layout>
+
       </v-card-actions>
     </v-card>
 
-    <report-modal :activityId="parseInt(activity.id)" :open="showReportMenu" @close="toggleReportMenu()"></report-modal>
+    <report-modal
+      :activityId="activity.pk"
+      :open="showReportMenu"
+      @refresh="fetchActivity"
+      @close="toggleReportMenu"></report-modal>
   </v-dialog>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
+
 import DefaultActivityImage from '@/assets/images/default_activity.jpg'
 import DirectionButton from '@/components/elements/buttons/DirectionButton'
 import ReportModal from '@/components/modals/ReportModal'
@@ -88,55 +143,9 @@ import RestrictionBox from '@/components/elements/RestrictionBox'
 
 export default {
   name: 'ActivityCard',
-  apollo: {
-    randomActivity: {
-      query: gql`query randomActivity($latitude: Float, $longitude: Float){ 
-        randomActivity (latitude: $latitude, longitude: $longitude) {
-          id
-          name
-          media
-          price
-          duration
-          description
-          over18
-          over21
-          kidFriendly
-          handicapFriendly
-          location {
-            address
-            latitude
-            longitude
-          }
-        }
-      }`,
-      variables () {
-        return {
-          latitude: this.currentLocation.latitude,
-          longitude: this.currentLocation.longitude
-        }
-      },
-      manual: false,
-      result ({ data, loading, networkStatus }) {
-        if (data.randomActivity) {
-          this.activity = data.randomActivity
-          this.loading = false
-        } else {
-          this.$message({
-            type: 'error',
-            message: 'Error: Unable to fetch activity.'
-          })
-          this.close()
-        }
-      },
-      error (err) {
-        console.log(err)
-        this.$message({
-          type: 'error',
-          message: 'Error: Unable to fetch activity.'
-        })
-        this.close()
-      }
-    }
+  props: ['value'],
+  created () {
+    this.modal = this.value
   },
   data () {
     return {
@@ -152,7 +161,7 @@ export default {
     activityImage () {
       return this.activity.media ? this.activity.media : DefaultActivityImage
     },
-    activityDuration () {
+    duration () {
       if (!this.activity.duration) {
         return null
       }
@@ -170,77 +179,116 @@ export default {
       } else {
         return 'FREE'
       }
+    },
+    date () {
+      if (this.activity.nextOccurrence) {
+        return moment(this.activity.nextOccurrence).format('MMM D @ h:mm a')
+      } else if (this.activity.prevOccurrence) {
+        return moment(this.activity.prevOccurrence).format('MMM D @ h:mm a')
+      } else {
+        return 'Anytime'
+      }
     }
   },
   methods: {
-    accept () {
+    toggleSave () {
+      if (this.activity.saved) {
+        this.unsaveActivity()
+      } else {
+        this.saveActivity()
+      }
+    },
+    saveActivity () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation AcceptActivity($activity: Int!){
-          acceptActivity(activity: $activity) {
+        mutation: gql`mutation SaveActivity ($activity: Int!) {
+          saveActivity (activity: $activity) {
             success
             error
             activity {
-              accepted
+              activity {
+                pk
+                id
+                name
+                media
+                price
+                duration
+                description
+                over18
+                over21
+                kidFriendly
+                handicapFriendly
+                nextOccurrence
+                prevOccurrence
+                saved
+                location {
+                  address
+                  latitude
+                  longitude
+                }
+              }
             }
           }
         }`,
         variables: {
-          activity: parseInt(self.activity.id)
+          activity: self.activity.pk
         }
-      }).then((response) => {
-        var data = response.data.acceptActivity
-        if (data.success) {
-          // Pass
-        } else {
-          this.flash('Error: ' + data.error, 'error', {
-            timeout: 3000
-          })
+      }).then(function (response) {
+        self.activity = response.data.saveActivity.activity.activity
+      })
+    },
+    unsaveActivity () {
+      this.$apollo.mutate({
+        mutation: gql`mutation UnsaveActivity ($activity: Int!) {
+          unsaveActivity (activity: $activity) {
+            success
+            error
+          }
+        }`,
+        variables: {
+          activity: this.activity.pk
         }
-      }).catch((error) => {
-        // Show error
-        this.flash('Error: ' + error, 'error', {
-          timeout: 3000
-        })
+      }).then(function (response) {
+        self.activity = response.data.saveActivity.activity.activity
       })
     },
     close () {
       this.activity = {}
-      this.$store.commit('AppState/CLOSE_ACTIVITY_CARD')
+      this.modal = false
+      this.$emit('close')
     },
     fetchActivity () {
-      this.$apollo.queries.randomActivity.refetch()
-    },
-    reject () {
       var self = this
-      this.$apollo.mutate({
-        mutation: gql`mutation RejectActivity($activity: Int!){
-          rejectActivity(activity: $activity) {
-            success
-            error
-            activity {
-              rejected
+      console.log('test')
+      return this.$apollo.query({
+        query: gql`query randomActivity($latitude: Float, $longitude: Float){ 
+          randomActivity (latitude: $latitude, longitude: $longitude) {
+            pk
+            id
+            name
+            media
+            price
+            duration
+            description
+            over18
+            over21
+            kidFriendly
+            handicapFriendly
+            nextOccurrence
+            prevOccurrence
+            saved
+            location {
+              address
+              latitude
+              longitude
             }
           }
         }`,
-        variables: {
-          activity: parseInt(self.activity.id)
-        }
-      }).then((response) => {
-        var data = response.data.rejectActivity
-        if (data.success) {
-          // Pass
-          self.refresh()
-        } else {
-          this.flash('Error: ' + data.error, 'error', {
-            timeout: 3000
-          })
-        }
-      }).catch((error) => {
-        // Show error
-        this.flash('Error: ' + error, 'error', {
-          timeout: 3000
-        })
+        variables: self.currentLocation
+      }).then(function (response) {
+        console.log('ok')
+        self.activity = response.data.randomActivity
+        return Promise.resolve(response)
       })
     },
     toggleReportMenu () {
@@ -248,15 +296,22 @@ export default {
     }
   },
   watch: {
-    activityCard () {
-      this.modal = this.activityCard
-    },
-    modal () {
-      if (this.modal === false) {
-        this.$store.commit('AppState/CLOSE_ACTIVITY_CARD')
+    value () {
+      if (this.value) {
+        var self = this
+        this.$emit('loading', true)
+        this.fetchActivity().then(function (response) {
+          if (response.data.randomActivity) {
+            self.$emit('loading', false)
+            self.modal = true
+          } else {
+            self.$emit('loading', false)
+            self.$emit('no-result')
+            self.close()
+          }
+        })
       } else {
-        this.fetchActivity()
-        this.$store.commit('AppState/OPEN_ACTIVITY_CARD')
+        this.close()
       }
     }
   },

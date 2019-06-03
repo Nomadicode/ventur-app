@@ -26,13 +26,19 @@
               v-model="activity.name"
               placeholder="House party"></el-input>
 
-            <label class="pad-top--half pad-bottom--quarter field-label">Location</label>
+            <label class="pad-top--half pad-bottom--quarter field-label">Location <a class="aside" @click.prevent="$refs.locationInput.geolocate()">use current location</a></label>
             <vue-google-autocomplete
               id="map"
+              ref="locationInput"
               classname="el-input__inner"
               placeholder="Enter location"
               v-on:placechanged="getAddressData"
-              enable-geolocation></vue-google-autocomplete>
+              :geolocationOptions="{
+                enableHighAccuracy: true
+              }"
+              :types="locationType"
+              enable-geolocation>
+            </vue-google-autocomplete>
 
             <label class="pad-top--half pad-bottom--quarter field-label">Provide a little more detail <span class="aside">optional</span></label>
             <el-input
@@ -122,7 +128,7 @@
                 <v-flex xs5>
                   <label class="pad-bottom--quarter field-label">Price <span class="aside">optional</span></label>
                   <el-input
-                    v-model="activity.price"
+                    v-model.number="activity.price"
                     type="number"
                   ></el-input>
                 </v-flex>
@@ -247,6 +253,7 @@ export default {
       categories: [],
       durationOptions: DURATIONS_ENUMS,
       repeatOptions: REPEAT_ENUMS,
+      locationType: 'address',
       activity: {
         name: null,
         description: null,
@@ -290,7 +297,8 @@ export default {
         endDatetime: null,
         frequency: null,
         interval: null,
-        days: []
+        days: [],
+        groups: []
       }
       this.$store.commit('AppState/CLOSE_ACTIVITY_MODAL')
     },
@@ -301,16 +309,23 @@ export default {
       this.activity.interval = null
       this.activity.days = []
     },
-    getLocation () {
-      if (navigator.geolocation) {
-        var self = this
-        navigator.geolocation.getCurrentPosition(function (location) {
-          self.activity.latitude = location.coords.latitude
-          self.activity.longitude = location.coords.longitude
-        })
-      }
+    setCurrentLocation () {
+      this.locationType = 'street_address'
+      this.$refs.location.geolocate()
     },
+    // setCurrentLocation () {
+    //   if (navigator.geolocation) {
+    //     var self = this
+    //     navigator.geolocation.getCurrentPosition(function (location) {
+    //       self.activity.latitude = location.coords.latitude
+    //       self.activity.longitude = location.coords.longitude
+
+    //       self.$refs.locationInput.updateCoordinates(LatLng(location.coords.latitude, location.coords.longitude))
+    //     })
+    //   }
+    // },
     getAddressData ($evt, place, id) {
+      this.locationType = 'address'
       this.activity.latitude = $evt.latitude
       this.activity.longitude = $evt.longitude
     },
@@ -319,6 +334,8 @@ export default {
       var data = Object.assign({}, self.activity)
       data.categories = data.categories ? data.categories.join(',') : null
       data.days = data.days ? data.days.join(',') : null
+
+      data.price = data.price ? data.price : null
 
       this.$apollo.mutate({
         mutation: gql`mutation ($name: String!, $description: String, $categories: String!, $duration: Int, $price: Float, $kidFriendly: Boolean,

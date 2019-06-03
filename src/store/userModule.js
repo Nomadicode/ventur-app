@@ -45,6 +45,9 @@ const UserModule = {
     profilePicture: state => {
       return (state.user) ? state.user.profile_picture : null
     },
+    timezone: state => {
+      return (state.user) ? state.user.timezone : null
+    },
     currentLocation: state => {
       return (state.location) ? state.location : null
     }

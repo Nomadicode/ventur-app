@@ -3,7 +3,7 @@
     fullscreen
     light
     scrollable
-    v-model="modal">
+    v-model="addFriendModal">
     <v-card class="modal">
       <v-card-title
         class="primary-background accent-color modal-header"
@@ -53,12 +53,8 @@ import FriendSearchResults from '@/components/friends/SearchResultList.vue'
 
 export default {
   name: 'FriendModal',
-  created () {
-    this.modal = this.addFriendModal
-  },
   data () {
     return {
-      modal: false,
       searchQuery: ''
     }
   },
@@ -69,18 +65,6 @@ export default {
   methods: {
     close () {
       this.$store.commit('AppState/CLOSE_ADD_FRIEND_MODAL')
-    }
-  },
-  watch: {
-    addFriendModal () {
-      this.modal = this.addFriendModal
-    },
-    modal () {
-      if (this.modal === false) {
-        this.$store.commit('AppState/CLOSE_ADD_FRIEND_MODAL')
-      } else {
-        this.$store.commit('AppState/OPEN_ADD_FRIEND_MODAL')
-      }
     }
   },
   components: {

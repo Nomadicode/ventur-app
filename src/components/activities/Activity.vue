@@ -15,20 +15,37 @@
     </v-img>
 
     <v-card-title class="header">
-      <h4 class="title">{{ item.name }}</h4>
-      <div class="details">
-        <div v-if="item && item.location" class="location">{{ item.location.address }}</div>
-        <v-layout>
-          <div class="price">{{ price }}</div>
+      <v-container class="pad-none" fluid>
+        <v-layout
+          row
+          wrap>
+          <v-flex xs9>
+            <h4 class="title">{{ item.name }}</h4>
+            <div v-if="item && item.location" class="location">{{ item.location.address }}</div>
+          </v-flex>
           <v-spacer />
-          <div class="duration">{{ duration }}</div>
+          <v-flex xs2 class="date">
+            <div class="detail">{{ price }}</div>
+          </v-flex>
         </v-layout>
-      </div>
-      <restriction-box
-        :over18="item.over18"
-        :over21="item.over21"
-        :kidFriendly="item.kidFriendly"
-        :handicapFriendly="item.handicapFriendly"></restriction-box>
+
+        <v-layout
+          row>
+          <v-flex xs6>
+            <div class="detail">{{ date }}</div>
+          </v-flex>
+          <v-spacer />
+          <v-flex xs1>
+            <div class="detail">{{ duration }}</div>
+          </v-flex>
+        </v-layout>
+        <restriction-box
+          :over18="item.over18"
+          :over21="item.over21"
+          :kidFriendly="item.kidFriendly"
+          :handicapFriendly="item.handicapFriendly"></restriction-box>
+      </v-container>
+      <!-- </v-layout> -->
     </v-card-title>
 
     <div v-if="expanded">
@@ -73,6 +90,7 @@
 
 <script>
 import gql from 'graphql-tag'
+import moment from 'moment'
 
 import DefaultImage from '@/assets/images/default_activity.jpg'
 import DirectionButton from '@/components/elements/buttons/DirectionButton'
@@ -110,6 +128,15 @@ export default {
         return '$' + parseFloat(Math.round(this.item.price * 100) / 100).toFixed(2)
       } else {
         return 'FREE'
+      }
+    },
+    date () {
+      if (this.item.nextOccurrence) {
+        return moment(this.item.nextOccurrence).format('MMM D @ h:mm a')
+      } else if (this.item.prevOccurrence) {
+        return moment(this.item.prevOccurrence).format('MMM D @ h:mm a')
+      } else {
+        return 'Anytime'
       }
     }
   },

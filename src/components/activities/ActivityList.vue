@@ -60,6 +60,8 @@ export default {
           price
           duration
           media
+          nextOccurrence
+          prevOccurrence
           location {
             address
             latitude

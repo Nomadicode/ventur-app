@@ -59,8 +59,10 @@ Vue.use(VueAuthenticate, {
   tokenType: 'JWT',
   providers: {
     facebook: {
+      clientId: '482160618854082',
       scope: ['public_profile', 'email'],
-      display: 'popup'
+      display: 'popup',
+      redirectUri: 'http://localhost:8080/'
     }
   }
 })

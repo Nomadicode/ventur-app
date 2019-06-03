@@ -1,26 +1,38 @@
 <template>
-  <div class="restriction-box">
-    <v-chip
+  <v-layout row wrap class="restriction-box">
+    <v-flex
       v-if="over18"
-      small
-      disabled
-      color="warning">Over 18</v-chip>
-    <v-chip
+      xs6>
+      <v-chip
+        small
+        disabled
+        color="warning">Over 18</v-chip>
+    </v-flex>
+    <v-flex
       v-if="over21"
-      small
-      disabled
-      color="error">Over 21</v-chip>
-    <v-chip
+      xs6>
+      <v-chip
+        small
+        disabled
+        color="error">Over 21</v-chip>
+    </v-flex>
+    <v-flex
       v-if="kidFriendly"
-      small
-      disabled
-      color="green">Kid Friendly</v-chip>
-    <v-chip
+      xs6>
+      <v-chip
+        small
+        disabled
+        color="green">Kid Friendly</v-chip>
+    </v-flex>
+    <v-flex
       v-if="handicapFriendly"
-      small
-      disabled
-      color="blue">Handicap Friendly</v-chip>
-  </div>
+      xs6>
+      <v-chip
+        small
+        disabled
+        color="blue">Handicap Friendly</v-chip>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -46,9 +58,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .restriction-box {
-    display: block;
-  }
-</style>

@@ -11,22 +11,18 @@
       src="@/assets/images/logo.svg" />
 
       <form class="fill-width" v-if="loginActive">
-        <v-text-field
+        <label>Email</label>
+        <el-input
           v-model="login.email"
-          label="email"
-          dark
-          color="white"></v-text-field>
+          placeholder="test@example.com" />
 
-        <v-text-field
-          dark
+        <label class="block pad-top--half">Password</label>
+        <el-input
           v-model="login.password"
-          :type="showLoginPassword ? 'text' : 'password'"
-          label="password"
-          :append-icon="showLoginPassword ? 'visibility_off' : 'visibility'"
-          @click:append="showLoginPassword = !showLoginPassword"
-          color="white"></v-text-field>
+          placeholder="password"
+          show-password />
 
-        <a class="reset-link" href="/password/forgot">forgot password?</a>
+        <a class="reset-link pad-top--quarter" href="/password/forgot">forgot password?</a>
       </form>
 
       <v-btn
@@ -39,24 +35,22 @@
         @click="loginClicked()">Sign In</v-btn>
 
       <form class="fill-width" v-if="registerActive">
-        <v-text-field
-          dark
+        <label class="block pad-top--half">Full Name</label>
+        <el-input
           v-model="register.name"
-          label="full name"
-          color="white"></v-text-field>
-        <v-text-field
-          dark
+          placeholder="John Smith" />
+
+        <label class="block pad-top--half">Email</label>
+        <el-input
           v-model="register.email"
-          label="email"
-          color="white"></v-text-field>
-        <v-text-field
-          dark
+          placeholder="test@example.com" />
+
+        <label class="block pad-top--half">Password</label>
+        <el-input
+          class="pad-bottom--half"
           v-model="register.password"
-          :type="showRegisterPassword ? 'text' : 'password'"
-          label="password"
-          :append-icon="showRegisterPassword ? 'visibility_off' : 'visibility'"
-          @click:append="showRegisterPassword = !showRegisterPassword"
-          color="white"></v-text-field>
+          placeholder="password"
+          show-password />
       </form>
       <v-btn
         depressed
@@ -76,7 +70,8 @@
         color="#4067AC"
         @click="authenticate('facebook')">
          <v-icon dark left>$vuetify.icons.facebook</v-icon>
-         Continue with Facebook</v-btn>
+         Continue with Facebook
+      </v-btn>
   </v-layout>
 </template>
 

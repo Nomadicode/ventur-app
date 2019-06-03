@@ -1,4 +1,5 @@
 .reset-link {
+  display: block;
   color: $accent-color;
   text-decoration: none;
 }
@@ -6,4 +7,11 @@
 .remove-btn {
   color: $accent-color;
   background: $warning-color !important;
+}
+
+.activity-btn {
+  .v-btn {
+    padding: 0;
+    min-width: 50px;
+  }
 }

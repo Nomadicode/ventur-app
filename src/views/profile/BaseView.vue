@@ -99,12 +99,29 @@
           @click="save('dateOfBirth')"></el-button>
       </el-input>
     </div>
+
+    <div>
+      <label class="block pad-top--half pad-bottom--quarter">Timezone</label>
+      <el-select
+        class="fill-width"
+        v-model="editedUser.timezone"
+        @change="save('timezone')"
+        filterable>
+        <el-option
+          v-for="item in timezones"
+          :key="item"
+          :label="item"
+          :value="item">
+        </el-option>
+      </el-select>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import gql from 'graphql-tag'
+import moment from 'moment-timezone'
 
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
 
@@ -118,11 +135,15 @@ export default {
       editName: false,
       user: {},
       editedUser: {},
-      imageUrl: ''
+      imageUrl: '',
+      moment: moment
     }
   },
   computed: {
-    ...mapGetters('UserModule', ['fullName', 'data'])
+    ...mapGetters('UserModule', ['fullName', 'data']),
+    timezones () {
+      return this.moment.tz.names()
+    }
   },
   methods: {
     toggleEditName () {
@@ -148,6 +169,7 @@ export default {
               isStaff
               isSuperuser
               lastLogin
+              timezone
             }
           }
         }`,

@@ -29,12 +29,12 @@
       </v-flex>
     </v-layout>
 
-    <search-result
+    <friend
       v-for="result of results"
       :key="result.id"
-      :result="result"
-      :cancelable="sentActive"
-      @refresh="refresh"></search-result>
+      :friend="result"
+      :pendingAcceptFromRecipient="sentActive"
+      @refresh="refresh"></friend>
 
     <div v-if="results && results.length === 0" class="empty">No users found</div>
   </div>
@@ -42,7 +42,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import SearchResult from './SearchResult'
+import Friend from './Friend'
 
 export default {
   name: 'FriendSearchResults',
@@ -82,9 +82,6 @@ export default {
         for (var request of data.sentFriendRequests) {
           this.sentRequests.push(request.toUser)
         }
-      },
-      error (err) {
-        console.log(err)
       }
     }
   },
@@ -126,8 +123,6 @@ export default {
           }
         }).then((response) => {
           self.queryResults = response.data.searchUsers
-        }).catch((error) => {
-          console.log(error)
         })
       } else {
         this.$apollo.queries.friendSuggestions.refetch()
@@ -139,7 +134,7 @@ export default {
     }
   },
   components: {
-    SearchResult
+    Friend
   },
   watch: {
     query () {

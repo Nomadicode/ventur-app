@@ -24,22 +24,32 @@
         v-if="showFriendRequests"
         row
         wrap>
-        <friend-item v-for="friend of friendRequests" :key="friend.id" :friend="friend.fromUser" :isRequest="true" @refresh="refetch()"></friend-item>
+        <friend
+          v-for="friend of friendRequests"
+          :key="friend.id"
+          :friend="friend.fromUser"
+          :pendingAcceptFromSelf="true"
+          @refresh="refetch"></friend>
       </v-layout>
     </div>
 
     <v-divider
-      v-if="friendRequests.length !== 0"
+      v-if="friendRequests && friendRequests.length !== 0"
       class="pad-quarter" />
 
     <div
       class="friend-list">
-      <h6 v-if="friends.length !== 0">Friends</h6>
+      <h6 v-if="friends && friends.length !== 0">Friends</h6>
 
       <v-layout
         row
         wrap>
-        <friend-item v-for="friend of friends" :key="friend.id" :friend="friend"></friend-item>
+        <friend
+          v-for="friend of friends"
+          :key="friend.id"
+          :friend="friend"
+          :isFriend="true"
+          @refresh="refetch"></friend>
       </v-layout>
 
       <div v-if="(!friends || friends.length === 0) && !loading" class="empty">
@@ -58,7 +68,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import FriendItem from './FriendItem'
+import Friend from './Friend'
 
 export default {
   name: 'FriendList',
@@ -118,7 +128,7 @@ export default {
     }
   },
   components: {
-    FriendItem
+    Friend
   }
 }
 </script>

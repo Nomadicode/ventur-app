@@ -124,6 +124,7 @@ export default {
               type: 'success',
               message: 'Activity Reported, thank you for keeping our community safe!'
             })
+            self.$emit('refresh')
             self.close()
           } else {
             self.$message({
