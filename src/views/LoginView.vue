@@ -122,7 +122,7 @@ export default {
         this.$auth.login(this.login).then((result) => {
           var user = converters.objToCamel(result.data)
           self.$store.commit('UserModule/LOGIN_USER', user)
-          self.$router.push({ name: 'explore-random' })
+          self.$router.push({ name: 'events' })
         }).catch((error) => {
           var errorMessage = self.parseErrors(error.response.data)
           self.$message({
@@ -143,7 +143,7 @@ export default {
         this.$auth.register(this.login).then((result) => {
           var user = converters.objToCamel(result.data)
           self.$store.commit('UserModule/LOGIN_USER', user)
-          self.$router.push({ name: 'explore-random' })
+          self.$router.push({ name: 'events' })
         }).catch((error) => {
           var errorMessage = self.parseErrors(error.response.data)
           self.$message({
@@ -187,6 +187,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -12,7 +12,6 @@
         </v-flex>
         <v-flex xs1>
           <el-button
-            class="white-text"
             type="text"
             size="mini"
             @click="showFriendRequests = !showFriendRequests"
@@ -55,9 +54,9 @@
       <div v-if="(!friends || friends.length === 0) && !loading" class="empty">
         <p>No friends found</p>
         <el-button
-          class="extra-light-text add-btn"
+          class="secondary-text add-btn"
           type="text"
-          @click="$store.commit('AppState/OPEN_ADD_FRIEND_MODAL')">
+          @click="openFriendAddModal">
           add a friend
         </el-button>
       </div>
@@ -122,6 +121,9 @@ export default {
     }
   },
   methods: {
+    openFriendAddModal () {
+      window.EventBus.$emit('friend:add')
+    },
     refetch () {
       this.$apollo.queries.friendships.refetch()
       this.$apollo.queries.pendingFriendRequests.refetch()

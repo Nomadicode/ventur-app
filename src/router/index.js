@@ -5,24 +5,31 @@ import LoginView from '@/views/LoginView.vue'
 import ForgotPassword from '@/views/ForgotPassword'
 import ResetPassword from '@/views/ResetPassword'
 
-import FullHeader from '@/components/layouts/FullHeader.vue'
+import MainView from '@/views/MainView.vue'
 
-import ExploreMainView from '@/views/explore/CommonView.vue'
-import ListView from '@/views/explore/ListView.vue'
-import SavedView from '@/views/explore/SavedView.vue'
-import ShuffleView from '@/views/explore/ShuffleView.vue'
-import ExploreFooter from '@/components/layouts/footers/ExploreFooter.vue'
+import EventView from '@/views/pages/EventView.vue'
+import FriendView from '@/views/pages/FriendView.vue'
+import MessageView from '@/views/pages/MessageView.vue'
+import ProfileView from '@/views/pages/ProfileView.vue'
 
-import FriendMainView from '@/views/friends/MainView.vue'
-import FriendListView from '@/views/friends/FriendView.vue'
-import GroupListView from '@/views/friends/GroupView.vue'
-import FriendFooter from '@/components/layouts/footers/FriendFooter.vue'
+// import FullHeader from '@/components/layouts/FullHeader.vue'
 
-import ProfileMainView from '@/views/profile/MainView.vue'
-import ProfileAccountView from '@/views/profile/AccountView.vue'
-import ProfileBaseView from '@/views/profile/BaseView.vue'
-import ProfileHistoryView from '@/views/profile/HistoryView.vue'
-import ProfileFooter from '@/components/layouts/footers/ProfileFooter.vue'
+// import ExploreMainView from '@/views/explore/CommonView.vue'
+// import ListView from '@/views/explore/ListView.vue'
+// import SavedView from '@/views/explore/SavedView.vue'
+// import ShuffleView from '@/views/explore/ShuffleView.vue'
+// import ExploreFooter from '@/components/layouts/footers/ExploreFooter.vue'
+
+// import FriendMainView from '@/views/friends/MainView.vue'
+// import FriendListView from '@/views/friends/FriendView.vue'
+// import GroupListView from '@/views/friends/GroupView.vue'
+// import FriendFooter from '@/components/layouts/footers/FriendFooter.vue'
+
+// import ProfileMainView from '@/views/profile/MainView.vue'
+// import ProfileAccountView from '@/views/profile/AccountView.vue'
+// import ProfileBaseView from '@/views/profile/BaseView.vue'
+// import ProfileHistoryView from '@/views/profile/HistoryView.vue'
+// import ProfileFooter from '@/components/layouts/footers/ProfileFooter.vue'
 
 Vue.use(Router)
 
@@ -31,7 +38,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: LoginView,
       meta: {
@@ -52,65 +59,31 @@ export default new Router({
         noauth: false
       }
     }, {
-      path: '/explore',
-      components: {header: FullHeader, default: ExploreMainView, footer: ExploreFooter},
+      path: '/',
+      component: MainView,
       meta: {
         auth: true
       },
       children: [
         {
-          path: 'random',
-          name: 'explore-random',
-          component: ShuffleView
+          path: 'events',
+          name: 'events',
+          component: EventView
         }, {
-          path: 'list',
-          name: 'explore-list',
-          component: ListView
+          path: 'friends',
+          name: 'friends',
+          component: FriendView
         }, {
-          path: 'saved',
-          name: 'explore-saved',
-          component: SavedView
+          path: 'messages',
+          name: 'messages',
+          component: MessageView
         }, {
-          path: '',
-          redirect: { name: 'explore-random' }
-        }
-      ]
-    }, {
-      path: '/friends',
-      components: {header: FullHeader, default: FriendMainView, footer: FriendFooter},
-      children: [
-        {
-          path: 'list',
-          name: 'friend-list',
-          component: FriendListView
-        }, {
-          path: 'groups',
-          name: 'friend-group-list',
-          component: GroupListView
+          path: 'profile',
+          name: 'profile',
+          component: ProfileView
         }, {
           path: '',
-          redirect: { name: 'friend-list' }
-        }
-      ]
-    }, {
-      path: '/profile',
-      components: {header: FullHeader, default: ProfileMainView, footer: ProfileFooter},
-      children: [
-        {
-          path: 'base',
-          name: 'profile-base',
-          component: ProfileBaseView
-        }, {
-          path: 'account',
-          name: 'profile-account',
-          component: ProfileAccountView
-        }, {
-          path: 'history',
-          name: 'profile-history',
-          component: ProfileHistoryView
-        }, {
-          path: '',
-          redirect: { name: 'profile-base' }
+          redirect: { name: 'events' }
         }
       ]
     }

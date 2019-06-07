@@ -1,38 +1,28 @@
 <template>
-  <v-layout row wrap class="restriction-box">
-    <v-flex
+  <div class="restriction-box">
+    <v-chip
       v-if="over18"
-      xs6>
-      <v-chip
-        small
-        disabled
-        color="warning">Over 18</v-chip>
-    </v-flex>
-    <v-flex
+      small
+      disabled
+      color="warning">18+</v-chip>
+    <v-chip
       v-if="over21"
-      xs6>
-      <v-chip
-        small
-        disabled
-        color="error">Over 21</v-chip>
-    </v-flex>
-    <v-flex
+      small
+      disabled
+      color="error">21+</v-chip>
+    <v-chip
       v-if="kidFriendly"
-      xs6>
-      <v-chip
-        small
-        disabled
-        color="green">Kid Friendly</v-chip>
-    </v-flex>
-    <v-flex
+      small
+      disabled
+      color="green">Kid</v-chip>
+    <v-chip
       v-if="handicapFriendly"
-      xs6>
-      <v-chip
-        small
-        disabled
-        color="blue">Handicap Friendly</v-chip>
-    </v-flex>
-  </v-layout>
+      small
+      disabled
+      color="blue">
+      <v-icon size="16px">fa fa-wheelchair</v-icon>
+    </v-chip>
+  </div>
 </template>
 
 <script>

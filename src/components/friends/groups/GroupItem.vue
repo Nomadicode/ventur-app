@@ -65,7 +65,7 @@
 <script>
 import gql from 'graphql-tag'
 import GroupListFriendItem from './FriendItem'
-import GroupEditModal from './GroupEditModal'
+import GroupEditModal from '@/components/modals/groups/EditModal'
 
 export default {
   name: 'GroupItem',

@@ -11,7 +11,11 @@ import CONSTANTS from './services/parameters'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
+
+import VueScroller from 'vue-scroller'
+
 import apolloProvider from './services/apollo'
+import { EventBus } from './services/event-bus'
 
 import Inputmask from 'inputmask'
 
@@ -67,6 +71,10 @@ Vue.use(VueAuthenticate, {
   }
 })
 // #endregion
+
+window.EventBus = EventBus
+
+Vue.use(VueScroller)
 
 Vue.config.productionTip = false
 

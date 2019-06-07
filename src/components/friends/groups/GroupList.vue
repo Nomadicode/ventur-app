@@ -10,9 +10,9 @@
       <div v-if="(!groups || groups.length === 0) && !loading" class="empty">
         <p>No groups found</p>
         <el-button
-          class="extra-light-text add-btn"
+          class="secondary-text add-btn"
           type="text"
-          @click="$store.commit('AppState/OPEN_ADD_GROUP_MODAL')">
+          @click="openGroupAddModal">
           add a group
         </el-button>
       </div>
@@ -45,17 +45,17 @@ export default {
       result ({ data, loading, networkStatus }) {
         this.groups = data.friendGroups
         this.loading = false
-      },
-      error (err) {
-        console.log(err)
       }
     }
   },
   created () {
-    this.$store.subscribe(mutation => {
-      if (mutation.type === 'AppState/CLOSE_ADD_GROUP_MODAL') {
-        this.refetch()
-      }
+    var self = this
+    window.EventBus.$on('group:created', () => {
+      self.refetch()
+    })
+
+    window.EventBus.$on('group:friend-add', () => {
+      self.refetch()
     })
   },
   data () {
@@ -65,6 +65,9 @@ export default {
     }
   },
   methods: {
+    openGroupAddModal () {
+      window.EventBus.$emit('group:add')
+    },
     refetch () {
       this.$apollo.queries.friendGroups.refetch()
     }

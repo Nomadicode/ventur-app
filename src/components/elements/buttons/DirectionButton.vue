@@ -1,6 +1,5 @@
 <template>
   <el-button
-    class="space-bottom--quarter space-right--quarter primary-background primary-border"
     :href="geoLink"
     type="primary">
     Directions

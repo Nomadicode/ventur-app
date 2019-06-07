@@ -74,7 +74,7 @@ export default {
   },
   watch: {
     value () {
-      this.image = this.value
+      this.image = this.value ? this.value : ''
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="friend-list">
+  <div class="friend-list search-list">
     <v-layout
       row
       wrap>

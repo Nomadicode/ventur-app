@@ -85,7 +85,7 @@
 import gql from 'graphql-tag'
 import AvatarImage from '@/assets/images/avatar.svg'
 
-import GroupAddModal from './GroupAddModal'
+import GroupAddModal from '@/components/modals/groups/FriendAddModal'
 
 export default {
   name: 'FriendItem',

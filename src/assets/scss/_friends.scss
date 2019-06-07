@@ -27,10 +27,6 @@
       font-weight: 600;
     }
   }
-
-  .search {
-      
-  }
 }
 
 .people-search {
@@ -38,16 +34,10 @@
 }
 
 .list {
-  height: calc(100vh - 175px);
-  width: 100%;
-  overflow-y: auto;
-  padding-bottom: 80px;
+  padding: 0 10px 80px 10px;
 }
 
 .friend-list {
-  max-height: calc(100vh - 200px);
-  overflow: auto;
-  
   .toggle-btn {
     font-size: 0.7rem;
     text-transform: uppercase;
@@ -59,20 +49,16 @@
     font-weight: 600;
   }
   
-  p {
-    font-weight: lighter;
-    color: $bg-accent-color;
-  }
-
   .empty {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
     text-align: center;
-    font-size: 1.35rem;
+    font-style: italic;
     color: $regular-text-color;
-    font-weight: 200;
+    font-size: 1.2rem;
+    font-weight: 300;
   }
 
   .friend {
@@ -80,6 +66,7 @@
     background: $accent-color;
     border-radius: 5px;
     color: $regular-text-color;
+    box-shadow: 0 0 3px $placeholder-text-color;
 
     .v-image {
       background: $base-light-color;
@@ -111,21 +98,22 @@
   }
 }
 
-.group-list {
-  p {
-    font-weight: lighter;
-    color: $bg-accent-color;
-  }
+.search-list {
+  height: calc(100vh - 180px);
+  overflow: auto;
+}
 
+.group-list {
   .empty {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
     text-align: center;
-    font-size: 1.35rem;
-    color: white;
-    font-weight: 200;
+    font-style: italic;
+    color: $regular-text-color;
+    font-size: 1.2rem;
+    font-weight: 300;
   }
 
   .group-card {

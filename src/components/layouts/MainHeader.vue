@@ -2,24 +2,30 @@
   <v-toolbar
     app
     color="transparent"
-    flat
     class="menu-header"
-    height="80">
+    flat
+    height="50">
     <img
       class="logo"
       alt="Driftr Logo"
       src="@/assets/images/logo.svg"
-      :height="'50px'" />
+      :height="'40px'" />
 
     <v-icon
+      v-if="$route.name === 'profile'"
       color="white"
       class="menu-icon"
-      @click.stop="$store.commit('AppState/TOGGLE_DRAWER')">menu</v-icon>
+      @click="openSettingsMenu">settings</v-icon>
   </v-toolbar>
 </template>
 
 <script>
 export default {
-  name: 'MainHeader'
+  name: 'MainHeader',
+  methods: {
+    openSettingsMenu () {
+      window.EventBus.$emit('profile:settings')
+    }
+  }
 }
 </script>

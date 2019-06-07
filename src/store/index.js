@@ -13,6 +13,7 @@ export default new Vuex.Store({
     UserModule
   },
   plugins: [createPersistentState({
+    paths: ['UserModule'],
     storage: {
       getItem: key => localStorage.getItem(key),
       setItem: (key, value) => localStorage.setItem(key, value),

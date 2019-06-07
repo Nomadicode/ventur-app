@@ -49,7 +49,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'FeedbackModal',
@@ -70,7 +69,10 @@ export default {
     }
   },
   created () {
-    this.modal = this.feedbackModal
+    var self = this
+    window.EventBus.$on('feedback:add', () => {
+      self.modal = true
+    })
   },
   data () {
     return {
@@ -83,12 +85,15 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters('AppState', ['feedbackModal'])
-  },
   methods: {
     close () {
-      this.$store.commit('AppState/CLOSE_FEEDBACK_MODAL')
+      this.feedback = {
+        subject: null,
+        details: null,
+        category: 1
+      }
+
+      this.modal = false
     },
     submitFeedback () {
       if (this.feedback.subject && this.feedback.details) {
@@ -126,18 +131,6 @@ export default {
           type: 'error',
           message: 'Please fill in all fields.'
         })
-      }
-    }
-  },
-  watch: {
-    feedbackModal () {
-      this.modal = this.feedbackModal
-    },
-    modal () {
-      if (this.modal === false) {
-        this.$store.commit('AppState/CLOSE_FEEDBACK_MODAL')
-      } else {
-        this.$store.commit('AppState/OPEN_FEEDBACK_MODAL')
       }
     }
   }
