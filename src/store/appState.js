@@ -2,35 +2,26 @@ const AppState = {
   namespaced: true,
 
   state: {
-    feedbackModal: false,
-    aboutModal: false
+    location: null,
+    timezone: null
   },
   mutations: {
-    OPEN_FEEDBACK_MODAL (state) {
-      state.feedbackModal = true
+    SET_LOCATION (state, locationData) {
+      state.location = {
+        latitude: locationData.latitude,
+        longitude: locationData.longitude
+      }
     },
-    CLOSE_FEEDBACK_MODAL (state) {
-      state.feedbackModal = false
-    },
-    TOGGLE_FEEDBACK_MODAL (state) {
-      state.feedbackModal = !state.feedbackModal
-    },
-    OPEN_ABOUT_MODAL (state) {
-      state.aboutModal = true
-    },
-    CLOSE_ABOUT_MODAL (state) {
-      state.aboutModal = false
-    },
-    TOGGLE_ABOUT_MODAL (state) {
-      state.aboutModal = !state.aboutModal
+    SET_TIMEZONE (state, timezone) {
+      state.timezone = timezone
     }
   },
   getters: {
-    aboutModal: state => {
-      return state.aboutModal
+    timezone: state => {
+      return (state.timezone) ? state.timezone : null
     },
-    feedbackModal: state => {
-      return state.feedbackModal
+    currentLocation: state => {
+      return (state.location) ? state.location : null
     }
   }
 }

@@ -14,21 +14,25 @@
 </template>
 
 <script>
+import moment from 'moment-timezone'
+
 export default {
   name: 'App',
   created () {
-    this.getLocation()
+    this.updateLocation()
 
     window.setInterval(this.getLocation, 15000)
   },
   methods: {
-    getLocation () {
+    updateLocation () {
       if (navigator.geolocation) {
         var self = this
         navigator.geolocation.getCurrentPosition(function (location) {
-          self.$store.commit('UserModule/SET_LOCATION', location.coords)
+          self.$store.commit('AppState/SET_LOCATION', location.coords)
         })
       }
+
+      this.$store.commit('AppState/SET_TIMEZONE', moment.tz.guess())
     }
   }
 }

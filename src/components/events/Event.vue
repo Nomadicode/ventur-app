@@ -206,7 +206,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('UserModule', ['currentLocation']),
+    ...mapGetters('AppState', ['currentLocation']),
     eventImage () {
       return this.event.media ? this.event.media : DefaultActivityImage
     },

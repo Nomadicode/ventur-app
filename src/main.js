@@ -13,6 +13,7 @@ import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 
 import VueScroller from 'vue-scroller'
+// import VCalendar from 'v-calendar'
 
 import apolloProvider from './services/apollo'
 import { EventBus } from './services/event-bus'
@@ -75,6 +76,7 @@ Vue.use(VueAuthenticate, {
 window.EventBus = EventBus
 
 Vue.use(VueScroller)
+// Vue.use(VCalendar)
 
 Vue.config.productionTip = false
 

@@ -69,7 +69,7 @@
             <h6 class="section-header">
               <span>Schedule</span>
             </h6>
-            <span v-if="!setSchedule" class="section-subheader">event will be marked as always available.</span>
+            <span v-if="!setSchedule" class="section-subheader warning-text">event will be marked as always available.</span>
 
             <el-switch
               active-text="Set schedule"
@@ -140,10 +140,10 @@
               <v-layout row wrap>
                 <v-flex xs5>
                   <label class="pad-bottom--quarter field-label">Price <span class="aside">optional</span></label>
-                  <el-input
-                    v-model.number="event.price"
-                    type="number"
-                  ></el-input>
+                  <money
+                    class="el-input__inner"
+                    v-model="event.price"
+                    v-bind="moneySettings"></money>
                 </v-flex>
                 <v-spacer />
                 <v-flex xs6>
@@ -211,6 +211,7 @@
 
 <script>
 import gql from 'graphql-tag'
+import { Money } from 'v-money'
 
 import DURATIONS_ENUMS from '@/enums/durationEnum.js'
 import REPEAT_ENUMS from '@/enums/repeatEnum.js'
@@ -268,6 +269,13 @@ export default {
       durationOptions: DURATIONS_ENUMS,
       repeatOptions: REPEAT_ENUMS,
       locationType: 'address',
+      moneySettings: {
+        decimal: '.',
+        thousands: ',',
+        prefix: '$',
+        precision: 2,
+        masked: false
+      },
       event: {
         name: null,
         description: null,
@@ -276,7 +284,7 @@ export default {
         longitude: null,
         categories: '',
         media: null,
-        price: null,
+        price: 0.00,
         duration: null,
         kidFriendly: false,
         handicapFriendly: false,
@@ -284,7 +292,7 @@ export default {
         over21: false,
         startDatetime: null,
         endDatetime: null,
-        frequency: null,
+        frequency: -1,
         interval: null,
         days: null,
         groups: []
@@ -302,7 +310,7 @@ export default {
         longitude: null,
         categories: [],
         media: null,
-        price: null,
+        price: 0.00,
         duration: null,
         kidFriendly: false,
         handicapFriendly: false,
@@ -310,7 +318,7 @@ export default {
         over21: false,
         startDatetime: null,
         endDatetime: null,
-        frequency: null,
+        frequency: -1,
         interval: null,
         days: [],
         groups: []
@@ -402,6 +410,7 @@ export default {
     }
   },
   components: {
+    Money,
     DateTimeSelect,
     DaySelect,
     ImageUploader,

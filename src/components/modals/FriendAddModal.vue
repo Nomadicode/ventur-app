@@ -28,7 +28,11 @@
               <label>My Handle</label>
             </div>
             <div class="search pad-top--half">
-              <v-text-field
+              <el-input
+                v-model="searchQuery"
+                placeholder="Search by handle, name, email"
+                suffix-icon="el-icon-search"></el-input>
+              <!-- <v-text-field
                 solo
                 fill-width
                 fixed
@@ -36,7 +40,7 @@
                 v-model="searchQuery"
                 class="rounded-input pad-bottom--half"
                 append-icon="search"
-                placeholder="Search by handle, name, email"></v-text-field>
+                placeholder="Search by handle, name, email"></v-text-field> -->
             </div>
           </div>
 

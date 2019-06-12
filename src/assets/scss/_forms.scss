@@ -18,8 +18,6 @@
   }
 }
 
-
-
 #MO:checked ~ label[for="MO"],
 #TU:checked ~ label[for="TU"],
 #WE:checked ~ label[for="WE"],
@@ -29,4 +27,57 @@
 #SU:checked ~ label[for="SU"] {
   background: $secondary-color;
   color: $accent-color;
+}
+
+.large-text {
+  .el-textarea__inner {
+    height: 90px;
+    padding: 5px 8px;
+  }
+}
+
+.el-input__inner {
+  padding: 0 8px;
+}
+
+.time-picker {
+  background: $accent-color;
+
+  .header {
+    text-align: center;
+    background: $primary-color;
+    padding: 16px;
+    color: $bg-accent-color;
+    font-size: 2rem;
+    letter-spacing: 0.1rem;
+  }
+
+  .selector {
+    background: $bg-accent-color;
+    padding: 16px;
+    height: 290px;
+    font-size: 25px;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    overflow: hidden;
+    justify-content: center;
+
+    ul {
+      padding: 0 15px;
+      text-align: center;
+      width: 33%;
+      overflow: auto;
+      color: $placeholder-text-color;
+      
+      &:not(:last-child) {
+        border-right: 1px solid $placeholder-text-color;
+      }
+
+      .active {
+        font-size: 30px;
+        color: $secondary-color;
+      }
+    }
+  }
 }

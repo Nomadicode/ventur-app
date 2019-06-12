@@ -1,6 +1,5 @@
 <template>
-  <scroller
-    ref="scroller"
+  <div
     class="event-list">
     <event-card
       v-for="activity of activities"
@@ -15,7 +14,7 @@
     </div>
 
     <!-- <loading-icon v-if="$apollo.loading"></loading-icon> -->
-  </scroller>
+  </div>
 </template>
 
 <script>
@@ -82,16 +81,13 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$refs.scroller.clientHeight = 'inherit'
-  },
   data () {
     return {
       page: 1
     }
   },
   computed: {
-    ...mapGetters('UserModule', ['currentLocation'])
+    ...mapGetters('AppState', ['currentLocation'])
   },
   methods: {
     refresh (done) {

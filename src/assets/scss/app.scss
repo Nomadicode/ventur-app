@@ -114,6 +114,23 @@ h6 { font-size: 0.75rem; font-weight: bold; }
 .search-field {
   .el-input__inner {
     border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #DCDFE6;
+  } 
+}
+
+.search {
+  .el-input__inner {
+    border-radius: 25px;
+    padding: 0 15px;
+    line-height: 45px;
+    font-size: 0.75rem;
+    height: 34px;
+  }
+
+  .el-input__suffix {
+    top: -3px;
+    right: 10px;
   }
 }
 
