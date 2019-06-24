@@ -1,0 +1,6 @@
+mutation UnsaveActivity ($activity: Int!) {
+  unsaveActivity (activity: $activity) {
+    success
+    error
+  }
+}

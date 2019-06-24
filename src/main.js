@@ -12,9 +12,6 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 
-import VueScroller from 'vue-scroller'
-// import VCalendar from 'v-calendar'
-
 import apolloProvider from './services/apollo'
 import { EventBus } from './services/event-bus'
 
@@ -75,9 +72,6 @@ Vue.use(VueAuthenticate, {
 
 window.EventBus = EventBus
 
-Vue.use(VueScroller)
-// Vue.use(VCalendar)
-
 Vue.config.productionTip = false
 
 Vue.directive('inputmask', {
@@ -88,6 +82,16 @@ Vue.directive('inputmask', {
       input = inputs[inputs.length - 1]
     }
     new Inputmask(binding.value).mask(input)
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth && !store.getters['UserModule/token']) {
+    next({
+      name: 'login'
+    })
+  } else {
+    next()
   }
 })
 

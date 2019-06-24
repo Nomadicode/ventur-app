@@ -1,0 +1,8 @@
+query searchUsers($query: String!){
+  searchUsers(query: $query) {
+    id
+    name
+    handle
+    profilePicture
+  }
+}

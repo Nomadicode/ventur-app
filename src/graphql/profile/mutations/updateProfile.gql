@@ -1,0 +1,19 @@
+mutation UpdateProfile ($name: String, $email: String, $handle: String, $dateOfBirth: Date, $profilePicture: String){
+  updateProfile(name: $name, email: $email, handle: $handle, dateOfBirth: $dateOfBirth, profilePicture: $profilePicture) {
+    success
+    error
+    user {
+      id
+      name
+      email
+      handle
+      profilePicture
+      dateOfBirth
+      isActive
+      isStaff
+      isSuperuser
+      lastLogin
+      timezone
+    }
+  }
+}

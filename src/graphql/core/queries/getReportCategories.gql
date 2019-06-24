@@ -1,0 +1,7 @@
+query { 
+  reportCategories {
+    id
+    name
+    detail
+  }
+}

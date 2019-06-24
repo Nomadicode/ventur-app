@@ -29,7 +29,18 @@ const apolloClient = new ApolloClient({
 })
 
 const apolloProvider = new VueApollo({
-  defaultClient: apolloClient
+  defaultClient: apolloClient,
+  defaultOptions: {
+    $query: {
+      loadingKey: 'loading',
+      fetchPolicy: 'cache-and-network'
+    }
+  },
+  errorHandler (error) {
+    if (error.message === 'GraphQL error: Signature verification failed') {
+      store.commit('UserModule/LOGOUT_USER')
+    }
+  }
 })
 
 Vue.use(VueApollo)

@@ -14,7 +14,7 @@
       v-if="kidFriendly"
       small
       disabled
-      color="green">Kid</v-chip>
+      color="green">&lt;10</v-chip>
     <v-chip
       v-if="handicapFriendly"
       small

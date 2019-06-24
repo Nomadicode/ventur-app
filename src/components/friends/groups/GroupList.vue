@@ -22,26 +22,22 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import getFriendGroups from '@/graphql/groups/queries/getFriendGroups.gql'
+
 import GroupItem from './GroupItem'
 
 export default {
   name: 'GroupList',
+  props: ['filter'],
   apollo: {
     friendGroups: {
       pollInterval: 10000,
-      query: gql`query {
-        friendGroups {
-          pk
-          id
-          name
-          friends {
-            id
-            name
-            profilePicture
-          }
+      query: getFriendGroups,
+      variables () {
+        return {
+          'query': this.filter
         }
-      }`,
+      },
       result ({ data, loading, networkStatus }) {
         this.groups = data.friendGroups
         this.loading = false
@@ -74,6 +70,11 @@ export default {
   },
   components: {
     GroupItem
+  },
+  watch: {
+    filter () {
+      this.refetch()
+    }
   }
 }
 </script>

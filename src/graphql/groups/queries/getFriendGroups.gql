@@ -1,0 +1,12 @@
+query FriendGroups ($query: String) {
+  friendGroups (query: $query) {
+    pk
+    id
+    name
+    friends {
+      id
+      name
+      profilePicture
+    }
+  }
+}

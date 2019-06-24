@@ -1,0 +1,14 @@
+mutation AddFriendToGroup ($groupId: Int!, $memberId: Int!) {
+  addFriendToGroup (groupId: $groupId, memberId: $memberId) {
+    success
+    error,
+    group {
+      pk
+      name
+      friends {
+        pk
+        name
+      }
+    }
+  }
+}

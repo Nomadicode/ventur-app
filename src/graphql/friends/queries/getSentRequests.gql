@@ -1,0 +1,12 @@
+query {
+  sentFriendRequests {
+    id
+    toUser {
+      pk
+      id
+      name
+      handle
+      profilePicture
+    }
+  }
+}

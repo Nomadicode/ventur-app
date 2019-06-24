@@ -9,7 +9,7 @@
         <v-flex xs3>
           <v-img
             :src="avatarImage"
-            width="70"
+            width="100%"
             height="70"
           ></v-img>
         </v-flex>
@@ -82,7 +82,12 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import acceptRequest from '@/graphql/friends/mutations/acceptRequest.gql'
+import cancelRequest from '@/graphql/friends/mutations/cancelRequest.gql'
+import createRequest from '@/graphql/friends/mutations/createRequest.gql'
+import rejectRequest from '@/graphql/friends/mutations/rejectRequest.gql'
+import removeFriend from '@/graphql/friends/mutations/removeFriend.gql'
+
 import AvatarImage from '@/assets/images/avatar.svg'
 
 import GroupAddModal from '@/components/modals/groups/FriendAddModal'
@@ -120,12 +125,7 @@ export default {
     accept () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation AcceptFriendRequest ($handle: String!) {
-          acceptFriendRequest (handle: $handle) {
-            success
-            error
-          }
-        }`,
+        mutation: acceptRequest,
         variables: {
           handle: this.friend.handle
         }
@@ -136,18 +136,7 @@ export default {
     add () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation CreateFriendRequest ($handle: String!, $message: String) {
-          createFriendRequest (handle: $handle, message: $message) {
-            success
-            error
-            friendshipRequest {
-              pk
-              message
-              created
-              rejected
-            }
-          }
-        }`,
+        mutation: createRequest,
         variables: {
           handle: this.friend.handle
         }
@@ -161,12 +150,7 @@ export default {
     cancel () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation CancelFriendRequest ($handle: String!) {
-          cancelFriendRequest (handle: $handle) {
-            success
-            error
-          }
-        }`,
+        mutation: cancelRequest,
         variables: {
           handle: this.friend.handle
         }
@@ -177,12 +161,7 @@ export default {
     reject () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation RejectFriendRequest ($handle: String!) {
-          rejectFriendRequest (handle: $handle) {
-            success
-            error
-          }
-        }`,
+        mutation: rejectRequest,
         variables: {
           handle: this.friend.handle
         }
@@ -193,12 +172,7 @@ export default {
     remove () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation RemoveFriend ($handle: String!) {
-          removeFriend (handle: $handle) {
-            success
-            error
-          }
-        }`,
+        mutation: removeFriend,
         variables: {
           handle: this.friend.handle
         }

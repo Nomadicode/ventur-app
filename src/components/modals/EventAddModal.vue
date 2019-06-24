@@ -23,6 +23,7 @@
           <!-- #region Core Data -->
             <label class="pad-bottom--quarter field-label">Event Name</label>
             <el-input
+              size="small"
               v-model="event.name"
               placeholder="House party"></el-input>
 
@@ -30,7 +31,7 @@
             <vue-google-autocomplete
               id="map"
               ref="location"
-              classname="el-input__inner"
+              classname="el-input__inner el-input--small height--small"
               placeholder="Enter location"
               v-on:placechanged="getAddressData"
               :geolocationOptions="{
@@ -42,6 +43,7 @@
 
             <label class="pad-top--half pad-bottom--quarter field-label">Provide a little more detail <span class="aside">optional</span></label>
             <el-input
+              size="small"
               v-model="event.description"
               type="textarea"
               class="large-text"
@@ -49,6 +51,7 @@
 
             <label class="pad-top--half pad-bottom--quarter field-label">How would you categorize your event?</label>
             <el-select
+              size="small"
               v-model="event.categories"
               class="fill-width"
               multiple
@@ -97,6 +100,7 @@
                 <v-flex xs6>
                   <label class="pad-top--half pad-bottom--quarter field-label">Frequency</label>
                   <el-select
+                    size="small"
                     class="fill-width"
                     default-first-option
                     v-model="event.frequency"
@@ -124,6 +128,7 @@
             <el-select
               v-model="event.groups"
               class="fill-width space-bottom--half"
+              size="small"
               multiple
               filterable
               default-first-option
@@ -139,27 +144,15 @@
             <v-container class="pad-none pad-top--half" fluid grid-list-sm>
               <v-layout row wrap>
                 <v-flex xs5>
-                  <label class="pad-bottom--quarter field-label">Price <span class="aside">optional</span></label>
-                  <money
-                    class="el-input__inner"
-                    v-model="event.price"
-                    v-bind="moneySettings"></money>
+                  <price-input
+                    optional
+                    v-model="event.price"></price-input>
                 </v-flex>
                 <v-spacer />
                 <v-flex xs6>
-                  <label class="pad-bottom--quarter field-label">Duration <span class="aside">optional</span></label>
-                  <el-select
-                    v-model="event.duration"
-                    class="fill-width"
-                    default-first-option
-                    placeholder="15 minutes">
-                    <el-option
-                      v-for="item in durationOptions"
-                      :key="item.value"
-                      :label="item.text"
-                      :value="item.value">
-                    </el-option>
-                  </el-select>
+                  <duration-select
+                    optional
+                    v-model="event.duration"></duration-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -200,6 +193,7 @@
           </div>
 
           <el-button
+            v-loading="loading"
             class="primary-background fix-bottom fill-width"
             type="primary"
             @click="save()">Create Event</el-button>
@@ -210,35 +204,27 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import { Money } from 'v-money'
-
-import DURATIONS_ENUMS from '@/enums/durationEnum.js'
 import REPEAT_ENUMS from '@/enums/repeatEnum.js'
+
+import getGroups from '@/graphql/groups/queries/getGroups.gql'
+import getEventCategories from '@/graphql/events/queries/getEventCategories.gql'
+import createEvent from '@/graphql/events/mutations/createEvent.gql'
 
 import DateTimeSelect from '@/components/elements/inputs/DateTimeSelect'
 import DaySelect from '@/components/elements/inputs/DaySelect'
+import DurationSelect from '@/components/elements/inputs/DurationSelect'
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
+import PriceInput from '@/components/elements/inputs/PriceInput'
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 export default {
   name: 'EventAddModal',
   apollo: {
     categories: {
-      query: gql`query { 
-        categories {
-          pk
-          name
-        }
-      }`
+      query: getEventCategories
     },
     friendGroups: {
-      query: gql`query {
-        friendGroups {
-          pk
-          name
-        }
-      }`
+      query: getGroups
     }
   },
   mounted () {
@@ -265,17 +251,10 @@ export default {
     return {
       modal: false,
       setSchedule: false,
+      loading: false,
       categories: [],
-      durationOptions: DURATIONS_ENUMS,
       repeatOptions: REPEAT_ENUMS,
       locationType: 'address',
-      moneySettings: {
-        decimal: '.',
-        thousands: ',',
-        prefix: '$',
-        precision: 2,
-        masked: false
-      },
       event: {
         name: null,
         description: null,
@@ -301,6 +280,7 @@ export default {
   },
   methods: {
     close () {
+      window.EventBus.$emit('events:refresh')
       this.$refs.location.clear()
       this.event = {
         name: null,
@@ -353,6 +333,7 @@ export default {
       this.event.longitude = $evt.longitude
     },
     save () {
+      this.loading = true
       var self = this
       var data = Object.assign({}, self.event)
       data.categories = data.categories ? data.categories.join(',') : null
@@ -361,24 +342,11 @@ export default {
       data.price = data.price ? data.price : null
 
       this.$apollo.mutate({
-        mutation: gql`mutation AddActivity($name: String!, $media: String, $description: String, $categories: String!, $duration: Int, $price: Float, $kidFriendly: Boolean,
-                    $handicapFriendly: Boolean, $over18: Boolean, $over21: Boolean, $address: String, $latitude: Float, $longitude: Float,
-                    $startDatetime: String, $endDatetime: String, $frequency: Int, $interval: Int, $days: String) {
-          addActivity(name: $name, media: $media, description: $description, categories: $categories, duration: $duration, price: $price, kidFriendly: $kidFriendly,
-              handicapFriendly: $handicapFriendly, over18: $over18, over21: $over21, address: $address, latitude: $latitude, longitude: $longitude,
-              startDatetime: $startDatetime, endDatetime: $endDatetime, frequency: $frequency, interval: $interval, days: $days) {
-            success
-            error
-            activity {
-              pk
-              name
-              created
-            }
-          }
-        }`,
+        mutation: createEvent,
         variables: data
       }).then((data) => {
         // Show success
+        self.loading = false
         self.close()
       }).catch((error) => {
         // Show error
@@ -410,10 +378,11 @@ export default {
     }
   },
   components: {
-    Money,
     DateTimeSelect,
     DaySelect,
+    DurationSelect,
     ImageUploader,
+    PriceInput,
     VueGoogleAutocomplete
   }
 }

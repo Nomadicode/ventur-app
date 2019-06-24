@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import getGroups from '@/graphql/groups/queries/getGroups.gql'
+import addFriendToGroup from '@/graphql/friends/mutations/addFriendToGroup.gql'
 
 export default {
   name: 'GroupAddModal',
@@ -68,18 +69,10 @@ export default {
   },
   apollo: {
     friendGroups: {
-      query: gql`query {
-        friendGroups {
-          pk
-          name
-        }
-      }`,
+      query: getGroups,
       result ({ data, loading, networkStatus }) {
         this.groups = data.friendGroups
         this.loading = false
-      },
-      error (err) {
-        console.log(err)
       }
     }
   },
@@ -94,20 +87,7 @@ export default {
     addToGroup () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation AddFriendToGroup ($groupId: Int!, $memberId: Int!) {
-          addFriendToGroup (groupId: $groupId, memberId: $memberId) {
-            success
-            error,
-            group {
-              pk
-              name
-              friends {
-                pk
-                name
-              }
-            }
-          }
-        }`,
+        mutation: addFriendToGroup,
         variables: {
           groupId: this.groupToAdd,
           memberId: this.friendId
@@ -115,8 +95,6 @@ export default {
       }).then((response) => {
         window.EventBus.$emit('group:friend-add')
         self.close()
-      }).catch((error) => {
-        console.log(error)
       })
     },
     close () {

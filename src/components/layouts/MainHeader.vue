@@ -11,11 +11,13 @@
       src="@/assets/images/logo.svg"
       :height="'40px'" />
 
-    <v-icon
-      v-if="$route.name === 'profile'"
-      color="white"
-      class="menu-icon"
-      @click="openSettingsMenu">settings</v-icon>
+    <div class="header-right">
+      <v-icon
+        v-if="$route.name === 'profile'"
+        color="white"
+        class="menu-icon"
+        @click="openSettingsMenu">settings</v-icon>
+    </div>
   </v-toolbar>
 </template>
 

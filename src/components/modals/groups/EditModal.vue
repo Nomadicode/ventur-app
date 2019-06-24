@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import updateGroup from '@/graphql/groups/mutations/updateGroup.gql'
 
 export default {
   name: 'GroupEditModal',
@@ -77,16 +77,7 @@ export default {
     saveChanges () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation UpdateFriendGroup ($pk: Int!, $name: String!) {
-          updateFriendGroup (pk: $pk, name: $name) {
-            success
-            error,
-            group {
-              pk
-              name
-            }
-          }
-        }`,
+        mutation: updateGroup,
         variables: {
           pk: this.groupId,
           name: this.newName
@@ -94,8 +85,6 @@ export default {
       }).then((response) => {
         self.$emit('refresh')
         self.close()
-      }).catch((error) => {
-        console.log(error)
       })
     },
     close () {

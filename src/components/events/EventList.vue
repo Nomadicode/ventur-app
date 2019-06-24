@@ -13,13 +13,14 @@
         {{ emptyMessage }}
     </div>
 
-    <!-- <loading-icon v-if="$apollo.loading"></loading-icon> -->
+    <loading-icon v-if="$apollo.loading"></loading-icon>
   </div>
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import { mapGetters } from 'vuex'
+
+import getEvents from '@/graphql/events/queries/getEvents.gql'
 
 import EventCard from '@/components/events/EventCard'
 import LoadingIcon from '@/components/elements/LoadingIcon'
@@ -27,13 +28,13 @@ import LoadingIcon from '@/components/elements/LoadingIcon'
 export default {
   name: 'EventList',
   props: {
-    startDate: {
-      type: String,
-      default: null
+    filters: {
+      type: Object,
+      default: () => { return {} }
     },
-    endDate: {
-      type: String,
-      default: null
+    creator: {
+      type: Boolean,
+      default: false
     },
     saved: {
       type: Boolean,
@@ -46,29 +47,7 @@ export default {
   },
   apollo: {
     activities: {
-      query: gql`query Activities($latitude: Float!, $longitude: Float!, $startDate: DateTime, $endDate: DateTime, $saved: Boolean){ 
-        activities (latitude: $latitude, longitude: $longitude, startDate: $startDate, endDate: $endDate, saved: $saved) {
-          pk
-          id
-          saved
-          name
-          description
-          over18
-          over21
-          kidFriendly
-          handicapFriendly
-          price
-          duration
-          media
-          nextOccurrence
-          prevOccurrence
-          location {
-            address
-            latitude
-            longitude
-          }
-        }
-      }`,
+      query: getEvents,
       variables () {
         return {
           latitude: this.currentLocation.latitude,
@@ -79,6 +58,16 @@ export default {
           page: this.page
         }
       }
+    }
+  },
+  mounted () {
+    var self = this
+    window.EventBus.$on('events:refresh', () => {
+      self.refresh()
+    })
+
+    window.onscroll = () => {
+      console.log(window.scrollY)
     }
   },
   data () {
@@ -98,32 +87,6 @@ export default {
     fetchNext (done) {
       console.log('test', this.page)
       done()
-      // this.page++
-      // done()
-    }
-  },
-  watch: {
-    startDate () {
-      // this.$apollo.queries.activities.refetch(
-      //   {
-      //     latitude: this.currentLocation.latitude,
-      //     longitude: this.currentLocation.longitude,
-      //     startDate: this.startDate,
-      //     endDate: this.endDate,
-      //     saved: this.saved
-      //   }
-      // )
-    },
-    endDate () {
-      // this.$apollo.queries.activities.refetch(
-      //   {
-      //     latitude: this.currentLocation.latitude,
-      //     longitude: this.currentLocation.longitude,
-      //     startDate: this.startDate,
-      //     endDate: this.endDate,
-      //     saved: this.saved
-      //   }
-      // )
     }
   },
   components: {

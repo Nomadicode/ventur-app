@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import createGroup from '@/graphql/groups/mutations/createGroup.gql'
+
 import { mapGetters } from 'vuex'
 
 export default {
@@ -76,16 +77,7 @@ export default {
     saveChanges () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation CreateFriendGroup($name: String!){
-            createFriendGroup(name: $name) {
-                success
-                error
-                group {
-                    id
-                    name
-                }
-            }
-        }`,
+        mutation: createGroup,
         variables: {
           name: this.name
         }
@@ -93,8 +85,6 @@ export default {
         window.EventBus.$emit('group:created')
         self.name = ''
         self.close()
-      }).catch((error) => {
-        console.log(error)
       })
     },
     close () {

@@ -1,0 +1,10 @@
+mutation CreateFriendGroup($name: String!){
+  createFriendGroup(name: $name) {
+    success
+    error
+    group {
+      id
+      name
+    }
+  }
+}

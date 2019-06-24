@@ -1,0 +1,29 @@
+mutation SaveActivity ($activity: Int!) {
+  saveActivity (activity: $activity) {
+    success
+    error
+    activity {
+      activity {
+        pk
+        id
+        name
+        media
+        price
+        duration
+        description
+        over18
+        over21
+        kidFriendly
+        handicapFriendly
+        nextOccurrence
+        prevOccurrence
+        saved
+        location {
+          address
+          latitude
+          longitude
+        }
+      }
+    }
+  }
+}

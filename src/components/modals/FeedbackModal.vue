@@ -48,23 +48,16 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import getFeedbackCategories from '@/graphql/core/queries/getFeedbackCategories.gql'
+import submitFeedback from '@/graphql/core/mutations/submitFeedback.gql'
 
 export default {
   name: 'FeedbackModal',
   apollo: {
     feedbackCategories: {
-      query: gql`query { 
-        feedbackCategories {
-          pk
-          name
-        }
-      }`,
+      query: getFeedbackCategories,
       result ({ data, loading, networkStatus }) {
         this.categories = data.feedbackCategories
-      },
-      error (err) {
-        console.log(err)
       }
     }
   },
@@ -99,16 +92,7 @@ export default {
       if (this.feedback.subject && this.feedback.details) {
         var self = this
         this.$apollo.mutate({
-          mutation: gql`mutation ($subject: String!, $category: Int!, $details: String!){
-            submitFeedback(subject: $subject, category: $category, details: $details) {
-              success
-              error
-              feedback {
-                subject
-                details
-              }
-            }
-          }`,
+          mutation: submitFeedback,
           variables: this.feedback
         }).then((data) => {
           // Show success

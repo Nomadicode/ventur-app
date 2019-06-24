@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+    v-if="event"
     ref="event"
     content-class="event-container"
     :z-index=5
@@ -95,8 +96,8 @@
             row
             wrap>
             <v-flex xs9 class="core-fields">
-              <h4 class="title">{{ event.name }}</h4>
-              <div v-if="event && event.location" class="location">{{ event.location.address }}</div>
+              <h4 class="title" v-if="event.name">{{ event.name }}</h4>
+              <div v-if="event.location" class="location">{{ event.location.address }}</div>
             </v-flex>
             <v-flex xs3 class="date-field">
               <div class="date">{{ date }}</div>
@@ -149,9 +150,13 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+
+import getEvent from '@/graphql/events/queries/getEvent.gql'
+import getRandomEvent from '@/graphql/events/queries/getRandomEvent.gql'
+import saveEvent from '@/graphql/events/mutations/saveEvent.gql'
+import unsaveEvent from '@/graphql/events/mutations/unsaveEvent.gql'
 
 import DefaultActivityImage from '@/assets/images/default_activity.jpg'
 import DirectionButton from '@/components/elements/buttons/DirectionButton'
@@ -161,7 +166,7 @@ import RestrictionBox from '@/components/elements/RestrictionBox'
 export default {
   name: 'Event',
   mounted () {
-    this.$refs.event.stackMinZIndex = 4
+    this.$refs.event.stackMinZIndex = 3
   },
   created () {
     var self = this
@@ -177,6 +182,7 @@ export default {
             type: 'error',
             message: 'No events found'
           })
+          window.EventBus.$emit('loading:event-random', false)
         }
       })
     })
@@ -193,6 +199,7 @@ export default {
             type: 'error',
             message: 'Unable to load event'
           })
+          window.EventBus.$emit('loading:event', value, false)
         }
       })
     })
@@ -208,10 +215,10 @@ export default {
   computed: {
     ...mapGetters('AppState', ['currentLocation']),
     eventImage () {
-      return this.event.media ? this.event.media : DefaultActivityImage
+      return this.event && this.event.media ? this.event.media : DefaultActivityImage
     },
     duration () {
-      if (!this.event.duration) {
+      if (!this.event || !this.event.duration) {
         return null
       }
       var duration = (this.event.duration >= 60) ? this.event.duration / 60 : this.event.duration
@@ -223,25 +230,25 @@ export default {
       return duration + interval
     },
     price () {
-      if (this.event.price) {
+      if (this.event && this.event.price) {
         return '$' + parseFloat(Math.round(this.event.price * 100) / 100).toFixed(2)
       } else {
         return 'FREE'
       }
     },
     date () {
-      if (this.event.nextOccurrence) {
-        return moment(this.event.nextOccurrence).format('MMM D @ h:mm a')
-      } else if (this.event.prevOccurrence) {
-        return moment(this.event.prevOccurrence).format('MMM D @ h:mm a')
+      if (this.event && this.event.nextOccurrence) {
+        return moment(this.event.nextOccurrence).format('MMM D')
+      } else if (this.event && this.event.prevOccurrence) {
+        return moment(this.event.prevOccurrence).format('MMM D')
       } else {
         return 'Anytime'
       }
     },
     time () {
-      if (this.event.nextOccurrence) {
+      if (this.event && this.event.nextOccurrence) {
         return moment(this.event.nextOccurrence).format('h:mm a')
-      } else if (this.event.prevOccurrence) {
+      } else if (this.event && this.event.prevOccurrence) {
         return moment(this.event.prevOccurrence).format('h:mm a')
       } else {
         return null
@@ -259,35 +266,7 @@ export default {
     saveActivity () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation SaveActivity ($activity: Int!) {
-          saveActivity (activity: $activity) {
-            success
-            error
-            activity {
-              activity {
-                pk
-                id
-                name
-                media
-                price
-                duration
-                description
-                over18
-                over21
-                kidFriendly
-                handicapFriendly
-                nextOccurrence
-                prevOccurrence
-                saved
-                location {
-                  address
-                  latitude
-                  longitude
-                }
-              }
-            }
-          }
-        }`,
+        mutation: saveEvent,
         variables: {
           activity: self.event.pk
         }
@@ -298,12 +277,7 @@ export default {
     unsaveActivity () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation UnsaveActivity ($activity: Int!) {
-          unsaveActivity (activity: $activity) {
-            success
-            error
-          }
-        }`,
+        mutation: unsaveEvent,
         variables: {
           activity: this.event.pk
         }
@@ -320,29 +294,7 @@ export default {
       var self = this
       window.EventBus.$emit('loading:event', activityId, true)
       return this.$apollo.query({
-        query: gql`query activity($pk: Int!){ 
-          activity (pk: $pk) {
-            pk
-            id
-            name
-            media
-            price
-            duration
-            description
-            over18
-            over21
-            kidFriendly
-            handicapFriendly
-            nextOccurrence
-            prevOccurrence
-            saved
-            location {
-              address
-              latitude
-              longitude
-            }
-          }
-        }`,
+        query: getEvent,
         variables: {
           pk: activityId
         },
@@ -356,29 +308,7 @@ export default {
       var self = this
       window.EventBus.$emit('loading:event-random', true)
       return this.$apollo.query({
-        query: gql`query randomActivity($latitude: Float, $longitude: Float){ 
-          randomActivity (latitude: $latitude, longitude: $longitude) {
-            pk
-            id
-            name
-            media
-            price
-            duration
-            description
-            over18
-            over21
-            kidFriendly
-            handicapFriendly
-            nextOccurrence
-            prevOccurrence
-            saved
-            location {
-              address
-              latitude
-              longitude
-            }
-          }
-        }`,
+        query: getRandomEvent,
         variables: self.currentLocation,
         fetchPolicy: 'no-cache'
       }).then(function (response) {

@@ -66,49 +66,29 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import getFriendships from '@/graphql/friends/queries/getFriendships.gql'
+import getPendingRequests from '@/graphql/friends/queries/getPendingRequests.gql'
+
 import Friend from './Friend'
 
 export default {
   name: 'FriendList',
+  props: ['filter'],
   apollo: {
     friendships: {
       pollInterval: 10000,
-      query: gql`query friendships { 
-        friendships {
-          pk
-          id
-          name
-          handle
-          profilePicture
-        }
-      }`,
+      query: getFriendships,
       result ({ data, loading, networkStatus }) {
-        this.friends = data.friendships
+        this.friends = (data) ? data.friendships : []
         this.loading = false
-      },
-      error (err) {
-        console.log(err)
       }
     },
     pendingFriendRequests: {
       pollInterval: 10000,
-      query: gql`query pendingFriendRequests { 
-        pendingFriendRequests {
-          id
-          fromUser {
-            name
-            handle
-            profilePicture
-          }
-        }
-      }`,
+      query: getPendingRequests,
       result ({ data, loading, networkStatus }) {
-        this.friendRequests = data.pendingFriendRequests
+        this.friendRequests = (data) ? data.pendingFriendRequests : []
         this.loading = false
-      },
-      error (err) {
-        console.log(err)
       }
     }
   },

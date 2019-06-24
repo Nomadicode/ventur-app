@@ -1,0 +1,11 @@
+mutation RemoveFriendFromGroup($groupId: Int!, $memberId:Int!){
+  removeFriendFromGroup(groupId: $groupId, memberId: $memberId) {
+    success
+    error
+    group {
+      pk
+      id
+      name
+    }
+  }
+}

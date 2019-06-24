@@ -3,6 +3,7 @@
 @import 'alignments';
 @import 'buttons';
 @import 'forms';
+@import 'typography';
 
 @import 'events';
 @import 'friends';
@@ -65,7 +66,21 @@ html {
 .v-text-field.v-text-field--solo .v-input__control {
   min-height: inherit;
 }
+
+.v-toolbar__extension {
+  height: 0;
+  padding: 0 !important;
+
+  .header-bar {
+    width: 100vw;
+    padding: 0 !important;
+  }
+}
 // #endregion
+
+.el-input__prefix, .el-input__suffix {
+  height: inherit;
+}
 
 .main-container {
   height: calc(100vh - 136px);
@@ -110,6 +125,8 @@ h5 { font-size: 1.00rem; font-weight: bold; }
 h6 { font-size: 0.75rem; font-weight: bold; }
 
 .small-text { font-size: 0.8rem; }
+
+.height--small { height: 32px; }
 
 .search-field {
   .el-input__inner {
@@ -220,11 +237,19 @@ h6 { font-size: 0.75rem; font-weight: bold; }
     left: 50%;
     transform: translateX(-50%);
   }
+  
+  .header-left {
 
-  .menu-icon {
+  }
+
+  .header-right {
     position: absolute;
     right: 20px;
     font-size: 20px;
+  }
+
+  .header-bar {
+
   }
 }
 

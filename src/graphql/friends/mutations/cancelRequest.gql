@@ -1,0 +1,6 @@
+mutation CancelFriendRequest ($handle: String!) {
+  cancelFriendRequest (handle: $handle) {
+    success
+    error
+  }
+}

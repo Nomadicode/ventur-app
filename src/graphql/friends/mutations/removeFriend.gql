@@ -1,0 +1,6 @@
+mutation RemoveFriend ($handle: String!) {
+  removeFriend (handle: $handle) {
+    success
+    error
+  }
+}

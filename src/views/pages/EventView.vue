@@ -2,23 +2,27 @@
   <div
     class="fill-width">
     <div class="position--fixed">
-      <el-input
-        class="search-field"
-        placeholder="search events"
-        size="mini"
-        suffix-icon="el-icon-search"></el-input>
+      <event-filters v-model="filters"></event-filters>
 
-      <div class="horizontal-right">
-        <el-switch
-          v-if="!hideToggle"
-          class="pad-right--half pad-top pad-bottom--half"
-          active-text="only saved events"
-          :width="30"
-          v-model="showSaved"></el-switch>
-      </div>
+      <v-layout v-if="!hideToggle" class="pad-sides--half pad-top--quarter">
+        <v-flex xs5>
+          <el-switch
+            class="font--small"
+            v-model="showMyEvents"
+            active-text="limit to my events"></el-switch>
+        </v-flex>
+        <v-spacer />
+        <v-flex xs4>
+          <el-switch
+            :width="50"
+            class="font--small"
+            v-model="showSaved"
+            active-text="only saved events"></el-switch>
+        </v-flex>
+      </v-layout>
     </div>
 
-    <event-list :saved="showSaved"></event-list>
+    <event-list :saved="showSaved" :creator="showMyEvents" :filters="filters"></event-list>
 
     <v-btn
       color="primary"
@@ -36,8 +40,10 @@
 </template>
 
 <script>
+import moment from 'moment-timezone'
 import EventAddModal from '@/components/modals/EventAddModal'
 import EventList from '@/components/events/EventList'
+import EventFilters from '@/components/events/Filters'
 
 export default {
   name: 'EventView',
@@ -54,7 +60,18 @@ export default {
     return {
       tab: 'all',
       showSaved: false,
-      hideToggle: false
+      showMyEvents: false,
+      hideToggle: false,
+      filters: {
+        startDate: moment().format('YYYY-MM-DD'),
+        endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
+        price: 50.00,
+        duration: null,
+        over18: false,
+        over21: false,
+        kidFriendly: false,
+        handicapFriendly: false
+      }
     }
   },
   methods: {
@@ -67,7 +84,8 @@ export default {
   },
   components: {
     EventAddModal,
-    EventList
+    EventList,
+    EventFilters
   }
 }
 </script>

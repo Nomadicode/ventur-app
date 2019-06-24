@@ -11,18 +11,20 @@
       src="@/assets/images/logo.svg" />
 
       <form class="fill-width" v-if="loginActive">
-        <label>Email</label>
+        <label class="field-label accent-color">Email</label>
         <el-input
+          size="small"
           v-model="login.email"
           placeholder="test@example.com" />
 
-        <label class="block pad-top--half">Password</label>
+        <label class="field-label accent-color block pad-top--half">Password</label>
         <el-input
+          size="small"
           v-model="login.password"
           placeholder="password"
           show-password />
 
-        <a class="reset-link pad-top--quarter" href="/password/forgot">forgot password?</a>
+        <a class="reset-link pad-top--half" href="/password/forgot">forgot password?</a>
       </form>
 
       <v-btn
@@ -35,18 +37,21 @@
         @click="loginClicked()">Sign In</v-btn>
 
       <form class="fill-width" v-if="registerActive">
-        <label class="block pad-top--half">Full Name</label>
+        <label class="field-label accent-color block pad-top--half">Full Name</label>
         <el-input
+          size="small"
           v-model="register.name"
           placeholder="John Smith" />
 
-        <label class="block pad-top--half">Email</label>
+        <label class="field-label accent-color block pad-top--half">Email</label>
         <el-input
+          size="small"
           v-model="register.email"
           placeholder="test@example.com" />
 
-        <label class="block pad-top--half">Password</label>
+        <label class="field-label accent-color block pad-top--half">Password</label>
         <el-input
+          size="small"
           class="pad-bottom--half"
           v-model="register.password"
           placeholder="password"
@@ -119,46 +124,44 @@ export default {
     processLogin () {
       if (this.login.email && this.login.password) {
         var self = this
-        this.$auth.login(this.login).then((result) => {
+        this.$http.post('/auth/login/', this.login).then((result) => {
           var user = converters.objToCamel(result.data)
           self.$store.commit('UserModule/LOGIN_USER', user)
           self.$router.push({ name: 'events' })
         }).catch((error) => {
-          var errorMessage = self.parseErrors(error.response.data)
-          self.$message({
-            type: 'error',
-            message: errorMessage
-          })
+          var errorData = error.response ? error.response.data : error.message
+          var errorMessage = self.parseErrors(errorData)
+          self.displayError(errorMessage)
         })
       } else {
-        this.$message({
-          type: 'error',
-          message: 'Error: All fields required'
-        })
+        this.displayError('Error: All fields required')
       }
     },
     async processRegistration () {
-      if (this.register.firstName && this.register.lastName && this.register.email && this.register.password) {
+      if (this.register.name && this.register.email && this.register.password) {
         var self = this
-        this.$auth.register(this.login).then((result) => {
+        this.$auth.register(this.register).then((result) => {
           var user = converters.objToCamel(result.data)
           self.$store.commit('UserModule/LOGIN_USER', user)
           self.$router.push({ name: 'events' })
         }).catch((error) => {
-          var errorMessage = self.parseErrors(error.response.data)
-          self.$message({
-            type: 'error',
-            message: errorMessage
-          })
+          var errorData = error.response ? error.response.data : error.message
+          var errorMessage = self.parseErrors(errorData)
+          self.displayError(errorMessage)
         })
       } else {
-        this.$message({
-          type: 'error',
-          message: 'Error: All fields required'
-        })
+        this.displayError('Error: All fields required')
       }
     },
+    displayError (message) {
+      this.$message({
+        type: 'error',
+        message: message
+      })
+    },
     parseErrors (error) {
+      if (typeof error === 'string') { return error }
+
       var keys = Object.keys(error)
       for (var i = 0; i < keys.length; i++) {
         var k = keys[i]
@@ -182,8 +185,6 @@ export default {
         this.registerActive = true
       }
     }
-  },
-  components: {
   }
 }
 </script>

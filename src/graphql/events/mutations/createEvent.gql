@@ -1,0 +1,15 @@
+mutation AddActivity($name: String!, $media: String, $description: String, $categories: String!, $duration: Int, $price: Float, $kidFriendly: Boolean, $handicapFriendly: Boolean,
+  $over18: Boolean, $over21: Boolean, $address: String, $latitude: Float, $longitude: Float, $startDatetime: String, $endDatetime: String, $frequency: Int, $interval: Int, 
+  $days: String) {
+    addActivity(name: $name, media: $media, description: $description, categories: $categories, duration: $duration, price: $price, kidFriendly: $kidFriendly, 
+      handicapFriendly: $handicapFriendly, over18: $over18, over21: $over21, address: $address, latitude: $latitude, longitude: $longitude, startDatetime: $startDatetime,
+      endDatetime: $endDatetime, frequency: $frequency, interval: $interval, days: $days) {
+    success
+    error
+    activity {
+      pk
+      name
+      created
+    }
+  }
+}

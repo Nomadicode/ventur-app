@@ -1,0 +1,12 @@
+mutation CreateFriendRequest ($handle: String!, $message: String) {
+  createFriendRequest (handle: $handle, message: $message) {
+    success
+    error
+    friendshipRequest {
+      pk
+      message
+      created
+      rejected
+    }
+  }
+}

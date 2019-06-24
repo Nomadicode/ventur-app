@@ -63,7 +63,8 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import deleteGroup from '@/graphql/groups/mutations/deleteGroup.gql'
+
 import GroupListFriendItem from './FriendItem'
 import GroupEditModal from '@/components/modals/groups/EditModal'
 
@@ -84,12 +85,7 @@ export default {
     deleteGroup () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation RemoveFriendGroup ($pk: Int!) {
-          removeFriendGroup (pk: $pk) {
-            success
-            error
-          }
-        }`,
+        mutation: deleteGroup,
         variables: {
           pk: this.item.pk
         }

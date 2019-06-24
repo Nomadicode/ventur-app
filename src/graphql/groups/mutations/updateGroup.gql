@@ -1,0 +1,10 @@
+mutation UpdateFriendGroup ($pk: Int!, $name: String!) {
+  updateFriendGroup (pk: $pk, name: $name) {
+    success
+    error,
+    group {
+      pk
+      name
+    }
+  }
+}

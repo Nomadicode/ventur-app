@@ -34,7 +34,7 @@ import ProfileView from '@/views/pages/ProfileView.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: process.env.CORDOVA_PLATFORM ? 'hash' : 'hash',
+  mode: process.env.CORDOVA_PLATFORM ? 'hash' : 'history',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -42,45 +42,54 @@ export default new Router({
       name: 'login',
       component: LoginView,
       meta: {
-        noauth: false
+        auth: false
       }
     }, {
       path: '/password/forgot',
       name: 'forgot-password',
       component: ForgotPassword,
       meta: {
-        noauth: false
+        auth: false
       }
     }, {
-      path: '/password/reset',
+      path: '/password/reset/:token',
       name: 'reset-password',
       component: ResetPassword,
       meta: {
-        noauth: false
+        auth: false
       }
     }, {
-      path: '/',
+      path: '/app',
       component: MainView,
-      meta: {
-        auth: true
-      },
       children: [
         {
           path: 'events',
           name: 'events',
-          component: EventView
+          component: EventView,
+          meta: {
+            auth: true
+          }
         }, {
           path: 'friends',
           name: 'friends',
-          component: FriendView
+          component: FriendView,
+          meta: {
+            auth: true
+          }
         }, {
           path: 'messages',
           name: 'messages',
-          component: MessageView
+          component: MessageView,
+          meta: {
+            auth: true
+          }
         }, {
           path: 'profile',
           name: 'profile',
-          component: ProfileView
+          component: ProfileView,
+          meta: {
+            auth: true
+          }
         }, {
           path: '',
           redirect: { name: 'events' }

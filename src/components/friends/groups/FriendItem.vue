@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import removeFriendFromGroup from '@/graphql/friends/mutations/removeFriendFromGroup.gql'
 import ProfilePicture from '@/assets/images/avatar.svg'
 
 export default {
@@ -36,30 +36,18 @@ export default {
       this.$confirm('Are you sure you want to remove ' + this.item.name + ' from ' + this.groupName)
         .then((response) => {
           self.remove()
-        }).catch(() => {})
+        })
     },
     remove () {
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation RemoveFriendFromGroup($groupId: Int!, $memberId:Int!){
-          removeFriendFromGroup(groupId: $groupId, memberId: $memberId) {
-            success
-            error
-            group {
-              pk
-              id
-              name
-            }
-          }
-        }`,
+        mutation: removeFriendFromGroup,
         variables: {
           groupId: this.groupId,
           memberId: this.item.id
         }
       }).then((response) => {
         self.$emit('refresh')
-      }).catch((error) => {
-        console.log(error)
       })
     }
   }

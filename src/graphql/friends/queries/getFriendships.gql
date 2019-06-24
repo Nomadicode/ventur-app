@@ -1,0 +1,9 @@
+query friendships { 
+  friendships {
+    pk
+    id
+    name
+    handle
+    profilePicture
+  }
+}

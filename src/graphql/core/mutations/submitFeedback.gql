@@ -1,0 +1,10 @@
+mutation SubmitFeedback ($subject: String!, $category: Int!, $details: String!){
+  submitFeedback(subject: $subject, category: $category, details: $details) {
+    success
+    error
+    feedback {
+      subject
+      details
+    }
+  }
+}

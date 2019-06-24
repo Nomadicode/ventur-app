@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import moment from 'moment-timezone'
 
 export default {
@@ -22,6 +23,13 @@ export default {
     this.updateLocation()
 
     window.setInterval(this.getLocation, 15000)
+
+    if (!this.token) {
+      this.logout()
+    }
+  },
+  computed: {
+    ...mapGetters('UserModule', ['token'])
   },
   methods: {
     updateLocation () {
@@ -33,6 +41,16 @@ export default {
       }
 
       this.$store.commit('AppState/SET_TIMEZONE', moment.tz.guess())
+    },
+    logout () {
+      if (this.$auth.isAuthenticated()) { this.$auth.logout() }
+    }
+  },
+  watch: {
+    token () {
+      if (!this.token) {
+        this.logout()
+      }
     }
   }
 }

@@ -104,8 +104,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import gql from 'graphql-tag'
 import moment from 'moment'
+
+import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
 
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
 
@@ -137,25 +138,7 @@ export default {
 
       var self = this
       this.$apollo.mutate({
-        mutation: gql`mutation UpdateProfile ($name: String, $email: String, $handle: String, $dateOfBirth: Date, $profilePicture: String){
-          updateProfile(name: $name, email: $email, handle: $handle, dateOfBirth: $dateOfBirth, profilePicture: $profilePicture) {
-            success
-            error
-            user {
-              id
-              name
-              email
-              handle
-              profilePicture
-              dateOfBirth
-              isActive
-              isStaff
-              isSuperuser
-              lastLogin
-              timezone
-            }
-          }
-        }`,
+        mutation: updateProfile,
         variables: fields
       }).then((data) => {
         self.$store.commit('UserModule/UPDATE_USER', data.data.updateProfile.user)

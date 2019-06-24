@@ -1,0 +1,23 @@
+query Activities($latitude: Float!, $longitude: Float!, $startDate: DateTime, $endDate: DateTime, $saved: Boolean){ 
+  activities (latitude: $latitude, longitude: $longitude, startDate: $startDate, endDate: $endDate, saved: $saved) {
+    pk
+    id
+    saved
+    name
+    description
+    over18
+    over21
+    kidFriendly
+    handicapFriendly
+    price
+    duration
+    media
+    nextOccurrence
+    prevOccurrence
+    location {
+      address
+      latitude
+      longitude
+    }
+  }
+}

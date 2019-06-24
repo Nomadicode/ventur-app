@@ -41,7 +41,11 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import searchUsers from '@/graphql/core/queries/searchUsers.gql'
+
+import getSentRequests from '@/graphql/friends/queries/getSentRequests.gql'
+import getSuggestions from '@/graphql/friends/queries/getSuggestions.gql'
+
 import Friend from './Friend'
 
 export default {
@@ -54,33 +58,17 @@ export default {
   },
   apollo: {
     friendSuggestions: {
-      query: gql`query {
-        friendSuggestions {
-          id
-          handle
-          name
-          profilePicture
-        }
-      }`
+      query: getSuggestions
     },
     sentFriendRequests: {
       pollInterval: 10000,
-      query: gql`query {
-        sentFriendRequests {
-          id
-          toUser {
-            pk
-            id
-            name
-            handle
-            profilePicture
-          }
-        }
-      }`,
+      query: getSentRequests,
       result ({ data, loading, networkStatus }) {
         this.sentRequests = []
-        for (var request of data.sentFriendRequests) {
-          this.sentRequests.push(request.toUser)
+        if (data) {
+          for (var request of data.sentFriendRequests) {
+            this.sentRequests.push(request.toUser)
+          }
         }
       }
     }
@@ -110,14 +98,7 @@ export default {
       var self = this
       if (this.query) {
         this.$apollo.query({
-          query: gql`query searchUsers($query: String!){
-              searchUsers(query: $query) {
-                id
-                name
-                handle
-                profilePicture
-              }
-          }`,
+          query: searchUsers,
           variables: {
             query: self.query
           }

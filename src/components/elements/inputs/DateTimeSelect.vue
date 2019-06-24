@@ -13,6 +13,7 @@
       >
         <template v-slot:activator="{ on }">
           <el-input
+            size="small"
             prefix-icon="el-icon-date"
             :value="displayDate"
             :placeholder="dateLabel"
@@ -23,7 +24,7 @@
           v-model="date"
           scrollable
           width="272"
-          :min="min"
+          :min="minDate"
           @change="$refs.datePicker.save(date)">
         </v-date-picker>
       </v-dialog>
@@ -40,6 +41,7 @@
       >
         <template v-slot:activator="{ on }">
           <el-input
+            size="small"
             prefix-icon="el-icon-time"
             :value="displayTime"
             :placeholder="timeLabel"
@@ -59,8 +61,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import moment from 'moment-timezone'
-import lang from '@/enums/lang.js'
 
 import TimePicker from './TimePicker'
 
@@ -79,8 +81,14 @@ export default {
       type: String
     },
     min: {
-      default: () => { return moment().tz(moment.tz.guess()).subtract(1, 'days').toISOString() },
       type: String
+    }
+  },
+  mounted () {
+    if (this.min) {
+      this.minDate = moment(this.min).tz(this.timezone).subtract(1, 'days').format()
+    } else {
+      this.minDate = moment().tz(this.timezone).subtract(1, 'days').format()
     }
   },
   data () {
@@ -88,14 +96,12 @@ export default {
       showDatePicker: false,
       date: null,
       time: null,
-      pickerOptions: {
-        disabledDate: this.disabledDate
-      },
-      lang: lang,
+      minDate: null,
       showTimePicker: false
     }
   },
   computed: {
+    ...mapGetters('AppState', ['timezone']),
     displayDate () {
       return (this.date) ? moment(this.date).format('YYYY-MM-DD') : ''
     },
@@ -114,8 +120,8 @@ export default {
     onChange () {
       if (this.date) {
         var time = (this.time) ? this.time : ''
-        var datetime = moment(this.date + ' ' + time).tz(moment.tz.guess())
-        this.$emit('input', datetime.toISOString())
+        var datetime = moment(this.date + ' ' + time).tz(this.timezone)
+        this.$emit('input', datetime.format())
       }
     }
   },
@@ -130,6 +136,13 @@ export default {
     },
     time () {
       this.onChange()
+    },
+    min () {
+      if (this.min) {
+        this.minDate = moment(this.min).tz(this.timezone).subtract(1, 'days').format()
+      } else {
+        this.minDate = moment().tz(this.timezone).subtract(1, 'days').format()
+      }
     }
   },
   components: {

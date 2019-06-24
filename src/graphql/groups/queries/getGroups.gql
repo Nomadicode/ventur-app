@@ -1,0 +1,6 @@
+query {
+  friendGroups {
+    pk
+    name
+  }
+}

@@ -1,0 +1,6 @@
+mutation RemoveFriendGroup ($pk: Int!) {
+  removeFriendGroup (pk: $pk) {
+    success
+    error
+  }
+}

@@ -52,7 +52,9 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import getReportCategories from '@/graphql/core/queries/getReportCategories.gql'
+
+import submitReport from '@/graphql/core/mutations/submitReport.gql'
 
 export default {
   name: 'ReportModal',
@@ -68,18 +70,11 @@ export default {
   },
   apollo: {
     reportCategories: {
-      query: gql`query { 
-        reportCategories {
-          id
-          name
-          detail
-        }
-      }`,
+      query: getReportCategories,
       result ({ data, loading, networkStatus }) {
         this.reasons = data.reportCategories
         this.loading = false
-      },
-      error (err) { console.log(err) }
+      }
     }
   },
   data () {
@@ -99,20 +94,7 @@ export default {
       var self = this
       if (this.selected && this.activityId) {
         this.$apollo.mutate({
-          mutation: gql`mutation SubmitReport($activity: Int!, $category: Int!, $detail: String){
-              submitReport(activity: $activity, category: $category, detail: $detail) {
-                  success
-                  error
-                  report {
-                      activity {
-                          name
-                      }
-                      reporter {
-                          name
-                      }
-                  }
-              }
-          }`,
+          mutation: submitReport,
           variables: {
             activity: this.activityId,
             category: this.selected

@@ -1,0 +1,10 @@
+query pendingFriendRequests { 
+  pendingFriendRequests {
+    id
+    fromUser {
+      name
+      handle
+      profilePicture
+    }
+  }
+}

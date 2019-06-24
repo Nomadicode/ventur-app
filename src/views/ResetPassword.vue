@@ -9,14 +9,13 @@
       height="150"
       src="@/assets/images/logo.svg" />
 
-      <h4>Reset Your Password</h4>
+      <h4 class="accent-color">Reset Your Password</h4>
 
-      <v-text-field
+      <el-input
+        class="fill-width space-top space-bottom--quad"
         v-model="newPassword"
-        label="new password"
-        class="fill-width"
-        dark
-        color="white"></v-text-field>
+        placeholder="new password"
+        show-password></el-input>
 
       <v-btn
         outline
@@ -29,12 +28,14 @@
         flat
         large
         class="fill-width"
-        color="white"
+        color="error"
         @click="goBack()">Go Back</v-btn>
   </v-layout>
 </template>
 
 <script>
+import { parseErrors } from '@/services/helpers.js'
+
 export default {
   name: 'ForgotPassword',
   data () {
@@ -44,7 +45,20 @@ export default {
   },
   methods: {
     resetPassword () {
-      console.log('Test')
+      var self = this
+      this.$http.post('/auth/password/reset/confirm/', { email: this.email }).then(function (result) {
+        self.$message({
+          type: 'success',
+          message: 'Password recovery information has been sent to your email.'
+        })
+      }).catch(function (error) {
+        var errorData = error.response ? error.response.data : error.message
+        var message = parseErrors(errorData)
+        self.$message({
+          type: 'error',
+          message: message
+        })
+      })
     },
     goBack () {
       this.$router.push({ name: 'login' })

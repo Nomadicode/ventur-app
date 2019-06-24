@@ -1,0 +1,23 @@
+query randomActivity($latitude: Float, $longitude: Float){ 
+  randomActivity (latitude: $latitude, longitude: $longitude) {
+    pk
+    id
+    name
+    media
+    price
+    duration
+    description
+    over18
+    over21
+    kidFriendly
+    handicapFriendly
+    nextOccurrence
+    prevOccurrence
+    saved
+    location {
+      address
+      latitude
+      longitude
+    }
+  }
+}

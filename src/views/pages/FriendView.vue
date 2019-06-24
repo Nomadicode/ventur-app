@@ -1,11 +1,8 @@
 <template>
   <div
     class="fill-width">
-    <el-input
-      class="search-field"
-      placeholder="search friends"
-      size="mini"
-      suffix-icon="el-icon-search"></el-input>
+
+    <search-input v-model="query" :placeholder="'search ' + tab"></search-input>
 
     <div class="tab-group horizontal-center">
       <v-btn
@@ -22,8 +19,8 @@
         @click="setTab('groups')">Groups</v-btn>
     </div>
 
-    <friends-tab v-if="tab === 'friends'"></friends-tab>
-    <groups-tab v-if="tab === 'groups'"></groups-tab>
+    <friends-tab v-if="tab === 'friends'" :filter="query"></friends-tab>
+    <groups-tab v-if="tab === 'groups'" :filter="query"></groups-tab>
 
     <v-speed-dial
       color="primary"
@@ -78,17 +75,20 @@ import GroupsTab from '@/components/friends/GroupsTab'
 
 import FriendModal from '@/components/modals/FriendAddModal'
 import GroupCreateModal from '@/components/modals/groups/CreateModal'
+import SearchInput from '@/components/elements/inputs/SearchInput'
 
 export default {
   name: 'FriendView',
   data () {
     return {
       fab: false,
-      tab: 'friends'
+      tab: 'friends',
+      query: null
     }
   },
   methods: {
     setTab (value) {
+      this.query = null
       this.tab = value
     },
     openFriendAddModal () {
@@ -103,7 +103,8 @@ export default {
     GroupsTab,
     FriendList,
     FriendModal,
-    GroupCreateModal
+    GroupCreateModal,
+    SearchInput
   }
 }
 </script>

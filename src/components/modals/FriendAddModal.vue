@@ -32,15 +32,6 @@
                 v-model="searchQuery"
                 placeholder="Search by handle, name, email"
                 suffix-icon="el-icon-search"></el-input>
-              <!-- <v-text-field
-                solo
-                fill-width
-                fixed
-                hideDetails
-                v-model="searchQuery"
-                class="rounded-input pad-bottom--half"
-                append-icon="search"
-                placeholder="Search by handle, name, email"></v-text-field> -->
             </div>
           </div>
 
@@ -71,13 +62,11 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters('AppState', ['addFriendModal']),
     ...mapGetters('UserModule', ['data'])
   },
   methods: {
     close () {
       this.modal = false
-    //  this.$store.commit('AppState/CLOSE_ADD_FRIEND_MODAL')
     }
   },
   components: {
