@@ -109,9 +109,8 @@
         <v-layout class="space-top--quarter" row>
           <v-flex xs9>
             <restriction-box
-              :over18="event.over18"
-              :over21="event.over21"
-              :kidFriendly="event.kidFriendly"
+              :isNsfw="event.isNsfw"
+              :alcoholPresent="event.alcoholPresent"
               :handicapFriendly="event.handicapFriendly"></restriction-box>
           </v-flex>
           <v-flex xs4 class="align-right">

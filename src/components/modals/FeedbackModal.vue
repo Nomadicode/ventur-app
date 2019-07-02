@@ -57,7 +57,7 @@ export default {
     feedbackCategories: {
       query: getFeedbackCategories,
       result ({ data, loading, networkStatus }) {
-        this.categories = data.feedbackCategories
+        this.categories = (data) ? data.feedbackCategories : []
       }
     }
   },

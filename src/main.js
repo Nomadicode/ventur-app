@@ -16,6 +16,7 @@ import apolloProvider from './services/apollo'
 import { EventBus } from './services/event-bus'
 
 import Inputmask from 'inputmask'
+import { VueMaskDirective } from 'v-mask'
 
 // #region Style Imports
 import Vuetify from 'vuetify'
@@ -84,6 +85,8 @@ Vue.directive('inputmask', {
     new Inputmask(binding.value).mask(input)
   }
 })
+
+Vue.directive('mask', VueMaskDirective)
 
 router.beforeEach((to, from, next) => {
   if (to.meta.auth && !store.getters['UserModule/token']) {

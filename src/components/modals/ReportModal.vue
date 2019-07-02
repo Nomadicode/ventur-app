@@ -72,7 +72,7 @@ export default {
     reportCategories: {
       query: getReportCategories,
       result ({ data, loading, networkStatus }) {
-        this.reasons = data.reportCategories
+        this.reasons = data ? data.reportCategories : []
         this.loading = false
       }
     }

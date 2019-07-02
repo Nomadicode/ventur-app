@@ -21,6 +21,34 @@
         <v-card-text>
           <v-layout
             class="space-bottom--half"
+            align-center
+            justify-center
+            row
+            wrap>
+            <v-flex xs4>
+              <el-button
+                size="mini"
+                round
+                @click="setDates('today')">Today</el-button>
+            </v-flex>
+
+            <v-flex xs4>
+              <el-button
+                size="mini"
+                round
+                @click="setDates('week')">7 Days</el-button>
+            </v-flex>
+
+            <v-flex xs4>
+              <el-button
+                size="mini"
+                round
+                @click="setDates('month')">30 Days</el-button>
+            </v-flex>
+          </v-layout>
+
+          <v-layout
+            class="space-bottom--half"
             row
             wrap>
             <v-flex class="pad-right--2" xs6>
@@ -47,7 +75,6 @@
                   v-model="filters.startDate"
                   scrollable
                   width="272"
-                  :min="today"
                   @change="$refs.startDatePicker.save(filters.startDate)">
                 </v-date-picker>
               </v-dialog>
@@ -77,7 +104,7 @@
                   v-model="filters.endDate"
                   scrollable
                   width="272"
-                  :min="this.filters.endDate"
+                  :min="this.filters.startDate"
                   @change="$refs.endDatePicker.save(filters.endDate)">
                 </v-date-picker>
               </v-dialog>
@@ -92,40 +119,6 @@
               <v-spacer />
               <v-flex xs6>
                 <duration-select v-model="filters.duration" label="Max duration"></duration-select>
-              </v-flex>
-            </v-layout>
-          </v-container>
-
-          <v-container class="pad-top--half pad-bottom--quarter pad-sides--none" fluid grid-list-sm>
-            <v-layout row wrap>
-              <v-flex xs7>
-                <el-switch
-                  v-model="filters.kidFriendly"
-                  active-text="Kid Friendly">
-                </el-switch>
-              </v-flex>
-              <v-spacer />
-              <v-flex xs5>
-                <el-switch
-                  v-model="filters.over18"
-                  active-text="Over 18">
-                </el-switch>
-              </v-flex>
-            </v-layout>
-            <v-layout row wrap>
-              <v-flex xs7>
-                <el-switch
-                  :width="50"
-                  v-model="filters.handicapFriendly"
-                  active-text="Handicap Friendly">
-                </el-switch>
-              </v-flex>
-              <v-spacer />
-              <v-flex xs5>
-                <el-switch
-                  v-model="filters.over21"
-                  active-text="Over 21">
-                </el-switch>
               </v-flex>
             </v-layout>
           </v-container>
@@ -148,7 +141,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import moment from 'moment-timezone'
+
 import DurationSelect from '@/components/elements/inputs/DurationSelect'
 import PriceInput from '@/components/elements/inputs/PriceInput'
 
@@ -174,6 +169,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('AppState', ['timezone']),
     displayStartDate () {
       return (this.filters && this.filters.startDate) ? moment(this.filters.startDate).format('MM/DD/YYYY') : ''
     },
@@ -188,6 +184,22 @@ export default {
     close () {
       this.dialog = false
       this.$emit('close')
+    },
+    setDates (increment) {
+      if (increment === 'today') {
+        this.filters.startDate = moment().tz(this.timezone).format('YYYY-MM-DD')
+        this.filters.endDate = moment().tz(this.timezone).endOf('day').format('YYYY-MM-DD')
+      }
+
+      if (increment === 'week') {
+        this.filters.startDate = moment().tz(this.timezone).format('YYYY-MM-DD')
+        this.filters.endDate = moment().tz(this.timezone).add(7, 'days').format('YYYY-MM-DD')
+      }
+
+      if (increment === 'month') {
+        this.filters.startDate = moment().tz(this.timezone).format('YYYY-MM-DD')
+        this.filters.endDate = moment().tz(this.timezone).add(30, 'days').format('YYYY-MM-DD')
+      }
     },
     save () {
       this.$emit('input', this.filters)

@@ -1,6 +1,6 @@
 .profile-container {
   width: 100%;
-  height: calc(100vh - 137px);
+  height: calc(100vh - 107px);
   padding: 15px 15px 40px 15px;
   overflow: auto;
 
@@ -36,4 +36,10 @@
       }
     }
   }
+}
+
+.v-tabs__bar.theme--light{
+  background: transparent;
+  border-top: 1px solid #E3E3E3;
+  border-bottom: 1px solid #E3E3E3;
 }

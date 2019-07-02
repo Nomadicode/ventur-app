@@ -1,20 +1,19 @@
 <template>
   <div class="restriction-box">
     <v-chip
-      v-if="over18"
+      v-if="isNsfw"
       small
       disabled
-      color="warning">18+</v-chip>
+      color="warning">
+      <v-icon size="14px">fas fa-ban</v-icon>
+    </v-chip>
     <v-chip
-      v-if="over21"
+      v-if="alcoholPresent"
       small
       disabled
-      color="error">21+</v-chip>
-    <v-chip
-      v-if="kidFriendly"
-      small
-      disabled
-      color="green">&lt;10</v-chip>
+      color="error">
+      <v-icon size="14px">fas fa-glass-martini-alt</v-icon>
+    </v-chip>
     <v-chip
       v-if="handicapFriendly"
       small
@@ -29,15 +28,11 @@
 export default {
   name: 'RestrictionBox',
   props: {
-    over18: {
+    isNsfw: {
       type: Boolean,
       default: false
     },
-    over21: {
-      type: Boolean,
-      default: false
-    },
-    kidFriendly: {
+    alcoholPresent: {
       type: Boolean,
       default: false
     },

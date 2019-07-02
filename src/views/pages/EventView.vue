@@ -5,16 +5,10 @@
       <event-filters v-model="filters"></event-filters>
 
       <v-layout v-if="!hideToggle" class="pad-sides--half pad-top--quarter">
-        <v-flex xs5>
-          <el-switch
-            class="font--small"
-            v-model="showMyEvents"
-            active-text="limit to my events"></el-switch>
-        </v-flex>
         <v-spacer />
-        <v-flex xs4>
+        <v-flex class="horizontal-right" xs6>
           <el-switch
-            :width="50"
+            :width="35"
             class="font--small"
             v-model="showSaved"
             active-text="only saved events"></el-switch>
@@ -22,7 +16,11 @@
       </v-layout>
     </div>
 
-    <event-list :saved="showSaved" :creator="showMyEvents" :filters="filters"></event-list>
+    <event-list
+      ref="events"
+      class="pad-sides--half space-top--triple"
+      :saved="showSaved"
+      :filters="filters"></event-list>
 
     <v-btn
       color="primary"
@@ -48,12 +46,9 @@ import EventFilters from '@/components/events/Filters'
 export default {
   name: 'EventView',
   mounted () {
-    window.onscroll = () => {
-      if (window.scrollY >= 15) {
-        this.hideToggle = true
-      } else {
-        this.hideToggle = false
-      }
+    if (this.$route.params.id) {
+      var paramArr = atob(this.$route.params.id).split('-')
+      window.EventBus.$emit('load:event', paramArr[1])
     }
   },
   data () {
@@ -65,12 +60,8 @@ export default {
       filters: {
         startDate: moment().format('YYYY-MM-DD'),
         endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
-        price: 50.00,
-        duration: null,
-        over18: false,
-        over21: false,
-        kidFriendly: false,
-        handicapFriendly: false
+        price: null,
+        duration: null
       }
     }
   },

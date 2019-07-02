@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="event-list">
+  <div class="event-list">
     <event-card
       v-for="activity of activities"
       :key="activity.title"
@@ -33,8 +32,8 @@ export default {
       default: () => { return {} }
     },
     creator: {
-      type: Boolean,
-      default: false
+      type: Number,
+      default: null
     },
     saved: {
       type: Boolean,
@@ -50,10 +49,10 @@ export default {
       query: getEvents,
       variables () {
         return {
+          createdBy: this.creator,
           latitude: this.currentLocation.latitude,
           longitude: this.currentLocation.longitude,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          filters: this.filters,
           saved: this.saved,
           page: this.page
         }
@@ -65,10 +64,6 @@ export default {
     window.EventBus.$on('events:refresh', () => {
       self.refresh()
     })
-
-    window.onscroll = () => {
-      console.log(window.scrollY)
-    }
   },
   data () {
     return {
@@ -79,19 +74,21 @@ export default {
     ...mapGetters('AppState', ['currentLocation'])
   },
   methods: {
-    refresh (done) {
-      this.$apollo.queries.activities.refetch().then(function () {
-        done()
-      })
+    refresh () {
+      this.$apollo.queries.activities.refetch()
     },
-    fetchNext (done) {
+    fetchNext () {
       console.log('test', this.page)
-      done()
     }
   },
   components: {
     EventCard,
     LoadingIcon
+  },
+  watch: {
+    filters (newValue, oldValue) {
+      this.refresh()
+    }
   }
 }
 </script>

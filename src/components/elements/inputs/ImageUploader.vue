@@ -1,7 +1,7 @@
 <template>
   <v-img
     :src="image"
-    :maxHeight="125"
+    :maxHeight="(size) ? size : 125"
     :gradient="'rgba(0,0,0,0), rgba(0,0,0,0.6)'"
     class="image-uploader"
     :style="{

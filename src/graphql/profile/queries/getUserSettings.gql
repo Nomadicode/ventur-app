@@ -1,0 +1,11 @@
+query getUser ($pk: Int) {
+  user (pk: $pk) {
+    settings {
+      showAlcohol
+      showNsfw
+      handicapOnly
+      newFriendEventNotification
+      upcomingSavedEventNotification
+    }
+  }
+}

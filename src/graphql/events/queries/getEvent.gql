@@ -7,9 +7,10 @@ query activity($pk: Int!){
     price
     duration
     description
-    over18
-    over21
-    kidFriendly
+    alcoholPresent
+    isNsfw
+    minimumAge
+    maximumAge
     handicapFriendly
     nextOccurrence
     prevOccurrence

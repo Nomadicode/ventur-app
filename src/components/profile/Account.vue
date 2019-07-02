@@ -58,47 +58,73 @@
       class="horizontal-center"
       v-model="editedUser.profilePicture"
       round
-      :size="125"></image-uploader>
+      :size="100"></image-uploader>
 
-    <div>
-      <label class="block pad-top--half pad-bottom--quarter">Email</label>
-      <el-input
-        v-model="editedUser.email">
-        <el-button
-          v-if="editedUser.email !== user.email"
-          slot="append"
-          icon="el-icon-check"
-          @click="save('email')"></el-button>
-      </el-input>
-    </div>
+    <v-tabs
+      class="pad-top--half tab-header"
+      v-model="active"
+      centered
+      grow
+      :height="30">
+      <v-tab :key="1">
+        <v-icon :size="14">far fa-flag</v-icon>
+      </v-tab>
+      <v-tab :key="2">
+        <v-icon :size="14">far fa-id-card</v-icon>
+      </v-tab>
 
-    <div>
-      <label class="block pad-top--half pad-bottom--quarter">Handle</label>
-      <el-input
-        v-model="editedUser.handle">
-        <template slot="prepend">@</template>
-        <el-button
-          v-if="editedUser.handle !== user.handle"
-          slot="append"
-          icon="el-icon-check"
-          @click="save('handle')"></el-button>
-      </el-input>
-    </div>
+      <v-tab-item
+        :key="1">
+        <event-list
+          class="space-top--half"
+          :creator="parseInt(user.id)"
+          :emptyMessage="'You haven\'t created any activities'"></event-list>
+      </v-tab-item>
+      <v-tab-item :key="2">
+        <div class="pad-top--half">
+          <label class="field-label bold block pad-top--half pad-bottom--quarter">Email</label>
+          <el-input
+            size="small"
+            v-model="editedUser.email">
+            <el-button
+              v-if="editedUser.email !== user.email"
+              slot="append"
+              icon="el-icon-check"
+              @click="save('email')"></el-button>
+          </el-input>
+        </div>
 
-    <div>
-      <label class="block pad-top--half pad-bottom--quarter">Date of Birth</label>
-      <el-input
-        v-model="editedUser.dateOfBirth"
-        v-inputmask
-        data-inputmask="'mask': '99/99/9999', 'greedy': 'false'"
-        placeholder="mm/dd/yyyy">
-        <el-button
-          v-if="editedUser.dateOfBirth && editedUser.dateOfBirth !== displayDate(user.dateOfBirth)"
-          slot="append"
-          icon="el-icon-check"
-          @click="save('dateOfBirth')"></el-button>
-      </el-input>
-    </div>
+        <div>
+          <label class="field-label bold block pad-top--half pad-bottom--quarter">Handle</label>
+          <el-input
+            size="small"
+            v-model="editedUser.handle">
+            <template slot="prepend">@</template>
+            <el-button
+              v-if="editedUser.handle !== user.handle"
+              slot="append"
+              icon="el-icon-check"
+              @click="save('handle')"></el-button>
+          </el-input>
+        </div>
+
+        <div>
+          <label class="field-label bold block pad-top--half pad-bottom--quarter">Date of Birth</label>
+          <el-input
+            size="small"
+            v-model="editedUser.dateOfBirth"
+            v-inputmask
+            data-inputmask="'mask': '99/99/9999', 'greedy': 'true'"
+            placeholder="mm/dd/yyyy">
+            <el-button
+              v-if="editedUser.dateOfBirth && editedUser.dateOfBirth !== displayDate(user.dateOfBirth)"
+              slot="append"
+              icon="el-icon-check"
+              @click="save('dateOfBirth')"></el-button>
+          </el-input>
+        </div>
+      </v-tab-item>
+    </v-tabs>
   </div>
 </template>
 
@@ -108,6 +134,7 @@ import moment from 'moment'
 
 import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
 
+import EventList from '@/components/events/EventList'
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
 
 export default {
@@ -117,6 +144,7 @@ export default {
   },
   data () {
     return {
+      active: 0,
       editName: false,
       user: {},
       editedUser: {}
@@ -164,6 +192,7 @@ export default {
     }
   },
   components: {
+    EventList,
     ImageUploader
   }
 }

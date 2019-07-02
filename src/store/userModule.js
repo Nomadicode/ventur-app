@@ -1,3 +1,5 @@
+import moment from 'moment-timezone'
+
 const UserModule = {
   namespaced: true,
 
@@ -19,6 +21,9 @@ const UserModule = {
     }
   },
   getters: {
+    userId: state => {
+      return (state.user) ? state.user.id : null
+    },
     email: state => {
       return (state.user) ? state.user.email : null
     },
@@ -36,6 +41,9 @@ const UserModule = {
     },
     profilePicture: state => {
       return (state.user) ? state.user.profile_picture : null
+    },
+    age: state => {
+      return (state.user && state.user.dateOfBirth) ? moment().diff(state.user.dateOfBirth, 'years') : 0
     }
   }
 }

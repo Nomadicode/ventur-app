@@ -17,7 +17,7 @@
 
       <v-card-text class="body small-text">
         <v-layout column>
-          <image-uploader v-model="event.media"></image-uploader>
+          <image-uploader style="height:125px" v-model="event.media"></image-uploader>
 
           <div class="pad-sides pad-top--half pad-bottom--quad">
           <!-- #region Core Data -->
@@ -27,7 +27,7 @@
               v-model="event.name"
               placeholder="House party"></el-input>
 
-            <label class="pad-top--half pad-bottom--quarter field-label">Location <a class="aside" @click.prevent="$refs.locationInput.geolocate()">use current location</a></label>
+            <label class="pad-top--half pad-bottom--quarter field-label">Location <a class="aside" @click.prevent="setCurrentLocation">use current location</a></label>
             <vue-google-autocomplete
               id="map"
               ref="location"
@@ -35,7 +35,8 @@
               placeholder="Enter location"
               v-on:placechanged="getAddressData"
               :geolocationOptions="{
-                enableHighAccuracy: true
+                enableHighAccuracy: true,
+                maximumAge: 0
               }"
               :types="locationType"
               enable-geolocation>
@@ -49,7 +50,7 @@
               class="large-text"
               placeholder="Join us for a party at a house. There will be food, games, and fun."></el-input>
 
-            <label class="pad-top--half pad-bottom--quarter field-label">How would you categorize your event?</label>
+            <!-- <label class="pad-top--half pad-bottom--quarter field-label">How would you categorize your event?</label>
             <el-select
               size="small"
               v-model="event.categories"
@@ -65,7 +66,7 @@
                 :label="item.name"
                 :value="item.name">
               </el-option>
-            </el-select>
+            </el-select> -->
           <!-- #endregion -->
 
           <!-- #region Scheduling -->
@@ -157,36 +158,40 @@
               </v-layout>
             </v-container>
 
-            <v-container class="pad-top--half pad-bottom--quarter pad-sides--none" fluid grid-list-sm>
+            <age-slider class="space-top--half" v-model="selectedAges"></age-slider>
+
+            <v-container class="pad-none" fluid grid-list-sm>
               <v-layout row wrap>
-                <v-flex xs7>
-                  <el-switch
-                    v-model="event.kidFriendly"
-                    active-text="Kid Friendly">
-                  </el-switch>
+                <v-flex xs6>
+                  <v-switch
+                    class="accessibility-switch"
+                    hide-details
+                    v-model="event.isNsfw"
+                    :disabled="event.minimumAge < 18 || age < 18"
+                    append-icon="fas fa-ban"
+                    :label="'NSFW'"></v-switch>
                 </v-flex>
                 <v-spacer />
-                <v-flex xs5>
-                  <el-switch
-                    v-model="event.over18"
-                    active-text="Over 18">
-                  </el-switch>
+                <v-flex xs6>
+                  <v-switch
+                    class="accessibility-switch"
+                    hide-details
+                    v-model="event.alcoholPresent"
+                    :disabled="event.maximumAge < 21 || age < 21"
+                    append-icon="fas fa-glass-martini-alt"
+                    :label="'Alcohol'"></v-switch>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
-                <v-flex xs7>
-                  <el-switch
+                <v-flex xs6>
+                  <v-switch
+                    class="accessibility-switch"
+                    hide-details
                     v-model="event.handicapFriendly"
-                    active-text="Handicap Friendly">
-                  </el-switch>
+                    append-icon="fas fa-wheelchair"
+                    :label="'Handicap'"></v-switch>
                 </v-flex>
                 <v-spacer />
-                <v-flex xs5>
-                  <el-switch
-                    v-model="event.over21"
-                    active-text="Over 21">
-                  </el-switch>
-                </v-flex>
               </v-layout>
             </v-container>
           <!-- #endregion -->
@@ -204,25 +209,26 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import REPEAT_ENUMS from '@/enums/repeatEnum.js'
 
+import { Event } from '@/models'
+
 import getGroups from '@/graphql/groups/queries/getGroups.gql'
-import getEventCategories from '@/graphql/events/queries/getEventCategories.gql'
 import createEvent from '@/graphql/events/mutations/createEvent.gql'
 
+import AgeSlider from '@/components/elements/inputs/AgeSlider'
 import DateTimeSelect from '@/components/elements/inputs/DateTimeSelect'
 import DaySelect from '@/components/elements/inputs/DaySelect'
 import DurationSelect from '@/components/elements/inputs/DurationSelect'
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
 import PriceInput from '@/components/elements/inputs/PriceInput'
+import LocationAutocomplete from '@/components/elements/inputs/LocationAutocomplete'
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 export default {
   name: 'EventAddModal',
   apollo: {
-    categories: {
-      query: getEventCategories
-    },
     friendGroups: {
       query: getGroups
     }
@@ -233,16 +239,13 @@ export default {
       self.modal = true
     })
   },
+  created () {
+    this.event = Object.assign({}, Event)
+    this.selectedAges[0] = this.age - 7
+    this.selectedAges[1] = this.age + 7
+  },
   computed: {
-    kidFriendly () {
-      return this.event.kidFriendly
-    },
-    over18 () {
-      return this.event.over18
-    },
-    over21 () {
-      return this.event.over21
-    },
+    ...mapGetters('UserModule', ['age']),
     locationAvailable () {
       return (navigator.geolocation)
     }
@@ -252,57 +255,16 @@ export default {
       modal: false,
       setSchedule: false,
       loading: false,
-      categories: [],
+      selectedAges: [0, 65],
       repeatOptions: REPEAT_ENUMS,
-      locationType: 'address',
-      event: {
-        name: null,
-        description: null,
-        address: null,
-        latitude: null,
-        longitude: null,
-        categories: '',
-        media: null,
-        price: 0.00,
-        duration: null,
-        kidFriendly: false,
-        handicapFriendly: false,
-        over18: false,
-        over21: false,
-        startDatetime: null,
-        endDatetime: null,
-        frequency: -1,
-        interval: null,
-        days: null,
-        groups: []
-      }
+      locationType: 'premise',
+      event: Event
     }
   },
   methods: {
     close () {
       window.EventBus.$emit('events:refresh')
       this.$refs.location.clear()
-      this.event = {
-        name: null,
-        description: null,
-        address: null,
-        latitude: null,
-        longitude: null,
-        categories: [],
-        media: null,
-        price: 0.00,
-        duration: null,
-        kidFriendly: false,
-        handicapFriendly: false,
-        over18: false,
-        over21: false,
-        startDatetime: null,
-        endDatetime: null,
-        frequency: -1,
-        interval: null,
-        days: [],
-        groups: []
-      }
       this.modal = false
     },
     toggleSchedule () {
@@ -313,22 +275,9 @@ export default {
       this.event.days = []
     },
     setCurrentLocation () {
-      this.locationType = 'street_address'
       this.$refs.location.geolocate()
     },
-    // setCurrentLocation () {
-    //   if (navigator.geolocation) {
-    //     var self = this
-    //     navigator.geolocation.getCurrentPosition(function (location) {
-    //       self.event.latitude = location.coords.latitude
-    //       self.event.longitude = location.coords.longitude
-
-    //       self.$refs.locationInput.updateCoordinates(LatLng(location.coords.latitude, location.coords.longitude))
-    //     })
-    //   }
-    // },
     getAddressData ($evt, place, id) {
-      this.locationType = 'address'
       this.event.latitude = $evt.latitude
       this.event.longitude = $evt.longitude
     },
@@ -336,10 +285,9 @@ export default {
       this.loading = true
       var self = this
       var data = Object.assign({}, self.event)
-      data.categories = data.categories ? data.categories.join(',') : null
-      data.days = data.days ? data.days.join(',') : null
-
-      data.price = data.price ? data.price : null
+      data.groups = data.groups ? data.groups.join(',') : ''
+      data.days = data.days ? data.days.join(',') : ''
+      data.price = data.price ? data.price : 0.00
 
       this.$apollo.mutate({
         mutation: createEvent,
@@ -349,40 +297,32 @@ export default {
         self.loading = false
         self.close()
       }).catch((error) => {
-        // Show error
-        console.error(error)
+        console.log(error)
+        self.loading = false
+        self.$message({
+          type: 'error',
+          message: 'An error occurred trying to create your event, please try again.'
+        })
       })
     }
   },
   watch: {
-    kidFriendly () {
-      if (this.kidFriendly) {
-        this.event.over18 = false
-        this.event.over21 = false
-      }
-    },
-    over18 () {
-      if (this.over18) {
-        this.event.kidFriendly = false
-        this.event.over21 = false
-      }
-    },
-    over21 () {
-      if (this.over21) {
-        this.event.kidFriendly = false
-        this.event.over18 = false
-      }
+    selectedAges () {
+      this.event.minimumAge = this.selectedAges[0]
+      this.event.maximumAge = this.selectedAges[1]
     },
     setSchedule () {
       this.toggleSchedule()
     }
   },
   components: {
+    AgeSlider,
     DateTimeSelect,
     DaySelect,
     DurationSelect,
     ImageUploader,
     PriceInput,
+    LocationAutocomplete,
     VueGoogleAutocomplete
   }
 }

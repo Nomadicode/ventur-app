@@ -1,0 +1,13 @@
+mutation UpdateUserSettings ($showAlcohol: Boolean, $showNsfw: Boolean, $handicapOnly: Boolean, $newFriendEventNotification: Boolean, $upcomingSavedEventNotification: Boolean) {
+  updateUserSettings (showAlcohol: $showAlcohol, showNsfw: $showNsfw, handicapOnly: $handicapOnly, newFriendEventNotification: $newFriendEventNotification, upcomingSavedEventNotification: $upcomingSavedEventNotification) {
+    success
+    error
+    userSettings {
+    	showAlcohol
+      showNsfw
+      handicapOnly
+      newFriendEventNotification
+      upcomingSavedEventNotification
+    }
+  }
+}

@@ -1,0 +1,8 @@
+query getUser ($pk: Int) {
+  user (pk: $pk) {
+    pk
+    id
+    name
+    profilePicture
+  }
+}

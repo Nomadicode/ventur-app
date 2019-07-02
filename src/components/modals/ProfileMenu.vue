@@ -11,11 +11,11 @@
             <v-list-tile-title>My Account</v-list-tile-title>
           </v-list-tile>
 
-          <!-- <v-divider />
+          <v-divider />
 
           <v-list-tile @click="open('accessibility')">
             <v-list-tile-title>Accessibility</v-list-tile-title>
-          </v-list-tile> -->
+          </v-list-tile>
 
           <v-divider />
 

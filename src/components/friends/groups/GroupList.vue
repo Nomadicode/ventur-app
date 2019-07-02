@@ -39,7 +39,7 @@ export default {
         }
       },
       result ({ data, loading, networkStatus }) {
-        this.groups = data.friendGroups
+        this.groups = (data) ? data.friendGroups : []
         this.loading = false
       }
     }

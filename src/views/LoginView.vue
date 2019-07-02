@@ -88,7 +88,7 @@ export default {
   name: 'home',
   created () {
     if (this.token) {
-      this.$router.push({ name: 'explore-random' })
+      this.$router.push({ name: 'events' })
     }
   },
   data () {

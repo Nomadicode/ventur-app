@@ -1,13 +1,14 @@
-query Activities($latitude: Float!, $longitude: Float!, $startDate: DateTime, $endDate: DateTime, $saved: Boolean){ 
-  activities (latitude: $latitude, longitude: $longitude, startDate: $startDate, endDate: $endDate, saved: $saved) {
+query Activities($latitude: Float!, $longitude: Float!, $filters: String, $saved: Boolean, $createdBy: Int){ 
+  activities (latitude: $latitude, longitude: $longitude, filters: $filters, saved: $saved, createdBy: $createdBy) {
     pk
     id
     saved
     name
     description
-    over18
-    over21
-    kidFriendly
+    alcoholPresent
+    isNsfw
+    minimumAge
+    maximumAge
     handicapFriendly
     price
     duration

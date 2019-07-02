@@ -70,6 +70,13 @@ export default new Router({
             auth: true
           }
         }, {
+          path: 'events/:id',
+          name: 'event',
+          component: EventView,
+          meta: {
+            auth: true
+          }
+        }, {
           path: 'friends',
           name: 'friends',
           component: FriendView,
@@ -95,6 +102,9 @@ export default new Router({
           redirect: { name: 'events' }
         }
       ]
+    }, {
+      path: '/',
+      redirect: { name: 'login' }
     }
   ]
 })
