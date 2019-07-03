@@ -288,7 +288,7 @@ export default {
     filterGeocodeResultTypes (results) {
       if (!results || !this.types) return results
       let output = []
-      let types = [this.types]
+      let types = [this.types, 'premise']
       if (types.includes('(cities)')) types = types.concat(CITIES_TYPE)
       if (types.includes('(regions)')) types = types.concat(REGIONS_TYPE)
       for (let r of results) {

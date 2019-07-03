@@ -15,7 +15,5 @@ export default {
   minimumAge: 0,
   maximumAge: 65,
   frequency: -1,
-  interval: null,
-  days: null,
   groups: []
 }

@@ -31,6 +31,8 @@
 <script>
 import {mapGetters} from 'vuex'
 
+import requestAccountDelete from '@/graphql/profile/mutations/deleteAccount.gql'
+
 export default {
   name: 'Security',
   data () {
@@ -40,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('UserModule', ['token']),
+    ...mapGetters('UserModule', ['token', 'userId']),
     headers () {
       return {
         'Authorization': 'JWT ' + this.token
@@ -80,13 +82,24 @@ export default {
         confirmButtonClass: 'el-button--danger',
         cancelButtonText: 'Cancel'
       }).then(function () {
+        self.$apollo.mutate({
+          mutation: requestAccountDelete,
+          variables: {
+            pk: self.userId
+          }
+        }).then((data) => {
+          self.$message({
+            type: 'success',
+            message: 'Your account deletion request is being processed. Please allow 7 days for the account to be removed.'
+          })
+        })
+      }).catch((error) => {
+        console.error(error)
         self.$message({
           type: 'error',
           message: 'Unable to delete account, please contact support: <strong>support@driftr.app</strong>',
           dangerouslyUseHTMLString: true
         })
-      }).catch((error) => {
-        console.error(error)
       })
     }
   }

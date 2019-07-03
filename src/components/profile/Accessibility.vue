@@ -58,8 +58,8 @@
         <el-switch
           :width="35"
           class="font--small"
-          @change="save('newFriendEventNotication')"
-          v-model="settings.newFriendEventNotication"></el-switch>
+          @change="save('newFriendEventNotification')"
+          v-model="settings.newFriendEventNotification"></el-switch>
       </v-flex>
     </v-layout>
 
@@ -121,7 +121,9 @@ export default {
         mutation: updateUserSettings,
         variables: self.settings
       }).then(function (result) {
-        console.log(result.data)
+        if (result.updateUserSettings && result.updateUserSettings.userSettings) {
+          self.settings = result.updateUserSettings.userSettings
+        }
       })
     }
   }

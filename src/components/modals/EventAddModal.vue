@@ -28,7 +28,7 @@
               placeholder="House party"></el-input>
 
             <label class="pad-top--half pad-bottom--quarter field-label">Location <a class="aside" @click.prevent="setCurrentLocation">use current location</a></label>
-            <vue-google-autocomplete
+            <location-autocomplete
               id="map"
               ref="location"
               classname="el-input__inner el-input--small height--small"
@@ -38,9 +38,8 @@
                 enableHighAccuracy: true,
                 maximumAge: 0
               }"
-              :types="locationType"
               enable-geolocation>
-            </vue-google-autocomplete>
+            </location-autocomplete>
 
             <label class="pad-top--half pad-bottom--quarter field-label">Provide a little more detail <span class="aside">optional</span></label>
             <el-input
@@ -49,24 +48,6 @@
               type="textarea"
               class="large-text"
               placeholder="Join us for a party at a house. There will be food, games, and fun."></el-input>
-
-            <!-- <label class="pad-top--half pad-bottom--quarter field-label">How would you categorize your event?</label>
-            <el-select
-              size="small"
-              v-model="event.categories"
-              class="fill-width"
-              multiple
-              filterable
-              allow-create
-              default-first-option
-              placeholder="party, dinner, movie">
-              <el-option
-                v-for="item in categories"
-                :key="item.pk"
-                :label="item.name"
-                :value="item.name">
-              </el-option>
-            </el-select> -->
           <!-- #endregion -->
 
           <!-- #region Scheduling -->
@@ -113,11 +94,6 @@
                       :value="item.value">
                     </el-option>
                   </el-select>
-                </v-flex>
-                <v-spacer />
-                <v-flex xs12>
-                  <label class="pad-top--half pad-bottom--quarter field-label">Days</label>
-                  <day-select v-model="event.days"></day-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -257,7 +233,7 @@ export default {
       loading: false,
       selectedAges: [0, 65],
       repeatOptions: REPEAT_ENUMS,
-      locationType: 'premise',
+      locationType: 'address',
       event: Event
     }
   },
