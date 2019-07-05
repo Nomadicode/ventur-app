@@ -52,11 +52,6 @@
                         share</v-list-tile-title>
                     </v-list-tile>
                     <v-divider />
-                    <v-list-tile>
-                      <v-list-tile-title
-                        class="secondary-text">hide</v-list-tile-title>
-                    </v-list-tile>
-                    <v-divider />
                     <v-list-tile
                       class="remove-btn"
                       @click="toggleReportMenu">
