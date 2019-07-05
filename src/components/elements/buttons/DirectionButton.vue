@@ -1,5 +1,6 @@
 <template>
   <el-button
+    size="small"
     :href="geoLink"
     type="primary">
     Directions

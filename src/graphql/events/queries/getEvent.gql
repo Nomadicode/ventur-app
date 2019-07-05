@@ -1,4 +1,4 @@
-query activity($pk: Int!){ 
+query activity($pk: ID!){ 
   activity (pk: $pk) {
     pk
     id
@@ -13,7 +13,6 @@ query activity($pk: Int!){
     maximumAge
     handicapFriendly
     nextOccurrence
-    prevOccurrence
     saved
     location {
       address

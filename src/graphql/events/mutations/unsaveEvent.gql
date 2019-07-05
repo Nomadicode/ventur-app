@@ -1,4 +1,4 @@
-mutation UnsaveActivity ($activity: Int!) {
+mutation UnsaveActivity ($activity: ID!) {
   unsaveActivity (activity: $activity) {
     success
     error

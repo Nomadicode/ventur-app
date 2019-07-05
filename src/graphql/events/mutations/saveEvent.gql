@@ -1,4 +1,4 @@
-mutation SaveActivity ($activity: Int!) {
+mutation SaveActivity ($activity: ID!) {
   saveActivity (activity: $activity) {
     success
     error
@@ -11,9 +11,8 @@ mutation SaveActivity ($activity: Int!) {
         price
         duration
         description
-        over18
-        over21
-        kidFriendly
+        isNsfw
+        alcoholPresent
         handicapFriendly
         nextOccurrence
         prevOccurrence

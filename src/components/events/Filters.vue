@@ -122,6 +122,20 @@
               </v-flex>
             </v-layout>
           </v-container>
+
+          <v-container class="pad-none pad-top--half space-bottom--half" fluid grid-list-sm>
+            <v-layout row wrap>
+              <v-flex xs6>
+                <label class="pad-bottom--quarter field-label">Radius</label>
+                <el-input-number
+                  size="small"
+                  controls-position="right"
+                  v-model="filters.radius"
+                  placeholder="search radius"></el-input-number>
+              </v-flex>
+              <v-spacer />
+            </v-layout>
+          </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -203,6 +217,7 @@ export default {
     },
     save () {
       this.$emit('input', this.filters)
+      window.EventBus.$emit('events:refresh')
       this.dialog = false
     }
   },

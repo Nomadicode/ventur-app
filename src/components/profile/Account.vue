@@ -77,7 +77,7 @@
         :key="1">
         <event-list
           class="space-top--half"
-          :creator="parseInt(user.id)"
+          :creator="user.id"
           :emptyMessage="'You haven\'t created any activities'"></event-list>
       </v-tab-item>
       <v-tab-item :key="2">

@@ -13,7 +13,6 @@ query randomActivity($latitude: Float, $longitude: Float){
     maximumAge
     handicapFriendly
     nextOccurrence
-    prevOccurrence
     saved
     location {
       address

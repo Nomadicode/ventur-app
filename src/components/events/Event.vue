@@ -68,12 +68,12 @@
             </v-layout>
           </v-flex>
           <v-spacer />
-          <v-flex xs3 class="space-bottom--quarter">
+          <v-flex xs2 class="space-bottom--half">
             <v-layout
               align-center
               row>
               <v-flex xs4 class="space-left">
-                <div class="white-text">{{ price }}</div>
+                <div class="white-text">{{ duration }}</div>
               </v-flex>
               <v-spacer />
               <v-flex xs5 class="align-right">
@@ -97,7 +97,7 @@
             wrap>
             <v-flex xs9 class="core-fields">
               <h4 class="title" v-if="event.name">{{ event.name }}</h4>
-              <div v-if="event.location" class="location">{{ event.location.address }}</div>
+              <div v-if="event && event.location" class="location">{{ event.location.address }}</div>
             </v-flex>
             <v-flex xs3 class="date-field">
               <div class="date">{{ date }}</div>
@@ -138,12 +138,18 @@
 
       <v-card-text class="body" v-html="event.description">
       </v-card-text>
+
+      <ul class="footer">
+        <li>{{ price }}</li>
+        <li>{{ duration }}</li>
+        <li>{{ ageRange }}</li>
+      </ul>
     </v-card>
 
     <report-modal
       :activityId="event.pk"
       :open="showReportMenu"
-      @refresh="fetchActivity"
+      @refresh="close"
       @close="toggleReportMenu"></report-modal>
   </v-dialog>
 </template>
@@ -238,8 +244,6 @@ export default {
     date () {
       if (this.event && this.event.nextOccurrence) {
         return moment(this.event.nextOccurrence).format('MMM D')
-      } else if (this.event && this.event.prevOccurrence) {
-        return moment(this.event.prevOccurrence).format('MMM D')
       } else {
         return 'Anytime'
       }
@@ -247,11 +251,30 @@ export default {
     time () {
       if (this.event && this.event.nextOccurrence) {
         return moment(this.event.nextOccurrence).format('h:mm a')
-      } else if (this.event && this.event.prevOccurrence) {
-        return moment(this.event.prevOccurrence).format('h:mm a')
       } else {
         return null
       }
+    },
+    ageRange () {
+      if (this.event.minimumAge === 0 && this.event.maximumAge === 65) {
+        return 'all ages'
+      }
+
+      if (this.event.minimumAge === this.event.maximumAge) {
+        return this.event.minimumAge
+      }
+
+      var minDisplay = this.event.minimumAge
+      var maxDisplay = this.event.maximumAge
+      if (this.event.minimumAge === 0) {
+        minDisplay = '<5'
+      }
+
+      if (this.event.maximumAge === 65) {
+        maxDisplay = '65+'
+      }
+
+      return 'ages ' + minDisplay + ' - ' + maxDisplay
     }
   },
   methods: {

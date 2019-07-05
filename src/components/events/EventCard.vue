@@ -12,7 +12,7 @@
           wrap>
           <v-flex xs9>
             <h4 class="title">{{ item.name }}</h4>
-            <div v-if="item && item.location" class="location">{{ item.location.address }}</div>
+            <div class="location">{{ item.distance }} miles away</div>
           </v-flex>
           <v-flex xs3 class="date-field">
             <div class="date">{{ date }}</div>
@@ -22,12 +22,6 @@
       </v-container>
 
       <div class="price">{{ price }}</div>
-
-      <restriction-box
-          :over18="item.over18"
-          :over21="item.over21"
-          :kidFriendly="item.kidFriendly"
-          :handicapFriendly="item.handicapFriendly"></restriction-box>
 
       <div v-if="loading" class="loading-overlay">
         <loading-icon></loading-icon>

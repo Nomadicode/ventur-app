@@ -1,7 +1,10 @@
 <template>
-  <img
-    class="loading-icon"
-    src="@/assets/images/loading.gif" />
+  <div class="loading">
+    <div class="loading-overlay"></div>
+    <img
+      class="loading-icon"
+      src="@/assets/images/loading.gif" />
+  </div>
 </template>
 
 <script>

@@ -1,4 +1,4 @@
-mutation SubmitReport($activity: Int!, $category: Int!, $detail: String){
+mutation SubmitReport($activity: ID!, $category: Int!, $detail: String){
   submitReport(activity: $activity, category: $category, detail: $detail) {
     success
     error

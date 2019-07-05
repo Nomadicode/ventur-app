@@ -247,8 +247,6 @@ export default {
       this.event.startDatetime = null
       this.event.endDatetime = null
       this.event.frequency = null
-      this.event.interval = null
-      this.event.days = []
     },
     setCurrentLocation () {
       this.$refs.location.geolocate()
@@ -262,7 +260,6 @@ export default {
       var self = this
       var data = Object.assign({}, self.event)
       data.groups = data.groups ? data.groups.join(',') : ''
-      data.days = data.days ? data.days.join(',') : ''
       data.price = data.price ? data.price : 0.00
 
       this.$apollo.mutate({

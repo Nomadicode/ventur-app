@@ -1,26 +1,17 @@
 <template>
   <div class="restriction-box">
-    <v-chip
+    <v-icon
       v-if="isNsfw"
-      small
-      disabled
-      color="warning">
-      <v-icon size="14px">fas fa-ban</v-icon>
-    </v-chip>
-    <v-chip
+      color="error"
+      size="14px">fas fa-ban</v-icon>
+    <v-icon
       v-if="alcoholPresent"
-      small
-      disabled
-      color="error">
-      <v-icon size="14px">fas fa-glass-martini-alt</v-icon>
-    </v-chip>
-    <v-chip
+      color="warning"
+      size="14px">fas fa-glass-martini-alt</v-icon>
+    <v-icon
       v-if="handicapFriendly"
-      small
-      disabled
-      color="blue">
-      <v-icon size="16px">fa fa-wheelchair</v-icon>
-    </v-chip>
+      color="blue"
+      size="16px">fa fa-wheelchair</v-icon>
   </div>
 </template>
 

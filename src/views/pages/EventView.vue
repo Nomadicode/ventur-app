@@ -18,7 +18,8 @@
 
     <event-list
       ref="events"
-      class="pad-sides--half space-top--triple"
+      class="pad-sides--half pad-top--double space-top--1_5"
+      @on-scroll="onScroll"
       :saved="showSaved"
       :filters="filters"></event-list>
 
@@ -47,9 +48,18 @@ export default {
   name: 'EventView',
   mounted () {
     if (this.$route.params.id) {
-      var paramArr = atob(this.$route.params.id).split('-')
-      window.EventBus.$emit('load:event', paramArr[1])
+      window.EventBus.$emit('load:event', this.$route.params.id)
     }
+    // var self = this
+    // this.$refs.events.$el.onscroll = (elem) => {
+    //   var scrollPos = elem.target.scrollTop
+
+    //   if (scrollPos >= 15) {
+    //     self.hideToggle = true
+    //   } else {
+    //     self.hideToggle = false
+    //   }
+    // }
   },
   data () {
     return {
@@ -61,7 +71,8 @@ export default {
         startDate: moment().format('YYYY-MM-DD'),
         endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
         price: null,
-        duration: null
+        duration: null,
+        radius: 10
       }
     }
   },
@@ -71,6 +82,20 @@ export default {
     },
     openEventModal () {
       window.EventBus.$emit('event:add')
+    },
+    onScroll (scrollPos) {
+      if (scrollPos >= 15) {
+        this.hideToggle = true
+      } else {
+        this.hideToggle = false
+      }
+    }
+  },
+  watch: {
+    $route (to, from) {
+      if (to.params && to.params.id) {
+        window.EventBus.$emit('load:event', to.params.id)
+      }
     }
   },
   components: {

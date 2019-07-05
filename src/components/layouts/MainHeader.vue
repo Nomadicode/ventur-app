@@ -13,6 +13,11 @@
 
     <div class="header-right">
       <v-icon
+        v-if="$route.name === 'events'"
+        color="white"
+        class="menu-icon"
+        @click="refreshEvents">refresh</v-icon>
+      <v-icon
         v-if="$route.name === 'profile'"
         color="white"
         class="menu-icon"
@@ -27,6 +32,9 @@ export default {
   methods: {
     openSettingsMenu () {
       window.EventBus.$emit('profile:settings')
+    },
+    refreshEvents () {
+      window.EventBus.$emit('events:refresh')
     }
   }
 }

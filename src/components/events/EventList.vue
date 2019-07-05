@@ -1,13 +1,18 @@
 <template>
-  <div class="event-list">
+  <div ref='infiniteScroll' class="event-list">
     <event-card
-      v-for="activity of activities"
+      v-for="activity of events"
       :key="activity.title"
       :item="activity"
       @refresh="refresh"></event-card>
 
+    <el-button
+      size="mini"
+      v-if="hasMore && events.length > 0 && !$apollo.loading"
+      class="fill-width">Load More</el-button>
+
     <div
-      v-if="activities && activities.length === 0 && !$apollo.loading"
+      v-if="events && events.length === 0 && !$apollo.loading"
       class="empty">
         {{ emptyMessage }}
     </div>
@@ -32,7 +37,7 @@ export default {
       default: () => { return {} }
     },
     creator: {
-      type: Number,
+      type: String,
       default: null
     },
     saved: {
@@ -56,7 +61,16 @@ export default {
           saved: this.saved,
           page: this.page
         }
-      }
+      },
+      result ({ data, loading, networkStatus }) {
+        var events = (data) ? data.activities : []
+        if (this.page === 1) {
+          this.events = events
+        } else {
+          this.events = this.events.concat(events)
+        }
+      },
+      manual: true
     }
   },
   mounted () {
@@ -64,10 +78,23 @@ export default {
     window.EventBus.$on('events:refresh', () => {
       self.refresh()
     })
+
+    this.$refs.infiniteScroll.onscroll = (elem) => {
+      var scrollPos = elem.target.scrollTop
+      self.$emit('on-scroll', scrollPos)
+
+      // var scrollHeight = elem.target.scrollHeight - elem.target.offsetHeight
+
+      // if (scrollHeight === scrollPos) {
+      // //  this.fetchNext()
+      // }
+    }
   },
   data () {
     return {
-      page: 1
+      page: 1,
+      hasMore: true,
+      events: []
     }
   },
   computed: {
@@ -75,10 +102,11 @@ export default {
   },
   methods: {
     refresh () {
-      this.$apollo.queries.activities.refetch()
-    },
-    fetchNext () {
-      console.log('test', this.page)
+      if (this.$apollo.queries && this.$apollo.queries.activities) {
+        this.page = 1
+        this.$refs.infiniteScroll.scrollTop = 0
+        this.$apollo.queries.activities.refetch()
+      }
     }
   },
   components: {

@@ -38,6 +38,7 @@
     "vue-axios": "^2.1.4",
     "vue-google-autocomplete": "^1.1.0",
     "vue-inputmask": "^0.2.1",
+    "vue-pull-to": "^0.1.7",
     "vue-qriously": "^1.1.1",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.7",
