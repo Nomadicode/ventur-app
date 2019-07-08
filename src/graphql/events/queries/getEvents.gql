@@ -10,8 +10,8 @@ query Activities($latitude: Float!, $longitude: Float!, $filters: String, $saved
     minimumAge
     maximumAge
     handicapFriendly
-    price
     distance
+    price
     media
     nextOccurrence
     location {

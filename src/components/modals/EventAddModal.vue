@@ -240,6 +240,7 @@ export default {
   methods: {
     close () {
       window.EventBus.$emit('events:refresh')
+      this.event = Object.assign({}, Event)
       this.$refs.location.clear()
       this.modal = false
     },

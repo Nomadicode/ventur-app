@@ -66,8 +66,9 @@ export default {
       result ({ data, loading, networkStatus }) {
         this.sentRequests = []
         if (data) {
-          for (var request of data.sentFriendRequests) {
-            this.sentRequests.push(request.toUser)
+          var request = data.sentFriendRequests
+          for (var item of request) {
+            this.sentRequests.push(item.toUser)
           }
         }
       }

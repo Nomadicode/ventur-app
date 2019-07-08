@@ -1,4 +1,4 @@
-mutation RemoveFriendFromGroup($groupId: Int!, $memberId:Int!){
+mutation RemoveFriendFromGroup($groupId: Int!, $memberId:ID!){
   removeFriendFromGroup(groupId: $groupId, memberId: $memberId) {
     success
     error

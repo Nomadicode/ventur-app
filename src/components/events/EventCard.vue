@@ -12,7 +12,7 @@
           wrap>
           <v-flex xs9>
             <h4 class="title">{{ item.name }}</h4>
-            <div class="location">{{ item.distance }} miles away</div>
+            <div class="location">{{ item.distance }}</div>
           </v-flex>
           <v-flex xs3 class="date-field">
             <div class="date">{{ date }}</div>

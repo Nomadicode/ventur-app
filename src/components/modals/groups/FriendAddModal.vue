@@ -60,7 +60,7 @@ export default {
   props: {
     friendId: {
       default: null,
-      type: Number
+      type: String
     },
     show: {
       default: false,
@@ -71,7 +71,7 @@ export default {
     friendGroups: {
       query: getGroups,
       result ({ data, loading, networkStatus }) {
-        this.groups = data.friendGroups
+        this.groups = (data) ? data.friendGroups : []
         this.loading = false
       }
     }

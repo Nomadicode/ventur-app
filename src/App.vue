@@ -17,6 +17,8 @@
 import { mapGetters } from 'vuex'
 import moment from 'moment-timezone'
 
+import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
+
 export default {
   name: 'App',
   created () {
@@ -29,14 +31,25 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('UserModule', ['token'])
+    ...mapGetters('UserModule', ['token']),
+    ...mapGetters('AppState', ['currentLocation', 'timezone'])
   },
   methods: {
     updateLocation () {
       if (navigator.geolocation) {
         var self = this
         navigator.geolocation.getCurrentPosition(function (location) {
-          self.$store.commit('AppState/SET_LOCATION', location.coords)
+          if (!self.currentLocation || (self.currentLocation.latitude !== location.coords.latitude && self.currentLocation.longitude !== location.coords.longitude)) {
+            self.$store.commit('AppState/SET_LOCATION', location.coords)
+            self.$apollo.mutate({
+              mutation: updateProfile,
+              variables: {
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                timezone: self.timezone
+              }
+            }).then(function (data) {})
+          }
         })
       }
 

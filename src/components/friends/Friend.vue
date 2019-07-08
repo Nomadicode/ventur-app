@@ -75,7 +75,7 @@
       </v-layout>
     </v-card>
     <group-add-modal
-      :friendId="friend.pk"
+      :friendId="friend.id"
       :show="groupModalVisible"
       @close="groupModalVisible = false"></group-add-modal>
   </v-flex>

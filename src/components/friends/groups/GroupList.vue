@@ -65,7 +65,9 @@ export default {
       window.EventBus.$emit('group:add')
     },
     refetch () {
-      this.$apollo.queries.friendGroups.refetch()
+      if (this.$apollo.queries) {
+        this.$apollo.queries.friendGroups.refetch()
+      }
     }
   },
   components: {

@@ -1,5 +1,5 @@
-mutation UpdateProfile ($name: String, $email: String, $handle: String, $dateOfBirth: Date, $profilePicture: String){
-  updateProfile(name: $name, email: $email, handle: $handle, dateOfBirth: $dateOfBirth, profilePicture: $profilePicture) {
+mutation UpdateProfile ($name: String, $email: String, $handle: String, $dateOfBirth: Date, $profilePicture: String, $timezone: String, $latitude: Float, $longitude: Float){
+  updateProfile(name: $name, email: $email, handle: $handle, dateOfBirth: $dateOfBirth, profilePicture: $profilePicture, timezone: $timezone, latitude: $latitude, longitude: $longitude) {
     success
     error
     user {

@@ -8,7 +8,7 @@
 
     <el-button
       size="mini"
-      v-if="hasMore && events.length > 0 && !$apollo.loading"
+      v-if="hasMore && events && events.length > 10 && !$apollo.loading"
       class="fill-width">Load More</el-button>
 
     <div

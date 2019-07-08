@@ -14,6 +14,10 @@ const AppState = {
     },
     SET_TIMEZONE (state, timezone) {
       state.timezone = timezone
+    },
+    RESET (state) {
+      state.location = null
+      state.timezone = null
     }
   },
   getters: {

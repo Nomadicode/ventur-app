@@ -1,4 +1,4 @@
-mutation AddFriendToGroup ($groupId: Int!, $memberId: Int!) {
+mutation AddFriendToGroup ($groupId: Int!, $memberId: String!) {
   addFriendToGroup (groupId: $groupId, memberId: $memberId) {
     success
     error,
@@ -6,7 +6,7 @@ mutation AddFriendToGroup ($groupId: Int!, $memberId: Int!) {
       pk
       name
       friends {
-        pk
+        id
         name
       }
     }
