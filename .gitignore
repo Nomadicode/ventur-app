@@ -2,6 +2,7 @@
 node_modules/
 /dist/
 /www/
+/platforms/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

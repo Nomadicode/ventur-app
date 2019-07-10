@@ -21,14 +21,14 @@
       class="pad-sides--half pad-top--double space-top--1_5"
       @on-scroll="onScroll"
       :saved="showSaved"
-      :filters="filters"></event-list>
+      :filters="filters"
+      centered></event-list>
 
     <v-btn
       color="primary"
       class="primary-action"
       bottom
       right
-      small
       fab
       fixed
       @click="openEventModal">

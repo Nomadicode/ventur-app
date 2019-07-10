@@ -84,7 +84,6 @@
         <div class="pad-top--half">
           <label class="field-label bold block pad-top--half pad-bottom--quarter">Email</label>
           <el-input
-            size="small"
             v-model="editedUser.email">
             <el-button
               v-if="editedUser.email !== user.email"
@@ -94,10 +93,9 @@
           </el-input>
         </div>
 
-        <div>
-          <label class="field-label bold block pad-top--half pad-bottom--quarter">Handle</label>
+        <div class="space-top">
+          <label class="field-label bold block pad-bottom--quarter">Handle</label>
           <el-input
-            size="small"
             v-model="editedUser.handle">
             <template slot="prepend">@</template>
             <el-button
@@ -108,10 +106,9 @@
           </el-input>
         </div>
 
-        <div>
-          <label class="field-label bold block pad-top--half pad-bottom--quarter">Date of Birth</label>
+        <div class="space-top">
+          <label class="field-label bold block pad-bottom--quarter">Date of Birth</label>
           <el-input
-            size="small"
             v-model="editedUser.dateOfBirth"
             v-inputmask
             data-inputmask="'mask': '99/99/9999', 'greedy': 'true'"

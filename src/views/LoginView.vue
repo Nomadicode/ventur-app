@@ -13,13 +13,11 @@
       <form class="fill-width" v-if="loginActive">
         <label class="field-label accent-color">Email</label>
         <el-input
-          size="small"
           v-model="login.email"
           placeholder="test@example.com" />
 
         <label class="field-label accent-color block pad-top--half">Password</label>
         <el-input
-          size="small"
           v-model="login.password"
           placeholder="password"
           show-password />
@@ -39,19 +37,16 @@
       <form class="fill-width" v-if="registerActive">
         <label class="field-label accent-color block pad-top--half">Full Name</label>
         <el-input
-          size="small"
           v-model="register.name"
           placeholder="John Smith" />
 
         <label class="field-label accent-color block pad-top--half">Email</label>
         <el-input
-          size="small"
           v-model="register.email"
           placeholder="test@example.com" />
 
         <label class="field-label accent-color block pad-top--half">Password</label>
         <el-input
-          size="small"
           class="pad-bottom--half"
           v-model="register.password"
           placeholder="password"

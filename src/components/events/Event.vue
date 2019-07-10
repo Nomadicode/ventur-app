@@ -184,6 +184,14 @@ export default {
           })
           window.EventBus.$emit('loading:event-random', false)
         }
+      },
+      function (error) {
+        console.error(error)
+        self.$message({
+          type: 'error',
+          message: 'Unable to find your location, please make sure location services are enabled'
+        })
+        window.EventBus.$emit('loading:event-random', false)
       })
     })
 
@@ -201,6 +209,14 @@ export default {
           })
           window.EventBus.$emit('loading:event', value, false)
         }
+      },
+      function (error) {
+        console.error(error)
+        self.$message({
+          type: 'error',
+          message: 'Unable to find your location, please make sure location services are enabled'
+        })
+        window.EventBus.$emit('loading:event', value, false)
       })
     })
   },
@@ -324,14 +340,27 @@ export default {
     fetchRandomActivity () {
       var self = this
       window.EventBus.$emit('loading:event-random', true)
-      return this.$apollo.query({
-        query: getRandomEvent,
-        variables: self.currentLocation,
-        fetchPolicy: 'no-cache'
-      }).then(function (response) {
-        self.event = response.data.randomActivity
-        return Promise.resolve(response)
-      })
+      if (self.currentLocation) {
+        return this.$apollo.query({
+          query: getRandomEvent,
+          variables: self.currentLocation,
+          fetchPolicy: 'no-cache'
+        }).then(function (response) {
+          self.event = response.data.randomActivity
+          return Promise.resolve(response)
+        },
+        function (error) {
+          console.error(error)
+          self.$message({
+            type: 'error',
+            message: 'Unable to fetch an event'
+          })
+          window.EventBus.$emit('loading:event-random', false)
+          return Promise.reject(new Error('Fetch Error'))
+        })
+      } else {
+        return Promise.reject(new Error('LocationMissing'))
+      }
     },
     toggleReportMenu () {
       this.showReportMenu = !this.showReportMenu

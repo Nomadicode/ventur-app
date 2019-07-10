@@ -13,8 +13,15 @@
 
     <div
       v-if="events && events.length === 0 && !$apollo.loading"
-      class="empty">
+      class="empty"
+      :class="{'center--vertical': centered}">
         {{ emptyMessage }}
+    </div>
+
+    <div
+      v-if="error"
+      class="error">
+      Driftr needs access to your location to function properly.
     </div>
 
     <loading-icon v-if="$apollo.loading"></loading-icon>
@@ -35,6 +42,10 @@ export default {
     filters: {
       type: Object,
       default: () => { return {} }
+    },
+    centered: {
+      type: Boolean,
+      default: false
     },
     creator: {
       type: String,
@@ -70,14 +81,19 @@ export default {
           this.events = this.events.concat(events)
         }
       },
-      manual: true
+      skip: true
     }
   },
   mounted () {
     var self = this
+
     window.EventBus.$on('events:refresh', () => {
       self.refresh()
     })
+
+    if (this.currentLocation) {
+      this.toggleQuery()
+    }
 
     this.$refs.infiniteScroll.onscroll = (elem) => {
       var scrollPos = elem.target.scrollTop
@@ -94,6 +110,7 @@ export default {
     return {
       page: 1,
       hasMore: true,
+      error: true,
       events: []
     }
   },
@@ -107,6 +124,10 @@ export default {
         this.$refs.infiniteScroll.scrollTop = 0
         this.$apollo.queries.activities.refetch()
       }
+    },
+    toggleQuery () {
+      this.$apollo.queries.activities.skip = !this.$apollo.queries.activities.skip
+      this.error = !this.error
     }
   },
   components: {
@@ -116,6 +137,16 @@ export default {
   watch: {
     filters (newValue, oldValue) {
       this.refresh()
+    },
+    currentLocation (newValue, oldValue) {
+      console.log(newValue, oldValue)
+      if (newValue.latitude == null || newValue.longitude == null) {
+        this.$apollo.queries.activities.skip = true
+        this.error = true
+      } else {
+        this.$apollo.queries.activities.skip = false
+        this.error = false
+      }
     }
   }
 }

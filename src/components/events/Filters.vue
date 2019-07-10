@@ -9,7 +9,7 @@
           class="fill-width space-none filter-btn"
           type="primary"
           plain
-          size="mini"
+          size="small"
           v-on="on"
         >
           <v-icon color="primary" size="14">add</v-icon>

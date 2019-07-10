@@ -10,7 +10,7 @@
 @import 'profile';
 
 html {
-  font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+  // font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -27,6 +27,10 @@ html {
   background: linear-gradient(135deg, #4AC1BB 0%, #9DDDB6 60%, #D1ECB5 100%);
   background-repeat: no-repeat;
   background-size: cover; 
+}
+
+.application {
+  font-family: 'Merriweather Sans', Tahoma, Verdana, sans-serif;
 }
 
 .v-btn--bottom:not(.v-btn--absolute), .v-speed-dial--bottom:not(.v-speed-dial--absolute) {
@@ -96,10 +100,6 @@ html {
 }
 // #endregion
 
-.el-input__prefix, .el-input__suffix {
-  height: inherit;
-}
-
 .main-container {
   height: calc(100vh - 136px);
   width: 100%;
@@ -135,12 +135,16 @@ html {
   min-width: 0;
 }
 
-h1 { font-size: 2rem; font-weight: bold; }
-h2 { font-size: 1.75rem; font-weight: bold; }
-h3 { font-size: 1.50rem; font-weight: bold; }
-h4 { font-size: 1.25rem; font-weight: bold; }
-h5 { font-size: 1.00rem; font-weight: bold; }
-h6 { font-size: 0.75rem; font-weight: bold; }
+.el-slider__button-wrapper {
+  z-index: 3;
+}
+
+h1 { font-size: 2rem; font-weight: 700; }
+h2 { font-size: 1.75rem; font-weight: 700; }
+h3 { font-size: 1.50rem; font-weight: 700; letter-spacing: 2px; }
+h4 { font-size: 1.25rem; font-weight: 700; }
+h5 { font-size: 1.00rem; font-weight: 700; }
+h6 { font-size: 0.75rem; font-weight: 700; }
 
 .small-text { font-size: 0.8rem; }
 
@@ -390,7 +394,7 @@ h6 { font-size: 0.75rem; font-weight: bold; }
   color: $secondary-text-color;
   line-height:0.1em; 
   margin:10px 0 20px;
-  font-weight: 200;
+  font-weight: 400;
   text-transform: uppercase;
   margin: 30px 0 15px;
 
@@ -402,8 +406,8 @@ h6 { font-size: 0.75rem; font-weight: bold; }
 
 .section-subheader {
   margin-top: -5px;
-  font-weight: 100;
-  font-size: 0.7rem;
+  font-weight: 400;
+  font-size: 0.8rem;
   margin-bottom: 20px;
   color: $secondary-text-color;
   display: block;

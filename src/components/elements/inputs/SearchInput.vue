@@ -1,15 +1,13 @@
 <template>
   <el-input
     v-model="query"
+    size="small"
     class="search-field"
-    :placeholder="placeholder"
-    size="mini">
-    <el-button
-      slot="append"
-      class="search-btn"
-      icon="el-icon-search"
-      size="mini"
-      @click="submit"></el-button>
+    :placeholder="placeholder">
+    <i
+      slot="suffix"
+      class="el-icon-search el-input__icon search-btn"
+      @click="submit"></i>
   </el-input>
 </template>
 
