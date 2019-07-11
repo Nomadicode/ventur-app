@@ -1,0 +1,6 @@
+mutation DeleteActivity ($pk: ID!) {
+  deleteActivity (pk: $pk) {
+    success
+    error
+  }
+}

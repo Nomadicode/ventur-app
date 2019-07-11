@@ -155,13 +155,15 @@
     }
 
     .body {
-      max-height: calc(100vh - 343px);
+      height: calc(100vh - 343px);
       overflow: auto;
       padding: 0 15px 60px;
       font-size: 0.95rem;
       font-weight: 200;
     }
-
+    .settings-btn {
+      bottom: 75px;
+    }
     .footer {
       position: absolute;
       display: flex;

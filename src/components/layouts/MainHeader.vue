@@ -5,6 +5,10 @@
     class="menu-header"
     flat
     height="50">
+    <div class="header-left">
+
+    </div>
+
     <img
       class="logo"
       alt="Driftr Logo"

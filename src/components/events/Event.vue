@@ -134,6 +134,44 @@
       <v-card-text class="body" v-html="event.description">
       </v-card-text>
 
+      <v-speed-dial
+        v-if="createdByUser"
+        class="settings-btn"
+        v-model="fab"
+        absolute
+        bottom
+        right
+      >
+        <template v-slot:activator>
+          <v-btn
+            v-model="fab"
+            color="blue darken-2"
+            dark
+            small
+            fab
+          >
+            <v-icon>settings</v-icon>
+            <v-icon>close</v-icon>
+          </v-btn>
+        </template>
+        <v-btn
+          fab
+          dark
+          small
+          color="green"
+          @click="editActivity">
+          <v-icon>edit</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="red"
+          @click="deleteActivity">
+          <v-icon>delete</v-icon>
+        </v-btn>
+      </v-speed-dial>
+
       <ul class="footer">
         <li>{{ price }}</li>
         <li>{{ duration }}</li>
@@ -157,6 +195,7 @@ import getEvent from '@/graphql/events/queries/getEvent.gql'
 import getRandomEvent from '@/graphql/events/queries/getRandomEvent.gql'
 import saveEvent from '@/graphql/events/mutations/saveEvent.gql'
 import unsaveEvent from '@/graphql/events/mutations/unsaveEvent.gql'
+import removeEvent from '@/graphql/events/mutations/removeEvent.gql'
 
 import DefaultActivityImage from '@/assets/images/default_activity.jpg'
 import DirectionButton from '@/components/elements/buttons/DirectionButton'
@@ -224,14 +263,22 @@ export default {
     return {
       DefaultActivityImage: DefaultActivityImage,
       modal: false,
+      fab: false,
       showReportMenu: false,
       event: {}
     }
   },
   computed: {
+    ...mapGetters('UserModule', ['userId']),
     ...mapGetters('AppState', ['currentLocation']),
     eventImage () {
       return this.event && this.event.media ? this.event.media : DefaultActivityImage
+    },
+    createdByUser () {
+      if (this.event && this.event.createdBy) {
+        return this.event.createdBy.id === this.userId
+      }
+      return false
     },
     duration () {
       if (!this.event || !this.event.duration) {
@@ -321,7 +368,25 @@ export default {
     close () {
       this.event = {}
       this.modal = false
+      window.EventBus.$emit('events:refresh')
       this.$emit('close')
+    },
+    deleteActivity () {
+      var self = this
+      this.$confirm('Are you sure you want to remove this activity? (this cannot be undone)')
+        .then((response) => {
+          self.$apollo.mutate({
+            mutation: removeEvent,
+            variables: {
+              pk: self.event.id
+            }
+          }).then((response) => {
+            self.close()
+          })
+        })
+    },
+    editActivity () {
+      console.log('Edit Event')
     },
     fetchActivity (activityId) {
       var self = this
