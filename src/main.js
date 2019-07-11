@@ -66,7 +66,7 @@ Vue.use(VueAuthenticate, {
       clientId: '482160618854082',
       scope: ['public_profile', 'email'],
       display: 'popup',
-      redirectUri: 'http://localhost:8080/'
+      redirectUri: 'http://localhost:8000/auth/facebook/'
     }
   }
 })
