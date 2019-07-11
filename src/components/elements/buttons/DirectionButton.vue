@@ -1,11 +1,11 @@
 <template>
-  <el-button
-    size="small"
+  <a
+    class="direction-btn el-button space-right--half el-button--primary el-button--small"
     :href="geoLink"
-    type="primary">
+    target="_blank">
     Directions
     <v-icon class="font-small">near_me</v-icon>
-  </el-button>
+  </a>
 </template>
 
 <script>

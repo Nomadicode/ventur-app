@@ -15,7 +15,6 @@ mutation SaveActivity ($activity: ID!) {
         alcoholPresent
         handicapFriendly
         nextOccurrence
-        prevOccurrence
         saved
         location {
           address
