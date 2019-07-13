@@ -4,7 +4,7 @@
     light
     scrollable
     v-model="modal">
-    <v-card class="modal">
+    <v-card class="modal information-modal">
       <v-card-title
         class="primary-background accent-color modal-header"
         primary-title>
@@ -18,16 +18,16 @@
       <v-card-text class="full-height bg-accent-background">
         <header class="major">
           <h2>Privacy Policy</h2>
-          <p>We value your privacy above everything.
-            <span class="effective-date">Effective date: November 25, 2018</span>
+          <p class='sub'>
+            Effective date: July 10, 2019
           </p>
         </header>
 
-        <p>Driftr, LLC ("us", "we", or "our") operates the Driftr mobile application (the "Service").</p>
+        <p>Nomadicode, LLC ("us", "we", or "our") operates the Driftr mobile application (the "Service").</p>
 
         <p>
           This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you
-          have associated with that data. Our Privacy Policy  for Driftr, LLC is managed through
+          have associated with that data. Our Privacy Policy for Nomadicode, LLC is managed through
           <a href="https://www.freeprivacypolicy.com/free-privacy-policy-generator.php">Free Privacy Policy Website</a>.
         </p>
 
@@ -88,7 +88,7 @@
 
         <h2>Use of Data</h2>
 
-        <p>Driftr, LLC uses the collected data for various purposes:</p>
+        <p>Nomadicode, LLC uses the collected data for various purposes:</p>
         <ul>
           <li>To provide and maintain the Service</li>
           <li>To notify you about changes to our Service</li>
@@ -111,7 +111,7 @@
         <p>
           Your consent to this Privacy Policy followed by your submission of such information represents your agreement to that transfer.</p>
         <p>
-          Driftr, LLC will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy
+          Nomadicode, LLC will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy
           and no transfer of your Personal Data will take place to an organization or a country unless there are adequate controls in place including
           the security of your data and other personal information.
         </p>
@@ -119,10 +119,10 @@
         <h2>Disclosure Of Data</h2>
 
         <h3>Legal Requirements</h3>
-        <p>Driftr, LLC may disclose your Personal Data in the good faith belief that such action is necessary to:</p>
+        <p>Nomadicode, LLC may disclose your Personal Data in the good faith belief that such action is necessary to:</p>
         <ul>
           <li>To comply with a legal obligation</li>
-          <li>To protect and defend the rights or property of Driftr, LLC</li>
+          <li>To protect and defend the rights or property of Nomadicode, LLC</li>
           <li>To prevent or investigate possible wrongdoing in connection with the Service</li>
           <li>To protect the personal safety of users of the Service or the public</li>
           <li>To protect against legal liability</li>
@@ -195,8 +195,8 @@
         <h2>Contact Us</h2>
         <p>If you have any questions about this Privacy Policy, please contact us:</p>
         <ul>
-            <li>By email: privacy@getdriftr.com</li>
-            <li>By phone number: (385) 626-6380</li>
+            <li>By email: privacy@driftr.app</li>
+            <li>By phone number: (435) 228-5258</li>
         </ul>
       </v-card-text>
     </v-card>

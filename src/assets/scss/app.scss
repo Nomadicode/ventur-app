@@ -437,3 +437,51 @@ h6 { font-size: 0.75rem; font-weight: 700; }
     border-bottom: 1px solid #efefef;
   }
 }
+
+.information-modal {
+  .major {
+    text-align: center;
+    padding: 10px;
+    
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    .sub {
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+  }
+
+  p {
+    padding: 8px 0;
+    font-size: 0.8rem;
+  }
+
+  h2 {
+    text-decoration: underline;
+    padding: 10px 0;
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    padding-bottom: 15px;
+  }
+
+  h4 {
+    font-size: 0.9rem;
+    padding: 8px 0;
+  }
+
+  ul {
+    margin-left: 30px;
+    margin-bottom: 10px;
+    list-style-type: disc;
+    font-size: 0.7rem;
+
+    li {
+      padding: 2px 0;
+    }
+  }
+}
