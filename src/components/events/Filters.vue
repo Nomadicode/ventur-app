@@ -164,7 +164,7 @@ import PriceInput from '@/components/elements/inputs/PriceInput'
 export default {
   name: 'EventFilters',
   props: ['value'],
-  mounted () {
+  created () {
     this.filters = Object.assign({}, this.value)
   },
   data () {

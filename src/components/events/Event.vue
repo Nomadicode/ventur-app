@@ -174,7 +174,7 @@
 
       <ul class="footer">
         <li>{{ price }}</li>
-        <li>{{ duration }}</li>
+        <li></li>
         <li>{{ ageRange }}</li>
       </ul>
     </v-card>
@@ -184,6 +184,10 @@
       :open="showReportMenu"
       @refresh="close"
       @close="toggleReportMenu"></report-modal>
+
+    <!-- <event-edit-modal
+      :value="event"
+      @close="close"></event-edit-modal> -->
   </v-dialog>
 </template>
 
@@ -199,6 +203,7 @@ import removeEvent from '@/graphql/events/mutations/removeEvent.gql'
 
 import DefaultActivityImage from '@/assets/images/default_activity.jpg'
 import DirectionButton from '@/components/elements/buttons/DirectionButton'
+import EventEditModal from '@/components/modals/EventEditModal'
 import ReportModal from '@/components/modals/ReportModal'
 import RestrictionBox from '@/components/elements/RestrictionBox'
 
@@ -365,10 +370,12 @@ export default {
         self.event.saved = false
       })
     },
-    close () {
+    close (refresh = false) {
       this.event = {}
       this.modal = false
-      window.EventBus.$emit('events:refresh')
+      if (refresh) {
+        window.EventBus.$emit('events:refresh')
+      }
       this.$emit('close')
     },
     deleteActivity () {
@@ -381,12 +388,12 @@ export default {
               pk: self.event.id
             }
           }).then((response) => {
-            self.close()
+            self.close(true)
           })
         })
     },
     editActivity () {
-      console.log('Edit Event')
+      // window.EventBus.$emit('event:edit', this.event.id)
     },
     fetchActivity (activityId) {
       var self = this
@@ -433,6 +440,7 @@ export default {
   },
   components: {
     DirectionButton,
+    EventEditModal,
     ReportModal,
     RestrictionBox
   }

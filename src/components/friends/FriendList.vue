@@ -49,6 +49,12 @@
           :friend="friend"
           :isFriend="true"
           @refresh="refetch"></friend>
+
+        <el-button
+          size="mini"
+          v-if="hasMore && !$apollo.loading"
+          class="fill-width"
+          @click="fetchNext">Load More</el-button>
       </v-layout>
 
       <div v-if="(!friends || friends.length === 0) && !loading" class="empty">
@@ -79,8 +85,19 @@ export default {
       pollInterval: 10000,
       query: getFriendships,
       result ({ data, loading, networkStatus }) {
-        this.friends = (data) ? data.friendships : []
-        this.loading = false
+        if (data) {
+          this.hasMore = data.friendships.pageInfo.hasNextPage
+
+          var friends = data.friendships.edges
+          var newFriends = friends.map(x => x.node)
+
+          if (this.cursor) {
+            this.friends = this.friends.concat(newFriends)
+          } else {
+            this.friends = newFriends
+          }
+          this.nextCursor = (friends.length > 0) ? friends[friends.length - 1]['cursor'] : null
+        }
       }
     },
     pendingFriendRequests: {
@@ -96,6 +113,9 @@ export default {
     return {
       loading: false,
       showFriendRequests: true,
+      cursor: null,
+      nextCursor: null,
+      hasMore: false,
       friendRequests: [],
       friends: []
     }
@@ -107,6 +127,9 @@ export default {
     refetch () {
       this.$apollo.queries.friendships.refetch()
       this.$apollo.queries.pendingFriendRequests.refetch()
+    },
+    fetchNext () {
+      this.cursor = this.nextCursor
     }
   },
   components: {

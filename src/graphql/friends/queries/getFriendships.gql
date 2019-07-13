@@ -1,8 +1,16 @@
-query friendships { 
-  friendships {
-    id
-    name
-    handle
-    profilePicture
+query friendships ($first: Int, $after: String) { 
+  friendships (first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        id
+        name
+        handle
+        profilePicture
+      }
+    }
   }
 }

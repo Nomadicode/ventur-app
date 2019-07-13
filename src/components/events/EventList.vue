@@ -8,8 +8,9 @@
 
     <el-button
       size="mini"
-      v-if="hasMore && events && events.length > 10 && !$apollo.loading"
-      class="fill-width">Load More</el-button>
+      v-if="hasMore && !$apollo.loading"
+      class="fill-width"
+      @click="fetchNext">Load More</el-button>
 
     <div
       v-if="events && events.length === 0 && !$apollo.loading"
@@ -70,15 +71,23 @@ export default {
           longitude: this.currentLocation.longitude,
           filters: this.filters,
           saved: this.saved,
-          page: this.page
+          first: this.pageSize,
+          after: this.cursor
         }
       },
       result ({ data, loading, networkStatus }) {
-        var events = (data) ? data.activities : []
-        if (this.page === 1) {
-          this.events = events
-        } else {
-          this.events = this.events.concat(events)
+        if (data) {
+          this.hasMore = data.activities.pageInfo.hasNextPage
+
+          var events = data.activities.edges
+          var newEvents = events.map(x => x.node)
+
+          if (this.cursor) {
+            this.events = this.events.concat(newEvents)
+          } else {
+            this.events = newEvents
+          }
+          this.nextCursor = events[events.length - 1]['cursor']
         }
       },
       skip: true
@@ -98,17 +107,13 @@ export default {
     this.$refs.infiniteScroll.onscroll = (elem) => {
       var scrollPos = elem.target.scrollTop
       self.$emit('on-scroll', scrollPos)
-
-      // var scrollHeight = elem.target.scrollHeight - elem.target.offsetHeight
-
-      // if (scrollHeight === scrollPos) {
-      // //  this.fetchNext()
-      // }
     }
   },
   data () {
     return {
-      page: 1,
+      pageSize: 10,
+      nextCursor: null,
+      cursor: null,
       hasMore: true,
       error: true,
       events: []
@@ -120,10 +125,15 @@ export default {
   methods: {
     refresh () {
       if (this.$apollo.queries && this.$apollo.queries.activities) {
-        this.page = 1
+        this.events = []
+        this.cursor = null
+        this.nextCursor = null
         this.$refs.infiniteScroll.scrollTop = 0
         this.$apollo.queries.activities.refetch()
       }
+    },
+    fetchNext () {
+      this.cursor = this.nextCursor
     },
     toggleQuery () {
       this.$apollo.queries.activities.skip = !this.$apollo.queries.activities.skip
@@ -139,7 +149,6 @@ export default {
       this.refresh()
     },
     currentLocation (newValue, oldValue) {
-      console.log(newValue, oldValue)
       if (newValue.latitude == null || newValue.longitude == null) {
         this.$apollo.queries.activities.skip = true
         this.error = true

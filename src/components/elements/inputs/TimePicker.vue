@@ -95,8 +95,8 @@ export default {
     },
     setTime (value = null) {
       if (value) {
-        var partInit = this.value.split(':')
-        var partSmall = partInit[1].split(' ')
+        var partInit = value.split(':')
+        var partSmall = (partInit.length === 2) ? partInit[1].split(' ') : [null, 'AM']
 
         this.selectedHour = partInit[0]
         this.selectedMinute = partSmall[0]

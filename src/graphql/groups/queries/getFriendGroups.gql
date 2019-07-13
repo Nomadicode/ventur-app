@@ -1,12 +1,20 @@
-query FriendGroups ($query: String) {
-  friendGroups (query: $query) {
-    pk
-    id
-    name
-    friends {
-      id
-      name
-      profilePicture
+query FriendGroupsPaged ($query: String, $first: Int, $after: String) {
+  friendGroupsPaged (query: $query, first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        pk
+        id
+        name
+        friends {
+          id
+          name
+          profilePicture
+        }
+      }
     }
   }
 }

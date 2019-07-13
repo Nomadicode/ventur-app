@@ -78,6 +78,7 @@ export default {
     return {
       queryResults: [],
       sentActive: false,
+      suggestions: [],
       sentRequests: []
     }
   },

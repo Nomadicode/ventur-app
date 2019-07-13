@@ -22,5 +22,9 @@ query activity($pk: ID!){
       latitude
       longitude
     }
+    schedule {
+      start
+      end
+    }
   }
 }

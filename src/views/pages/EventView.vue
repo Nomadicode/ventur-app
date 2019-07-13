@@ -50,16 +50,6 @@ export default {
     if (this.$route.params.id) {
       window.EventBus.$emit('load:event', this.$route.params.id)
     }
-    // var self = this
-    // this.$refs.events.$el.onscroll = (elem) => {
-    //   var scrollPos = elem.target.scrollTop
-
-    //   if (scrollPos >= 15) {
-    //     self.hideToggle = true
-    //   } else {
-    //     self.hideToggle = false
-    //   }
-    // }
   },
   data () {
     return {
@@ -70,7 +60,7 @@ export default {
       filters: {
         startDate: moment().format('YYYY-MM-DD'),
         endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
-        price: null,
+        price: 150.00,
         duration: null,
         radius: 10
       }

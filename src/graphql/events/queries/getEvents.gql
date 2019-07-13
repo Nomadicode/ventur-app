@@ -1,23 +1,31 @@
-query Activities($latitude: Float!, $longitude: Float!, $filters: String, $saved: Boolean, $createdBy: ID, $page: Int){
-  activities (latitude: $latitude, longitude: $longitude, filters: $filters, saved: $saved, createdBy: $createdBy, page: $page) {
-    pk
-    id
-    saved
-    name
-    description
-    alcoholPresent
-    isNsfw
-    minimumAge
-    maximumAge
-    handicapFriendly
-    distance
-    price
-    media
-    nextOccurrence
-    location {
-      address
-      latitude
-      longitude
+query Activities ($latitude: Float!, $longitude: Float!, $filters: String, $saved: Boolean, $createdBy: ID, $first: Int, $after: String) {
+  activities (latitude: $latitude, longitude: $longitude, filters: $filters, saved: $saved, createdBy: $createdBy, first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        pk
+        id
+        saved
+        name
+        description
+        alcoholPresent
+        isNsfw
+        minimumAge
+        maximumAge
+        handicapFriendly
+        distance
+        price
+        media
+        nextOccurrence
+        location {
+          address
+          latitude
+          longitude
+        }
+      }
     }
   }
 }

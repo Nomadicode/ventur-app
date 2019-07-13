@@ -1,4 +1,4 @@
-mutation RequestAccountDelete ($pk: Int!) {
+mutation RequestAccountDelete ($pk: ID!) {
   requestAccountDelete (pk: $pk) {
     success
     error

@@ -7,7 +7,13 @@
         :item="group"
         @refresh="refetch"></group-item>
 
-      <div v-if="(!groups || groups.length === 0) && !loading" class="empty">
+      <el-button
+        size="mini"
+        v-if="hasMore && !$apollo.loading"
+        class="fill-width"
+        @click="fetchNext">Load More</el-button>
+
+      <div v-if="(!groups || groups.length === 0) && !$apollo.loading" class="empty">
         <p>No groups found</p>
         <el-button
           class="secondary-text add-btn"
@@ -22,7 +28,7 @@
 </template>
 
 <script>
-import getFriendGroups from '@/graphql/groups/queries/getFriendGroups.gql'
+import getFriendGroupsPaged from '@/graphql/groups/queries/getFriendGroups.gql'
 
 import GroupItem from './GroupItem'
 
@@ -30,17 +36,30 @@ export default {
   name: 'GroupList',
   props: ['filter'],
   apollo: {
-    friendGroups: {
+    friendGroupsPaged: {
       pollInterval: 10000,
-      query: getFriendGroups,
+      query: getFriendGroupsPaged,
       variables () {
         return {
-          'query': this.filter
+          'query': this.filter,
+          'first': 10,
+          'after': this.cursor
         }
       },
       result ({ data, loading, networkStatus }) {
-        this.groups = (data) ? data.friendGroups : []
-        this.loading = false
+        if (data) {
+          this.hasMore = data.friendGroupsPaged.pageInfo.hasNextPage
+
+          var groups = data.friendGroupsPaged.edges
+          var newGroups = groups.map(x => x.node)
+
+          if (this.cursor) {
+            this.groups = this.groups.concat(newGroups)
+          } else {
+            this.groups = newGroups
+          }
+          this.nextCursor = groups[groups.length - 1]['cursor']
+        }
       }
     }
   },
@@ -57,6 +76,9 @@ export default {
   data () {
     return {
       loading: false,
+      cursor: null,
+      nextCursor: null,
+      hasMore: false,
       groups: []
     }
   },
@@ -66,8 +88,11 @@ export default {
     },
     refetch () {
       if (this.$apollo.queries) {
-        this.$apollo.queries.friendGroups.refetch()
+        this.$apollo.queries.friendGroupsPaged.refetch()
       }
+    },
+    fetchNext () {
+      this.cursor = this.nextCursor
     }
   },
   components: {
