@@ -14,7 +14,7 @@ export default {
   props: ['latitude', 'longitude'],
   computed: {
     geoLink () {
-      return 'geo:' + this.latitude + ',' + this.longitude
+      return 'geo:0,0?q=' + this.latitude + ',' + this.longitude
     }
   }
 }
