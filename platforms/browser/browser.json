@@ -4,12 +4,20 @@
     "uninstalled": []
   },
   "config_munge": {
-    "files": {}
+    "files": {
+      "config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"QRScanner\"><param name=\"browser-package\" value=\"QRScanner\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      }
+    }
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
     "cordova-plugin-appcenter-shared": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
@@ -17,6 +25,12 @@
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
     "cordova-plugin-appcenter-crashes": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "cordova-plugin-qrscanner": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   },
@@ -45,12 +59,27 @@
       "clobbers": [
         "AppCenter.Crashes"
       ]
+    },
+    {
+      "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
+      "id": "cordova-plugin-qrscanner.QRScanner",
+      "pluginId": "cordova-plugin-qrscanner",
+      "clobbers": [
+        "QRScanner"
+      ]
+    },
+    {
+      "file": "plugins/cordova-plugin-qrscanner/src/browser/plugin.min.js",
+      "id": "cordova-plugin-qrscanner.QRScannerProxy",
+      "pluginId": "cordova-plugin-qrscanner",
+      "runs": true
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-appcenter-shared": "0.2.2",
     "cordova-plugin-appcenter-analytics": "0.2.2",
-    "cordova-plugin-appcenter-crashes": "0.2.2"
+    "cordova-plugin-appcenter-crashes": "0.2.2",
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-qrscanner": "3.0.1"
   }
 }

@@ -15,6 +15,9 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "cordova-plugin-qrscanner": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   },
   "dependent_plugins": {

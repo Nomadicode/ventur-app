@@ -16,6 +16,9 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="QRScanner">
+        <param name="android-package" value="com.bitpay.cordova.qrscanner.QRScanner" />
+    </feature>
     <name>Driftr</name>
     <description>
         Driftr is a tool to connect users with activities in their current area. It aids travellers in finding things to do that may be less tourist focused and
@@ -40,5 +43,6 @@
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="orientation" value="portrait" />
+    <preference name="DisallowOverscroll" value="true" />
     <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />
 </widget>

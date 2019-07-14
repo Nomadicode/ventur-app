@@ -7,13 +7,16 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
     "cordova-plugin-appcenter-analytics": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
     "cordova-plugin-appcenter-crashes": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "cordova-plugin-qrscanner": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   },

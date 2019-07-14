@@ -23,12 +23,21 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "AppCenter.Crashes"
       ]
+    },
+    {
+      "id": "cordova-plugin-qrscanner.QRScanner",
+      "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
+      "pluginId": "cordova-plugin-qrscanner",
+      "clobbers": [
+        "QRScanner"
+      ]
     }
   ];
   module.exports.metadata = {
     "cordova-plugin-appcenter-shared": "0.2.2",
     "cordova-plugin-appcenter-analytics": "0.2.2",
     "cordova-plugin-appcenter-crashes": "0.2.2",
-    "cordova-plugin-whitelist": "1.3.3"
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-qrscanner": "3.0.1"
   };
 });

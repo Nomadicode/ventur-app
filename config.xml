@@ -18,14 +18,14 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="orientation" value="portrait" />
+    <preference name="DisallowOverscroll" value="true" />
     <platform name="android">
-        <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />\
+        <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />
         <icon background="static/android/background.xml" density="mdpi" foreground="static/android/foreground.xml" src="static/android/mdpi.png" />
         <icon background="static/android/background.xml" density="hdpi" foreground="static/android/foreground.xml" src="static/android/hdpi.png" />
         <icon background="static/android/background.xml" density="xhdpi" foreground="static/android/foreground.xml" src="static/android/xhdpi.png" />
         <icon background="static/android/background.xml" density="xxhdpi" foreground="static/android/foreground.xml" src="static/android/xxhdpi.png" />
         <icon background="static/android/background.xml" density="xxxhdpi" foreground="static/android/foreground.xml" src="static/android/xxxhdpi.png" />
-
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
@@ -35,5 +35,4 @@
     </platform>
     <plugin name="cordova-plugin-appcenter-analytics" spec="^0.2.0" />
     <plugin name="cordova-plugin-appcenter-crashes" spec="^0.2.0" />
-    <engine name="browser" spec="^5.0.4" />
 </widget>
