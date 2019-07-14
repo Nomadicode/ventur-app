@@ -12,12 +12,12 @@
         <param name="onload" value="true" />
         <param name="android-package" value="com.microsoft.azure.mobile.cordova.AppCenterCrashesPlugin" />
     </feature>
+    <feature name="QRScanner">
+        <param name="android-package" value="com.bitpay.cordova.qrscanner.QRScanner" />
+    </feature>
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
-    </feature>
-    <feature name="QRScanner">
-        <param name="android-package" value="com.bitpay.cordova.qrscanner.QRScanner" />
     </feature>
     <name>Driftr</name>
     <description>
@@ -42,6 +42,7 @@
     <icon background="static/android/background.xml" density="xxxhdpi" foreground="static/android/foreground.xml" src="static/android/xxxhdpi.png" />
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="android-minSdkVersion" value="19" />
     <preference name="orientation" value="portrait" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />

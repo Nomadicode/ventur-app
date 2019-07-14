@@ -13,10 +13,10 @@
     "cordova-plugin-appcenter-crashes": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-plugin-whitelist": {
+    "cordova-plugin-qrscanner": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-plugin-qrscanner": {
+    "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   },

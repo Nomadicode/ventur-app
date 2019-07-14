@@ -37,7 +37,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-appcenter-shared": "0.2.2",
     "cordova-plugin-appcenter-analytics": "0.2.2",
     "cordova-plugin-appcenter-crashes": "0.2.2",
-    "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-qrscanner": "3.0.1"
+    "cordova-plugin-qrscanner": "3.0.1",
+    "cordova-plugin-whitelist": "1.3.3"
   };
 });
