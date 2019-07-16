@@ -18,6 +18,9 @@
     },
     "cordova-plugin-qrscanner": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   },
   "dependent_plugins": {

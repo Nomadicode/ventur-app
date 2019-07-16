@@ -22,7 +22,7 @@
           placeholder="password"
           show-password />
 
-        <a class="reset-link pad-top--half" href="/password/forgot">forgot password?</a>
+        <router-link class="reset-link pad-top--half" :to="{ name: 'forgot-password' }">forgot password?</router-link>
       </form>
 
       <v-btn

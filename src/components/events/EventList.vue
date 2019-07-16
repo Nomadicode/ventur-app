@@ -8,7 +8,7 @@
 
     <el-button
       size="mini"
-      v-if="hasMore && !$apollo.loading"
+      v-if="hasMore && !error && !$apollo.loading"
       class="fill-width"
       @click="fetchNext">Load More</el-button>
 
@@ -87,7 +87,9 @@ export default {
           } else {
             this.events = newEvents
           }
-          this.nextCursor = events[events.length - 1]['cursor']
+          if (events.length > 0) {
+            this.nextCursor = events[events.length - 1]['cursor']
+          }
         }
       },
       skip: true
@@ -145,17 +147,23 @@ export default {
     LoadingIcon
   },
   watch: {
-    filters (newValue, oldValue) {
-      this.refresh()
+    filters: {
+      handler (newValue, oldValue) {
+        this.refresh()
+      },
+      deep: true
     },
-    currentLocation (newValue, oldValue) {
-      if (newValue.latitude == null || newValue.longitude == null) {
-        this.$apollo.queries.activities.skip = true
-        this.error = true
-      } else {
-        this.$apollo.queries.activities.skip = false
-        this.error = false
-      }
+    currentLocation: {
+      handler (newValue, oldValue) {
+        if (newValue.latitude == null || newValue.longitude == null) {
+          this.$apollo.queries.activities.skip = true
+          this.error = true
+        } else {
+          this.$apollo.queries.activities.skip = false
+          this.error = false
+        }
+      },
+      deep: true
     }
   }
 }

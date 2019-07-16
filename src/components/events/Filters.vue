@@ -164,7 +164,7 @@ import PriceInput from '@/components/elements/inputs/PriceInput'
 export default {
   name: 'EventFilters',
   props: ['value'],
-  created () {
+  mounted () {
     this.filters = Object.assign({}, this.value)
   },
   data () {
@@ -197,6 +197,7 @@ export default {
   methods: {
     close () {
       this.dialog = false
+      this.filters = Object.assign({}, this.value)
       this.$emit('close')
     },
     setDates (increment) {
@@ -217,7 +218,6 @@ export default {
     },
     save () {
       this.$emit('input', this.filters)
-      window.EventBus.$emit('events:refresh')
       this.dialog = false
     }
   },

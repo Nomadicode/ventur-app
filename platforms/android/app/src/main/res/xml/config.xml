@@ -19,6 +19,9 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    </feature>
     <name>Driftr</name>
     <description>
         Driftr is a tool to connect users with activities in their current area. It aids travellers in finding things to do that may be less tourist focused and

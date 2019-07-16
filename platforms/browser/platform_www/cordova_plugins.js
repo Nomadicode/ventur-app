@@ -46,7 +46,8 @@ module.exports.metadata =
     "cordova-plugin-appcenter-analytics": "0.2.2",
     "cordova-plugin-appcenter-crashes": "0.2.2",
     "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-qrscanner": "3.0.1"
+    "cordova-plugin-qrscanner": "3.0.1",
+    "cordova-plugin-geolocation": "4.0.2"
 }
 // BOTTOM OF METADATA
 });
