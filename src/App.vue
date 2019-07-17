@@ -22,6 +22,27 @@ import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
 export default {
   name: 'App',
   created () {
+    var app = {
+      initialize: function () {
+        this.bindEvents()
+      },
+
+      bindEvents: function () {
+        document.addEventListener('deviceready', this.onDeviceReady, false)
+      },
+
+      onDeviceReady: function () {
+        console.log('Device is ready')
+        universalLinks.subscribe('openEventDetailPage', app.eventDetailPageRequested)
+      },
+
+      eventDetailPageRequested: function (eventData) {
+        console.log(eventData)
+      }
+    }
+
+    app.initialize()
+
     this.updateLocation()
 
     window.setInterval(this.getLocation, 15000)

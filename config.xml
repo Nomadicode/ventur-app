@@ -20,6 +20,8 @@
     <preference name="android-minSdkVersion" value="19" />
     <preference name="orientation" value="portrait" />
     <preference name="DisallowOverscroll" value="true" />
+    <preference name="SplashScreenDelay" value="2000" />
+    <preference name="StatusBarBackgroundColor" value="transparent" />
     <platform name="android">
         <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />
         <icon background="static/android/background.xml" density="mdpi" foreground="static/android/foreground.xml" src="static/android/mdpi.png" />
@@ -28,6 +30,10 @@
         <icon background="static/android/background.xml" density="xxhdpi" foreground="static/android/foreground.xml" src="static/android/xxhdpi.png" />
         <icon background="static/android/background.xml" density="xxxhdpi" foreground="static/android/foreground.xml" src="static/android/xxxhdpi.png" />
         <allow-intent href="market:*" />
+        <splash src="static/android/splash/splash-hdpi.png" density="port-hdpi"/>
+        <splash src="static/android/splash/splash-ldpi.png" density="port-ldpi"/>
+        <splash src="static/android/splash/splash-mdpi.png" density="port-mdpi"/>
+        <splash src="static/android/splash/splash-xhdpi.png" density="port-xhdpi"/>
     </platform>
     <platform name="ios">
         <preference name="APP_SECRET" value="33fe45b1-717f-4c77-807b-af13ca261259" />

@@ -12,6 +12,9 @@
         <param name="onload" value="true" />
         <param name="android-package" value="com.microsoft.azure.mobile.cordova.AppCenterCrashesPlugin" />
     </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    </feature>
     <feature name="QRScanner">
         <param name="android-package" value="com.bitpay.cordova.qrscanner.QRScanner" />
     </feature>
@@ -19,8 +22,20 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="Geolocation">
-        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="StatusBar">
+        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
+    <feature name="UniversalLinks">
+        <param name="android-package" value="com.nordnetab.cordova.ul.UniversalLinksPlugin" />
+        <param name="onload" value="true" />
     </feature>
     <name>Driftr</name>
     <description>
@@ -44,9 +59,15 @@
     <icon background="static/android/background.xml" density="xxhdpi" foreground="static/android/foreground.xml" src="static/android/xxhdpi.png" />
     <icon background="static/android/background.xml" density="xxxhdpi" foreground="static/android/foreground.xml" src="static/android/xxxhdpi.png" />
     <allow-intent href="market:*" />
+    <splash density="port-hdpi" src="static/android/splash/splash-hdpi.png" />
+    <splash density="port-ldpi" src="static/android/splash/splash-ldpi.png" />
+    <splash density="port-mdpi" src="static/android/splash/splash-mdpi.png" />
+    <splash density="port-xhdpi" src="static/android/splash/splash-xhdpi.png" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="orientation" value="portrait" />
     <preference name="DisallowOverscroll" value="true" />
+    <preference name="SplashScreenDelay" value="2000" />
+    <preference name="StatusBarBackgroundColor" value="transparent" />
     <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />
 </widget>

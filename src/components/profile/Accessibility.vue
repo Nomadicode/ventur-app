@@ -31,22 +31,6 @@
       </v-flex>
     </v-layout>
 
-    <v-divider />
-
-    <v-layout align-center class="pad-ends--quarter">
-      <v-flex xs9>
-        <label class="field-label">Show 18+ (NSFW) events?</label>
-      </v-flex>
-      <v-spacer />
-      <v-flex class="horizontal-right" xs4>
-        <el-switch
-          :width="35"
-          class="font--small"
-          @change="save('showNsfw')"
-          v-model="settings.showNsfw"></el-switch>
-      </v-flex>
-    </v-layout>
-
     <h5 class="space-top--double space-bottom--half">Notifications</h5>
 
     <v-layout align-center class="pad-ends--quarter">

@@ -142,10 +142,9 @@
                   <v-switch
                     class="accessibility-switch"
                     hide-details
-                    v-model="event.isNsfw"
-                    :disabled="event.minimumAge < 18 || age < 18"
-                    append-icon="fas fa-ban"
-                    :label="'NSFW'"></v-switch>
+                    v-model="event.handicapFriendly"
+                    append-icon="fas fa-wheelchair"
+                    :label="'Handicap'"></v-switch>
                 </v-flex>
                 <v-spacer />
                 <v-flex xs6>
@@ -157,17 +156,6 @@
                     append-icon="fas fa-glass-martini-alt"
                     :label="'Alcohol'"></v-switch>
                 </v-flex>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs6>
-                  <v-switch
-                    class="accessibility-switch"
-                    hide-details
-                    v-model="event.handicapFriendly"
-                    append-icon="fas fa-wheelchair"
-                    :label="'Handicap'"></v-switch>
-                </v-flex>
-                <v-spacer />
               </v-layout>
             </v-container>
           <!-- #endregion -->

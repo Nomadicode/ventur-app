@@ -61,7 +61,7 @@
         color="white"
         @click="registerClicked()">Create Account</v-btn>
 
-      <v-btn
+      <!-- <v-btn
         depressed
         large
         dark
@@ -71,7 +71,7 @@
         @click="authenticate('facebook')">
          <v-icon dark left>$vuetify.icons.facebook</v-icon>
          Continue with Facebook
-      </v-btn>
+      </v-btn> -->
   </v-layout>
 </template>
 

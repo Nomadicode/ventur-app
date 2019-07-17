@@ -47,7 +47,8 @@
                   <v-list class="more-menu">
                     <v-list-tile>
                       <v-list-tile-title
-                        class="secondary-text">
+                        class="secondary-text"
+                        @click="shareActivity">
                         <v-icon size="14px" class="pad-right--quarter">fa fa-share</v-icon>
                         share</v-list-tile-title>
                     </v-list-tile>
@@ -154,14 +155,14 @@
             <v-icon>close</v-icon>
           </v-btn>
         </template>
-        <v-btn
+        <!-- <v-btn
           fab
           dark
           small
           color="green"
           @click="editActivity">
           <v-icon>edit</v-icon>
-        </v-btn>
+        </v-btn> -->
         <v-btn
           fab
           dark
@@ -184,10 +185,6 @@
       :open="showReportMenu"
       @refresh="close"
       @close="toggleReportMenu"></report-modal>
-
-    <!-- <event-edit-modal
-      :value="event"
-      @close="close"></event-edit-modal> -->
   </v-dialog>
 </template>
 
@@ -432,6 +429,29 @@ export default {
         })
       } else {
         return Promise.reject(new Error('LocationMissing'))
+      }
+    },
+    shareActivity () {
+      if (window.plugins && window.plugins.socialsharing) {
+        var self = this
+        var options = {
+          'message': 'Share this event',
+          'subject': 'Check out this event on Driftr',
+          'files': [this.eventImage],
+          'url': 'https://driftr.app/events/' + this.event.id
+        }
+        window.plugins.socialsharing.shareWithOptions(options, function (success) {
+          self.$message({
+            type: 'success',
+            message: 'You have successfully shared this event!'
+          })
+        }, function (error) {
+          console.log(error)
+          self.$message({
+            type: 'error',
+            message: 'An error occurred while attempting to share this event.'
+          })
+        })
       }
     },
     toggleReportMenu () {
