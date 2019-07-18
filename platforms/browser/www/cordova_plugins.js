@@ -39,18 +39,20 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-        "id": "cordova-plugin-splashscreen.SplashScreen",
-        "pluginId": "cordova-plugin-splashscreen",
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "id": "phonegap-plugin-push.PushNotification",
+        "pluginId": "phonegap-plugin-push",
         "clobbers": [
-            "navigator.splashscreen"
+            "PushNotification"
         ]
     },
     {
-        "file": "plugins/cordova-plugin-splashscreen/src/browser/SplashScreenProxy.js",
-        "id": "cordova-plugin-splashscreen.SplashScreenProxy",
-        "pluginId": "cordova-plugin-splashscreen",
-        "runs": true
+        "file": "plugins/phonegap-plugin-push/www/browser/push.js",
+        "id": "phonegap-plugin-push.BrowserPush",
+        "pluginId": "phonegap-plugin-push",
+        "clobbers": [
+            "PushNotification"
+        ]
     },
     {
         "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
@@ -67,6 +69,20 @@ module.exports = [
         "runs": true
     },
     {
+        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "id": "cordova-plugin-splashscreen.SplashScreen",
+        "pluginId": "cordova-plugin-splashscreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-splashscreen/src/browser/SplashScreenProxy.js",
+        "id": "cordova-plugin-splashscreen.SplashScreenProxy",
+        "pluginId": "cordova-plugin-splashscreen",
+        "runs": true
+    },
+    {
         "file": "plugins/es6-promise-plugin/www/promise.js",
         "id": "es6-promise-plugin.Promise",
         "pluginId": "es6-promise-plugin",
@@ -79,14 +95,6 @@ module.exports = [
         "clobbers": [
             "window.plugins.socialsharing"
         ]
-    },
-    {
-        "file": "plugins/cordova-universal-links-plugin/www/universal_links.js",
-        "id": "cordova-universal-links-plugin.universalLinks",
-        "pluginId": "cordova-universal-links-plugin",
-        "clobbers": [
-            "universalLinks"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -98,11 +106,11 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-qrscanner": "3.0.1",
     "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-splashscreen": "5.0.3",
+    "phonegap-plugin-push": "2.2.3",
     "cordova-plugin-statusbar": "2.4.3",
+    "cordova-plugin-splashscreen": "5.0.3",
     "es6-promise-plugin": "4.2.2",
-    "cordova-plugin-x-socialsharing": "5.4.7",
-    "cordova-universal-links-plugin": "1.2.1"
+    "cordova-plugin-x-socialsharing": "5.4.7"
 }
 // BOTTOM OF METADATA
 });

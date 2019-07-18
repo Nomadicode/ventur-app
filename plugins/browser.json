@@ -22,24 +22,24 @@
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-plugin-splashscreen": {
+    "phonegap-plugin-push": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-plugin-x-socialsharing": {
+    "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-universal-links-plugin": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "cordova-plugin-x-socialsharing": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   },
   "dependent_plugins": {
     "cordova-plugin-appcenter-shared": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
-    "es6-promise-plugin": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   }

@@ -21,7 +21,6 @@
     <preference name="orientation" value="portrait" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="SplashScreenDelay" value="2000" />
-    <preference name="StatusBarBackgroundColor" value="transparent" />
     <platform name="android">
         <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />
         <icon background="static/android/background.xml" density="mdpi" foreground="static/android/foreground.xml" src="static/android/mdpi.png" />
@@ -42,4 +41,9 @@
     </platform>
     <plugin name="cordova-plugin-appcenter-analytics" spec="^0.2.0" />
     <plugin name="cordova-plugin-appcenter-crashes" spec="^0.2.0" />
+    <universal-links>
+      <host name="*.driftr.app" scheme="https">
+        <path url="/events/*" />
+      </host>
+    </universal-links>
 </widget>

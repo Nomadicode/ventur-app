@@ -19,13 +19,13 @@
     "cordova-plugin-qrscanner": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
     "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
     "cordova-plugin-x-socialsharing": {
@@ -34,13 +34,27 @@
     },
     "cordova-universal-links-plugin": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "phonegap-plugin-push": {
+      "ANDROID_SUPPORT_V13_VERSION": "27.+",
+      "FCM_VERSION": "11.6.2",
+      "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   },
   "dependent_plugins": {
+    "cordova-plugin-add-swift-support": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
     "cordova-plugin-appcenter-shared": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "es6-promise-plugin": {
+    "cordova-support-google-services": {
+      "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "phonegap-plugin-multidex": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     }
   }

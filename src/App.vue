@@ -16,34 +16,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import moment from 'moment-timezone'
+import CordovaApp from '@/services/cordova-init'
 
 import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
 
 export default {
   name: 'App',
   created () {
-    var app = {
-      initialize: function () {
-        this.bindEvents()
-      },
-
-      bindEvents: function () {
-        document.addEventListener('deviceready', this.onDeviceReady, false)
-      },
-
-      onDeviceReady: function () {
-        universalLinks.subscribe('openEventDetailPage', app.eventDetailPageRequested)
-      },
-
-      eventDetailPageRequested: function (eventData) {
-      }
-    }
-
-    app.initialize()
+    CordovaApp.initialize()
 
     this.updateLocation()
 
-    window.setInterval(this.getLocation, 15000)
+    window.setInterval(this.updateLocation, 15000)
 
     if (!this.token) {
       this.logout()
@@ -60,14 +44,16 @@ export default {
         navigator.geolocation.getCurrentPosition(function (location) {
           if (!self.currentLocation || (self.currentLocation.latitude !== location.coords.latitude && self.currentLocation.longitude !== location.coords.longitude)) {
             self.$store.commit('AppState/SET_LOCATION', location.coords)
-            self.$apollo.mutate({
-              mutation: updateProfile,
-              variables: {
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-                timezone: self.timezone
-              }
-            }).then(function (data) {})
+            if (self.token) {
+              self.$apollo.mutate({
+                mutation: updateProfile,
+                variables: {
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
+                  timezone: self.timezone
+                }
+              }).then(function (data) {})
+            }
           }
         })
       }
