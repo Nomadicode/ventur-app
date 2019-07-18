@@ -259,7 +259,6 @@ export default {
         self.loading = false
         self.close()
       }).catch((error) => {
-        console.log(error)
         self.loading = false
         self.$message({
           type: 'error',

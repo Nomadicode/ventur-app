@@ -117,7 +117,6 @@ export default {
           }
         }).catch((error) => {
           // Show error
-          console.log(error)
           self.$message({
             type: 'error',
             message: 'Error: An error occurred reporting this activity. Contact support@driftr.app'

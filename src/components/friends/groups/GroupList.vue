@@ -58,7 +58,10 @@ export default {
           } else {
             this.groups = newGroups
           }
-          this.nextCursor = groups[groups.length - 1]['cursor']
+
+          if (groups.length > 0) {
+            this.nextCursor = groups[groups.length - 1]['cursor']
+          }
         }
       }
     }

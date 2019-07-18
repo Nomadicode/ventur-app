@@ -14,13 +14,13 @@
           <v-divider />
 
           <v-list-tile @click="open('accessibility')">
-            <v-list-tile-title>Accessibility</v-list-tile-title>
+            <v-list-tile-title>Accessibility &amp; Notifications</v-list-tile-title>
           </v-list-tile>
 
           <v-divider />
 
           <v-list-tile @click="open('security')">
-            <v-list-tile-title>Security</v-list-tile-title>
+            <v-list-tile-title>Security &amp; Password</v-list-tile-title>
           </v-list-tile>
 
           <v-divider />

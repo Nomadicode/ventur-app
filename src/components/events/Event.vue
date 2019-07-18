@@ -434,10 +434,11 @@ export default {
     shareActivity () {
       if (window.plugins && window.plugins.socialsharing) {
         var self = this
+        var eventImg = this.event ? [this.event.media] : null
         var options = {
-          'message': 'Share this event',
+          'message': `Check out this event on Driftr: (${this.event.name})`,
           'subject': 'Check out this event on Driftr',
-          'files': [this.eventImage],
+          'files': eventImg,
           'url': 'https://driftr.app/events/' + this.event.id
         }
         window.plugins.socialsharing.shareWithOptions(options, function (success) {
@@ -446,7 +447,6 @@ export default {
             message: 'You have successfully shared this event!'
           })
         }, function (error) {
-          console.log(error)
           self.$message({
             type: 'error',
             message: 'An error occurred while attempting to share this event.'

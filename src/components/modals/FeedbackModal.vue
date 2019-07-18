@@ -103,7 +103,6 @@ export default {
           self.close()
         }).catch((error) => {
           // Show error
-          console.log(error)
           self.$message({
             type: 'error',
             message: 'An error occurred submitting your feedback'

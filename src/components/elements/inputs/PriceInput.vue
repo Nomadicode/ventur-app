@@ -48,6 +48,11 @@ export default {
       this.$emit('input', this.newValue)
     }
   },
+  watch: {
+    value () {
+      this.newValue = this.value
+    }
+  },
   components: {
     Money
   }

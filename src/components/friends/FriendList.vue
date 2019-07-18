@@ -96,7 +96,9 @@ export default {
           } else {
             this.friends = newFriends
           }
-          this.nextCursor = (friends.length > 0) ? friends[friends.length - 1]['cursor'] : null
+          if (friends.length > 0) {
+            this.nextCursor = friends[friends.length - 1]['cursor']
+          }
         }
       }
     },

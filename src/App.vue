@@ -32,12 +32,10 @@ export default {
       },
 
       onDeviceReady: function () {
-        console.log('Device is ready')
         universalLinks.subscribe('openEventDetailPage', app.eventDetailPageRequested)
       },
 
       eventDetailPageRequested: function (eventData) {
-        console.log(eventData)
       }
     }
 
