@@ -23,7 +23,7 @@
           </p>
         </header>
 
-        <p>Nomadicode, LLC ("us", "we", or "our") operates the Driftr mobile application (the "Service").</p>
+        <p>Nomadicode, LLC ("us", "we", or "our") operates the Ventür mobile application (the "Service").</p>
 
         <p>
           This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you
