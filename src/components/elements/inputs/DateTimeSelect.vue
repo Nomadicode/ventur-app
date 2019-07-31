@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs6>
+    <v-flex :xs6="showTime" :xs12="!showTime">
       <label class="pad-top--half pad-bottom--quarter field-label">{{ dateLabel }}</label>
       <v-dialog
         ref="datePicker"
@@ -30,7 +30,7 @@
       </v-dialog>
     </v-flex>
     <v-spacer />
-    <v-flex xs5>
+    <v-flex xs5 v-if="showTime">
       <label class="pad-top--half pad-bottom--quarter field-label">{{ timeLabel }}</label>
       <v-dialog
         ref="timePicker"
@@ -71,6 +71,10 @@ export default {
   props: {
     value: {
       default: null
+    },
+    showTime: {
+      default: false,
+      type: Boolean
     },
     dateLabel: {
       default: 'Date',

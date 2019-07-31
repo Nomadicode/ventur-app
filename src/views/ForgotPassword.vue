@@ -6,8 +6,8 @@
     <img
       alt="Driftr Logo"
       class="space-bottom--double"
-      height="150"
-      src="@/assets/images/logo.svg" />
+      height="50"
+      src="@/assets/images/logo.png" />
 
       <h4 class="accent-color">Recover Password</h4>
 

@@ -15,7 +15,7 @@
           @click="close()">close</v-icon>
       </v-card-title>
 
-      <v-card-text class="body small-text">
+      <v-card-text v-if="event" class="body small-text">
         <v-layout column>
           <image-uploader style="height:125px" v-model="event.media"></image-uploader>
 
@@ -66,11 +66,13 @@
               fluid
               grid-list-sm>
               <date-time-select
+                showTime
                 v-model="event.startDatetime"
                 dateLabel="Start Date"
                 timeLabel="Start Time"></date-time-select>
 
               <date-time-select
+                showTime
                 v-model="event.endDatetime"
                 :min="event.startDatetime"
                 dateLabel="End Date"
@@ -84,7 +86,6 @@
                   <el-select
                     size="small"
                     class="fill-width"
-                    default-first-option
                     v-model="event.frequency"
                     placeholder="No Repeat">
                     <el-option
@@ -94,6 +95,18 @@
                       :value="item.value">
                     </el-option>
                   </el-select>
+                </v-flex>
+              </v-layout>
+
+              <v-layout
+                v-if="event.frequency != null && event.frequency > -1"
+                row
+                wrap>
+                <v-flex xs12>
+                  <date-time-select
+                    v-model="event.repeatUntil"
+                    :min="event.endDatetime"
+                    dateLabel="Repeat until"></date-time-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -222,7 +235,7 @@ export default {
       selectedAges: [0, 65],
       repeatOptions: REPEAT_ENUMS,
       locationType: 'address',
-      event: Event
+      event: null
     }
   },
   methods: {

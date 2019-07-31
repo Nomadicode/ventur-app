@@ -7,8 +7,8 @@
     <img
       alt="Driftr Logo"
       :class="{'space-bottom--double': !registerActive, 'space-bottom': registerActive}"
-      :height="registerActive || loginActive ? '100' : '150'"
-      src="@/assets/images/logo.svg" />
+      :height="registerActive || loginActive ? '50' : '75'"
+      src="@/assets/images/logo.png" />
 
       <form class="fill-width" v-if="loginActive">
         <label class="field-label accent-color">Email</label>

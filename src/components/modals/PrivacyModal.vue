@@ -195,7 +195,7 @@
         <h2>Contact Us</h2>
         <p>If you have any questions about this Privacy Policy, please contact us:</p>
         <ul>
-            <li>By email: privacy@driftr.app</li>
+            <li>By email: privacy@ventur.app</li>
             <li>By phone number: (435) 228-5258</li>
         </ul>
       </v-card-text>

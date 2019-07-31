@@ -4,7 +4,7 @@
 
     <div class="horizontal-center center--vertical">
       <h6>Email</h6>
-      <p>support@driftr.app</p>
+      <p>support@ventur.app</p>
 
       <el-button
         class="space-top--quad"

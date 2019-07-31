@@ -12,6 +12,7 @@ export default {
   alcoholPresent: false,
   startDatetime: null,
   endDatetime: null,
+  repeatUntil: null,
   minimumAge: 0,
   maximumAge: 65,
   frequency: -1,

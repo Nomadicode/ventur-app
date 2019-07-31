@@ -12,8 +12,8 @@
     <img
       class="logo"
       alt="Driftr Logo"
-      src="@/assets/images/logo.svg"
-      :height="'40px'" />
+      src="@/assets/images/logo.png"
+      :width="'75px'" />
 
     <div class="header-right">
       <v-icon
