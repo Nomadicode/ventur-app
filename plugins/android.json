@@ -13,12 +13,6 @@
     "cordova-plugin-appcenter-crashes": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
-    "cordova-plugin-qrscanner": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
@@ -32,16 +26,16 @@
       "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-universal-links-plugin": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
     "es6-promise-plugin": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
     "phonegap-plugin-push": {
       "ANDROID_SUPPORT_V13_VERSION": "27.+",
       "FCM_VERSION": "11.6.2",
-      "PACKAGE_NAME": "com.nomadicode.driftr"
+      "PACKAGE_NAME": "com.nomadicode.ventur"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.nomadicode.ventur"
     }
   },
   "dependent_plugins": {
@@ -52,10 +46,10 @@
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
     "cordova-support-google-services": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
+      "PACKAGE_NAME": "com.nomadicode.ventur"
     },
     "phonegap-plugin-multidex": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
+      "PACKAGE_NAME": "com.nomadicode.ventur"
     }
   }
 }

@@ -31,22 +31,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-qrscanner": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-qrscanner"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "cordova-plugin-geolocation": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-geolocation@4.0.2"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-add-swift-support": {
     "source": {
       "type": "registry",
@@ -62,25 +46,6 @@
     },
     "is_top_level": true,
     "variables": {}
-  },
-  "cordova-universal-links-plugin": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-universal-links-plugin@^1.2.1"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "phonegap-plugin-push": {
-    "source": {
-      "type": "registry",
-      "id": "phonegap-plugin-push@2.2.3"
-    },
-    "is_top_level": true,
-    "variables": {
-      "ANDROID_SUPPORT_V13_VERSION": "27.+",
-      "FCM_VERSION": "11.6.2"
-    }
   },
   "cordova-support-google-services": {
     "source": {
@@ -118,6 +83,22 @@
     "source": {
       "type": "registry",
       "id": "cordova-plugin-x-socialsharing"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "phonegap-plugin-push": {
+    "source": {
+      "type": "registry",
+      "id": "phonegap-plugin-push@2.2.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-geolocation": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-geolocation@4.0.2"
     },
     "is_top_level": true,
     "variables": {}

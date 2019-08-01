@@ -12,7 +12,7 @@
     <img
       class="logo"
       alt="Driftr Logo"
-      src="@/assets/images/logo.png"
+      src="@/assets/images/logo.svg"
       :width="'75px'" />
 
     <div class="header-right">

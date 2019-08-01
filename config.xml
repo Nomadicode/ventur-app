@@ -36,14 +36,10 @@
     </platform>
     <platform name="ios">
         <preference name="APP_SECRET" value="33fe45b1-717f-4c77-807b-af13ca261259" />
+        <preference name="StatusBarOverlaysWebView" value="false" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
     <plugin name="cordova-plugin-appcenter-analytics" spec="^0.2.0" />
     <plugin name="cordova-plugin-appcenter-crashes" spec="^0.2.0" />
-    <universal-links>
-      <host name="*.driftr.app" scheme="https">
-        <path url="/events/*" />
-      </host>
-    </universal-links>
 </widget>

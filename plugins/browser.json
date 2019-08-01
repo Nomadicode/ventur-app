@@ -13,16 +13,7 @@
     "cordova-plugin-appcenter-crashes": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
-    "cordova-plugin-qrscanner": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.nomadicode.driftr"
-    },
-    "phonegap-plugin-push": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
     },
     "cordova-plugin-statusbar": {
@@ -36,6 +27,12 @@
     },
     "cordova-plugin-x-socialsharing": {
       "PACKAGE_NAME": "com.nomadicode.driftr"
+    },
+    "phonegap-plugin-push": {
+      "PACKAGE_NAME": "com.nomadicode.ventur"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.nomadicode.ventur"
     }
   },
   "dependent_plugins": {

@@ -6,7 +6,7 @@
     <img
       alt="Driftr Logo"
       class="space-bottom--double"
-      height="150"
+      height="50"
       src="@/assets/images/logo.svg" />
 
       <h4 class="accent-color">Reset Your Password</h4>
