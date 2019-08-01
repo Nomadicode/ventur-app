@@ -55,10 +55,9 @@
     <icon background="static/android/background.xml" density="xxhdpi" foreground="static/android/foreground.xml" src="static/android/xxhdpi.png" />
     <icon background="static/android/background.xml" density="xxxhdpi" foreground="static/android/foreground.xml" src="static/android/xxxhdpi.png" />
     <allow-intent href="market:*" />
-    <splash density="port-hdpi" src="static/android/splash/splash-hdpi.png" />
-    <splash density="port-ldpi" src="static/android/splash/splash-ldpi.png" />
-    <splash density="port-mdpi" src="static/android/splash/splash-mdpi.png" />
-    <splash density="port-xhdpi" src="static/android/splash/splash-xhdpi.png" />
+    <splash density="port-hdpi" src="static/android/splash/hdpi.png" />
+    <splash density="port-mdpi" src="static/android/splash/mdpi.png" />
+    <splash density="port-xhdpi" src="static/android/splash/xhdpi.png" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="orientation" value="portrait" />
