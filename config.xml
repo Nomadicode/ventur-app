@@ -36,6 +36,12 @@
     <platform name="ios">
         <preference name="APP_SECRET" value="33fe45b1-717f-4c77-807b-af13ca261259" />
         <preference name="StatusBarOverlaysWebView" value="false" />
+        <icon src="static/ios/icons/icon-60.png" width="60" height="60" />
+        <icon src="static/ios/icons/icon-60@2x.png" width="120" height="120" />
+        <icon src="static/ios/icons/icon-60@3x.png" width="180" height="180" />
+        <icon src="static/ios/icons/icon-40.png" width="40" height="40" />
+        <icon src="static/ios/icons/icon-40@2x.png" width="80" height="80" />
+        <icon src="static/ios/icons/icon-40@3x.png" width="120" height="120" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <splash src="static/ios/Default@2x~universal~comany.png" />
