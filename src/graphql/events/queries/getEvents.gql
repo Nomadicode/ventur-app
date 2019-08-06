@@ -21,6 +21,7 @@ query Activities ($latitude: Float!, $longitude: Float!, $filters: String, $save
         media
         nextOccurrence
         location {
+          name
           address
           latitude
           longitude

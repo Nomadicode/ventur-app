@@ -1,8 +1,8 @@
 mutation AddActivity($name: String!, $media: String, $description: String, $categories: String, $duration: Int, $price: Float, $minimumAge: Int, $maximumAge: Int, 
-  $handicapFriendly: Boolean, $isNsfw: Boolean, $alcoholPresent: Boolean, $address: String, $latitude: Float, $longitude: Float, $startDatetime: String, $endDatetime: String, 
+  $handicapFriendly: Boolean, $isNsfw: Boolean, $alcoholPresent: Boolean, $address: String, $locationName: String, $latitude: Float, $longitude: Float, $startDatetime: String, $endDatetime: String, 
   $repeatUntil: String, $frequency: Int, $groups: String) {
     addActivity(name: $name, media: $media, description: $description, categories: $categories, duration: $duration, price: $price, minimumAge: $minimumAge, maximumAge: $maximumAge, 
-      handicapFriendly: $handicapFriendly, isNsfw: $isNsfw, alcoholPresent: $alcoholPresent, address: $address, latitude: $latitude, longitude: $longitude, startDatetime: $startDatetime,
+      handicapFriendly: $handicapFriendly, isNsfw: $isNsfw, alcoholPresent: $alcoholPresent, address: $address, locationName: $locationName, latitude: $latitude, longitude: $longitude, startDatetime: $startDatetime,
       endDatetime: $endDatetime, repeatUntil: $repeatUntil, frequency: $frequency, groups: $groups) {
     success
     error

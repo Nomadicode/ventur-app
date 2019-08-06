@@ -1,7 +1,7 @@
 <template>
   <v-card
     class="group-card"
-    elevation="1"
+    elevation="0"
     light>
     <v-card-title>
       <v-layout

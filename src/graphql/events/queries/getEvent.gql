@@ -18,6 +18,7 @@ query activity($pk: ID!){
       id
     }
     location {
+      name
       address
       latitude
       longitude

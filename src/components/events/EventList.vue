@@ -155,7 +155,10 @@ export default {
     },
     currentLocation: {
       handler (newValue, oldValue) {
-        if (newValue.latitude == null || newValue.longitude == null) {
+        if (newValue.latitude == null || 
+            newValue.longitude == null || 
+            ((newValue.latitude == oldValue.latitude) &&
+            (newValue.longitude == oldValue.longitude))) {
           this.$apollo.queries.activities.skip = true
           this.error = true
         } else {

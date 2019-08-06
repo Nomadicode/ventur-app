@@ -17,7 +17,18 @@
 
       <v-card-text v-if="event" class="body small-text">
         <v-layout column>
-          <image-uploader style="height:125px" v-model="event.media"></image-uploader>
+          <v-flex xs12>
+            <croppa
+              v-model="croppaImg"
+              :accept="'image/*'"
+              :file-size-limit="0"
+              :autoSizing="true"
+              :quality="2"
+              :zoom-speed="3"
+              :show-remove-button="false"
+              placeholder="Choose an image"></croppa>
+          </v-flex>
+          <!-- <image-uploader style="height:125px" v-model="image"></image-uploader> -->
 
           <div class="pad-sides pad-top--half pad-bottom--quad">
           <!-- #region Core Data -->
@@ -33,6 +44,7 @@
               ref="location"
               classname="el-input__inner el-input--small height--small"
               placeholder="Enter location"
+              :types="['establishment', 'geocode']"
               v-on:placechanged="getAddressData"
               :geolocationOptions="{
                 enableHighAccuracy: true,
@@ -186,10 +198,13 @@
 </template>
 
 <script>
+import uuidv4 from 'uuid'
 import { mapGetters } from 'vuex'
 import REPEAT_ENUMS from '@/enums/repeatEnum.js'
 
 import { Event } from '@/models'
+import CONSTANTS from '@/services/parameters'
+import AWS_S3 from '@/services/aws.js'
 
 import getGroups from '@/graphql/groups/queries/getGroups.gql'
 import createEvent from '@/graphql/events/mutations/createEvent.gql'
@@ -201,7 +216,6 @@ import DurationSelect from '@/components/elements/inputs/DurationSelect'
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
 import PriceInput from '@/components/elements/inputs/PriceInput'
 import LocationAutocomplete from '@/components/elements/inputs/LocationAutocomplete'
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 export default {
   name: 'EventAddModal',
@@ -235,6 +249,7 @@ export default {
       selectedAges: [0, 65],
       repeatOptions: REPEAT_ENUMS,
       locationType: 'address',
+      croppaImg: {},
       event: null
     }
   },
@@ -254,30 +269,74 @@ export default {
       this.$refs.location.geolocate()
     },
     getAddressData ($evt, place, id) {
+      this.event.locationName = (place.name) ? place.name : null
+      this.event.address = place.formatted_address
       this.event.latitude = $evt.latitude
       this.event.longitude = $evt.longitude
     },
-    save () {
-      this.loading = true
-      var self = this
-      var data = Object.assign({}, self.event)
-      data.groups = data.groups ? data.groups.join(',') : ''
+    async saveEvent() {
+      var data = Object.assign({}, this.event)
       data.price = data.price ? data.price : 0.00
+      data.groups = data.groups ? data.groups.join(',') : ''
 
-      this.$apollo.mutate({
-        mutation: createEvent,
-        variables: data
-      }).then((data) => {
-        // Show success
-        self.loading = false
-        self.close()
-      }).catch((error) => {
-        self.loading = false
-        self.$message({
+      try {
+        var result = await this.$apollo.mutate({
+          mutation: createEvent,
+          variables: data
+        })
+      } catch (err) {
+        this.loading = false
+        this.$message({
           type: 'error',
           message: 'An error occurred trying to create your event, please try again.'
         })
-      })
+        return
+      }
+
+      this.loading = false
+      this.close()
+    },
+    async save () {
+      this.loading = true
+      var self = this
+
+      if (Object.keys(this.croppaImg).length != 0) {
+        this.croppaImg.generateBlob(blob => {
+          var params = {
+            Bucket: CONSTANTS.aws,
+            Key: 'activities/' + uuidv4() + '.jpg',
+            Body: blob
+          }
+          var options = {partSize: 10 * 1024 * 1024, queueSize: 1};
+          AWS_S3.upload(params, options, function (err, data) {
+            self.event.media = data.Location
+            self.saveEvent()
+          })
+        }, 'image/jpeg', 0.75)
+
+      } else {
+        this.saveEvent()
+      }
+
+      // var self = this
+      // var data = Object.assign({}, self.event)
+      // data.groups = data.groups ? data.groups.join(',') : ''
+      // data.price = data.price ? data.price : 0.00
+
+      // this.$apollo.mutate({
+      //   mutation: createEvent,
+      //   variables: data
+      // }).then((data) => {
+      //   // Show success
+      //   self.loading = false
+      //   self.close()
+      // }).catch((error) => {
+      //   self.loading = false
+      //   self.$message({
+      //     type: 'error',
+      //     message: 'An error occurred trying to create your event, please try again.'
+      //   })
+      // })
     }
   },
   watch: {
@@ -296,8 +355,7 @@ export default {
     DurationSelect,
     ImageUploader,
     PriceInput,
-    LocationAutocomplete,
-    VueGoogleAutocomplete
+    LocationAutocomplete
   }
 }
 </script>

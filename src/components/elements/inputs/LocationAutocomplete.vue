@@ -41,7 +41,7 @@ export default {
       default: 'Start typing'
     },
     types: {
-      type: String,
+      type: [String, Array],
       default: 'address'
     },
     country: {
@@ -106,7 +106,7 @@ export default {
   mounted () {
     const options = {}
     if (this.types) {
-      options.types = [this.types]
+      options.types = Array.isArray(this.types) ? this.types : [this.types]
     }
     if (this.country) {
       options.componentRestrictions = {
@@ -288,7 +288,7 @@ export default {
     filterGeocodeResultTypes (results) {
       if (!results || !this.types) return results
       let output = []
-      let types = [this.types, 'premise']
+      let types = Array.isArray(this.types) ? this.types.concat(['premise']) : [this.types, 'premise']
       if (types.includes('(cities)')) types = types.concat(CITIES_TYPE)
       if (types.includes('(regions)')) types = types.concat(REGIONS_TYPE)
       for (let r of results) {

@@ -7,6 +7,8 @@ import router from './router'
 import store from './store'
 import _ from 'lodash'
 
+import Croppa from 'vue-croppa'
+
 import CONSTANTS from './services/parameters'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -27,6 +29,8 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import 'material-design-icons/iconfont/material-icons.css'
 import 'vuetify/dist/vuetify.min.css'
 import './assets/scss/element-theme/index.css'
+import 'vue-croppa/dist/vue-croppa.css'
+
 import './assets/scss/app.scss'
 
 Vue.use(Vuetify, {
@@ -86,6 +90,8 @@ Vue.directive('inputmask', {
     new Inputmask(binding.value).mask(input)
   }
 })
+
+Vue.use(Croppa)
 
 Vue.directive('mask', VueMaskDirective)
 

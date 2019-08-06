@@ -76,6 +76,7 @@
                 <direction-button
                   class="space-right--half"
                   v-if="event && event.location"
+                  :address="event.location.address"
                   :latitude="event.location.latitude"
                   :longitude="event.location.longitude"></direction-button>
               </v-flex>
@@ -93,7 +94,10 @@
             wrap>
             <v-flex xs9 class="core-fields">
               <h4 class="title" v-if="event.name">{{ event.name }}</h4>
-              <div v-if="event && event.location" class="location">{{ event.location.address }}</div>
+              <div @click="toggleAddress" v-if="event && event.location" class="location">
+                <span v-if="!viewAddress && event.location.name">{{ event.location.name }}</span>
+                <span v-else>{{ event.location.address }}</span>
+              </div>
             </v-flex>
             <v-flex xs3 class="date-field">
               <div class="date">{{ date }}</div>
@@ -227,7 +231,6 @@ export default {
         }
       },
       function (error) {
-        console.error(error)
         self.$message({
           type: 'error',
           message: 'Unable to find your location, please make sure location services are enabled'
@@ -252,7 +255,6 @@ export default {
         }
       },
       function (error) {
-        console.error(error)
         self.$message({
           type: 'error',
           message: 'Unable to find your location, please make sure location services are enabled'
@@ -267,7 +269,8 @@ export default {
       modal: false,
       fab: false,
       showReportMenu: false,
-      event: {}
+      event: {},
+      viewAddress: false
     }
   },
   computed: {
@@ -345,6 +348,9 @@ export default {
         this.saveActivity()
       }
     },
+    toggleAddress () {
+      this.viewAddress = !this.viewAddress
+    },
     saveActivity () {
       var self = this
       this.$apollo.mutate({
@@ -370,7 +376,7 @@ export default {
     close (refresh = false) {
       this.event = {}
       this.modal = false
-      if (refresh) {
+      if (refresh === true) {
         window.EventBus.$emit('events:refresh')
       }
       this.$emit('close')
@@ -419,7 +425,6 @@ export default {
           return Promise.resolve(response)
         },
         function (error) {
-          console.error(error)
           self.$message({
             type: 'error',
             message: 'Unable to fetch an event'

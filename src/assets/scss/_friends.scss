@@ -120,6 +120,9 @@
 
   .group-card {
     margin: 10px 0;
+    &:not(:first-child) {
+      margin-top: 25px;
+    }
 
     .v-card__title {
       position: relative;

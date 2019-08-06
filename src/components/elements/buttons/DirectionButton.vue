@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'DirectionButton',
-  props: ['latitude', 'longitude'],
+  props: ['address', 'latitude', 'longitude'],
   computed: {
     geoLink () {
       return 'geo:0,0?q=' + this.latitude + ',' + this.longitude
