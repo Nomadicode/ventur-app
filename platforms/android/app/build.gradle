@@ -90,9 +90,6 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "../cordova-plugin-qrscanner/driftr-qrscanner.gradle"
-apply from: "../cordova-support-google-services/driftr-build.gradle"
-apply from: "../phonegap-plugin-multidex/driftr-multidex.gradle"
 apply from: "../cordova-support-google-services/ventur-build.gradle"
 apply from: "../phonegap-plugin-multidex/ventur-multidex.gradle"
 // PLUGIN GRADLE EXTENSIONS END

@@ -25,6 +25,28 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
+      "clobbers": [
+        "device"
+      ]
+    },
+    {
+      "id": "cordova-plugin-geolocation.geolocation",
+      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "clobbers": [
+        "navigator.geolocation"
+      ]
+    },
+    {
+      "id": "cordova-plugin-geolocation.PositionError",
+      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "runs": true
+    },
+    {
       "id": "cordova-plugin-splashscreen.SplashScreen",
       "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
       "pluginId": "cordova-plugin-splashscreen",
@@ -61,20 +83,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "PushNotification"
       ]
-    },
-    {
-      "id": "cordova-plugin-geolocation.geolocation",
-      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
-      "pluginId": "cordova-plugin-geolocation",
-      "clobbers": [
-        "navigator.geolocation"
-      ]
-    },
-    {
-      "id": "cordova-plugin-geolocation.PositionError",
-      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
-      "pluginId": "cordova-plugin-geolocation",
-      "runs": true
     }
   ];
   module.exports.metadata = {
@@ -82,6 +90,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-appcenter-shared": "0.2.2",
     "cordova-plugin-appcenter-analytics": "0.2.2",
     "cordova-plugin-appcenter-crashes": "0.2.2",
+    "cordova-plugin-device": "2.0.3",
+    "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-splashscreen": "5.0.3",
     "cordova-plugin-statusbar": "2.4.3",
     "cordova-plugin-whitelist": "1.3.3",
@@ -89,7 +99,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-x-socialsharing": "5.4.7",
     "cordova-support-google-services": "1.1.0",
     "phonegap-plugin-multidex": "1.0.0",
-    "phonegap-plugin-push": "2.2.3",
-    "cordova-plugin-geolocation": "4.0.2"
+    "phonegap-plugin-push": "2.2.3"
   };
 });
