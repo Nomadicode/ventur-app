@@ -19,6 +19,7 @@
         <v-layout column>
           <v-flex xs12>
             <croppa
+              ref="uploader"
               v-model="croppaImg"
               :accept="'image/*'"
               :file-size-limit="0"
@@ -26,7 +27,8 @@
               :quality="2"
               :zoom-speed="3"
               :show-remove-button="false"
-              placeholder="Choose an image"></croppa>
+              placeholder="Choose an image">
+              <el-button v-if="imageSelected()" @click="changeImage" type="text" class='edit-btn'>Change Image</el-button></croppa>
           </v-flex>
           <!-- <image-uploader style="height:125px" v-model="image"></image-uploader> -->
 
@@ -257,6 +259,7 @@ export default {
     close () {
       window.EventBus.$emit('events:refresh')
       this.event = Object.assign({}, Event)
+      this.croppaImg.remove()
       this.$refs.location.clear()
       this.modal = false
     },
@@ -273,6 +276,12 @@ export default {
       this.event.address = place.formatted_address
       this.event.latitude = $evt.latitude
       this.event.longitude = $evt.longitude
+    },
+    imageSelected () {
+      return this.$refs && this.$refs.uploader && this.$refs.uploader.hasImage()
+    },
+    changeImage () {
+      this.$refs.uploader.chooseFile()
     },
     async saveEvent() {
       var data = Object.assign({}, this.event)
@@ -317,26 +326,6 @@ export default {
       } else {
         this.saveEvent()
       }
-
-      // var self = this
-      // var data = Object.assign({}, self.event)
-      // data.groups = data.groups ? data.groups.join(',') : ''
-      // data.price = data.price ? data.price : 0.00
-
-      // this.$apollo.mutate({
-      //   mutation: createEvent,
-      //   variables: data
-      // }).then((data) => {
-      //   // Show success
-      //   self.loading = false
-      //   self.close()
-      // }).catch((error) => {
-      //   self.loading = false
-      //   self.$message({
-      //     type: 'error',
-      //     message: 'An error occurred trying to create your event, please try again.'
-      //   })
-      // })
     }
   },
   watch: {
