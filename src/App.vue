@@ -25,9 +25,11 @@ export default {
   created () {
     CordovaApp.initialize()
 
-    this.updateLocation()
+    this.initializeLocation()
 
-    window.setInterval(this.updateLocation, 15000)
+    this.registerWatchLocation()
+
+    // window.setInterval(this.updateLocation, 15000)
 
     if (!this.token) {
       this.logout()
@@ -38,7 +40,7 @@ export default {
     ...mapGetters('AppState', ['currentLocation', 'timezone'])
   },
   methods: {
-    updateLocation () {
+    initializeLocation () {
       if (navigator.geolocation) {
         var self = this
         navigator.geolocation.getCurrentPosition(function (location) {
@@ -55,6 +57,31 @@ export default {
               }).then(function (data) {})
             }
           }
+        })
+      }
+
+      this.$store.commit('AppState/SET_TIMEZONE', moment.tz.guess())
+    },
+    registerWatchLocation () {
+      if (navigator.geolocation) {
+        var self = this
+        navigator.geolocation.watchPosition(function (location) {
+          if (!self.currentLocation || (self.currentLocation.latitude !== location.coords.latitude && self.currentLocation.longitude !== location.coords.longitude)) {
+            self.$store.commit('AppState/SET_LOCATION', location.coords)
+            if (self.token) {
+              self.$apollo.mutate({
+                mutation: updateProfile,
+                variables: {
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
+                  timezone: self.timezone
+                }
+              }).then(function (data) {})
+            }
+          }
+        }, function (error) {
+        }, {
+          enableHighAccuracy: true
         })
       }
 

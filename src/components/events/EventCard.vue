@@ -1,7 +1,7 @@
 <template>
   <v-card
     light
-    class="event-card space-bottom--quarter"
+    class="event-card"
     @click="openEvent">
     <v-card-title class="header">
       <v-container class="pad-none">

@@ -1,6 +1,5 @@
 <template>
   <v-dialog
-    v-if="event"
     ref="event"
     content-class="event-container"
     :z-index=5
@@ -9,7 +8,6 @@
     scrollable
     hide-overlay
     persistent
-    lazy
     v-model="modal">
     <v-card class="event">
       <v-toolbar
@@ -17,7 +15,10 @@
         :fixed="true"
         :height="40"
         :elevation="0"
-        class="header">
+        class="header"
+        :class="{
+          'scrolled': scrolled
+        }">
         <v-layout row>
           <v-flex xs2>
             <v-btn
@@ -70,6 +71,35 @@
           :src="eventImage"
           :height="200"
           :width="'100%'">
+          <v-speed-dial
+            v-if="createdByUser"
+            class="settings-btn"
+            v-model="fab"
+            direction="left"
+            absolute
+            bottom
+            right>
+            <template v-slot:activator>
+              <v-btn
+                v-model="fab"
+                color="blue darken-2"
+                dark
+                small
+                fab
+              >
+                <v-icon>settings</v-icon>
+                <v-icon>close</v-icon>
+              </v-btn>
+            </template>
+            <v-btn
+              fab
+              dark
+              small
+              color="red"
+              @click="deleteActivity">
+              <v-icon>delete</v-icon>
+            </v-btn>
+          </v-speed-dial>
         </v-img>
 
         <div class="pad-sides--half">
@@ -107,11 +137,13 @@
               </div>
             </v-flex>
             <v-spacer />
-            <v-flex xs5 class="align-right">
+            <v-flex xs5 class="align-right position--relative">
               <restriction-box
                 :isNsfw="event.isNsfw"
                 :alcoholPresent="event.alcoholPresent"
                 :handicapFriendly="event.handicapFriendly"></restriction-box>
+              
+              <div class="age-range-display">{{ ageRange }}</div>
             </v-flex>
           </v-layout>
 
@@ -124,46 +156,18 @@
           </date-scroller>
 
           <div class="body" v-html="event.description"></div>
-
-          <v-speed-dial
-            v-if="createdByUser"
-            class="settings-btn"
-            v-model="fab"
-            absolute
-            bottom
-            right>
-            <template v-slot:activator>
-              <v-btn
-                v-model="fab"
-                color="blue darken-2"
-                dark
-                small
-                fab
-              >
-                <v-icon>settings</v-icon>
-                <v-icon>close</v-icon>
-              </v-btn>
-            </template>
-            <v-btn
-              fab
-              dark
-              small
-              color="red"
-              @click="deleteActivity">
-              <v-icon>delete</v-icon>
-            </v-btn>
-          </v-speed-dial>
         </div>
       </v-card-text>
 
       <v-card-actions class="pad-bottom--half">
         <v-layout row>
           <v-flex>
-            <el-button
+            <div class="price-display">{{ price }}</div>
+            <!-- <el-button
               v-if="false"
               plain
               type="danger"
-              size="small">Buy Tickets</el-button>
+              size="small">Buy Tickets</el-button> -->
           </v-flex>
           <v-spacer />
           <v-flex class="align-right">
@@ -174,14 +178,6 @@
           </v-flex>
         </v-layout>
       </v-card-actions>
-
-
-      <!--
-      <ul class="footer">
-        <li>{{ price }}</li>
-        <li></li>
-        <li>{{ ageRange }}</li>
-      </ul> -->
     </v-card>
 
     <report-modal
@@ -212,7 +208,18 @@ import RestrictionBox from '@/components/elements/RestrictionBox'
 export default {
   name: 'Event',
   mounted () {
+    var self = this
     this.$refs.event.stackMinZIndex = 3
+
+    this.$refs.eventBody.onscroll = (elem) => {
+      var scrollPos = elem.target.scrollTop
+
+      if (scrollPos < 100) {
+        self.scrolled = false
+      } else {
+        self.scrolled = true
+      }
+    }
   },
   created () {
     var self = this
@@ -263,11 +270,6 @@ export default {
         window.EventBus.$emit('loading:event', value, false)
       })
     })
-
-    this.$refs.eventBody.onscroll = (elem) => {
-      var scrollPos = elem.target.scrollTop
-      console.log(scrollPos)
-    }
   },
   data () {
     return {
@@ -276,7 +278,7 @@ export default {
       fab: false,
       showReportMenu: false,
       event: {},
-      viewAddress: false
+      scrolled: false
     }
   },
   computed: {

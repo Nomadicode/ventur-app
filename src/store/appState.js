@@ -1,9 +1,12 @@
+import moment from 'moment-timezone'
+
 const AppState = {
   namespaced: true,
 
   state: {
     location: null,
-    timezone: null
+    timezone: null,
+    filters: null
   },
   mutations: {
     SET_LOCATION (state, locationData) {
@@ -14,6 +17,9 @@ const AppState = {
     },
     SET_TIMEZONE (state, timezone) {
       state.timezone = timezone
+    },
+    SET_FILTERS (state, filters) {
+      state.filters = filters
     },
     RESET (state) {
       state.location = null
@@ -26,6 +32,16 @@ const AppState = {
     },
     currentLocation: state => {
       return (state.location) ? state.location : null
+    },
+    savedFilters: state => {
+      var defaultFilters = {
+        startDate: moment().format('YYYY-MM-DD'),
+        endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
+        price: 150.00,
+        duration: null,
+        radius: 10
+      }
+      return (state.filters) ? state.filters : defaultFilters
     }
   }
 }

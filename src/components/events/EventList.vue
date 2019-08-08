@@ -20,7 +20,7 @@
     </div>
 
     <div
-      v-if="error"
+      v-if="!currentLocation || !currentLocation.latitude || !currentLocation.longitude"
       class="error">
       Driftr needs access to your location to function properly.
     </div>

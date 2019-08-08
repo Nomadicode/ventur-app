@@ -54,11 +54,21 @@
       </v-flex>
     </v-layout>
 
-    <image-uploader
+    <v-img
+      :src="editedUser.profilePicture"
+      :maxHeight="100"
+      class="horizontal-center image-uploader"
+      :style="{
+        'border-radius': '50%',
+        'width': '100px'
+      }"
+      @click="openUploadModal">
+    </v-img>
+    <!-- <image-uploader
       class="horizontal-center"
       v-model="editedUser.profilePicture"
       round
-      :size="100"></image-uploader>
+      :size="100"></image-uploader> -->
 
     <v-tabs
       class="pad-top--half tab-header"
@@ -122,6 +132,8 @@
         </div>
       </v-tab-item>
     </v-tabs>
+
+    <upload-modal :image="editedUser.profilePicture"></upload-modal>
   </div>
 </template>
 
@@ -133,6 +145,7 @@ import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
 
 import EventList from '@/components/events/EventList'
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
+import UploadModal from '@/components/modals/UploadModal'
 
 export default {
   name: 'Account',
@@ -156,6 +169,9 @@ export default {
     },
     toggleEditName () {
       this.editName = !this.editName
+    },
+    openUploadModal () {
+      window.EventBus.$emit('profile:upload')
     },
     save (field) {
       var fields = {}
@@ -181,16 +197,17 @@ export default {
     },
     data () {
       this.user = Object.assign({}, this.data)
-    },
-    'editedUser.profilePicture' () {
-      if (this.editedUser.profilePicture && this.editedUser.profilePicture.indexOf('http') === -1) {
-        this.save('profilePicture')
-      }
     }
+    // 'editedUser.profilePicture' () {
+    //   if (this.editedUser.profilePicture && this.editedUser.profilePicture.indexOf('http') === -1) {
+    //     this.save('profilePicture')
+    //   }
+    // }
   },
   components: {
     EventList,
-    ImageUploader
+    ImageUploader,
+    UploadModal
   }
 }
 </script>

@@ -67,7 +67,6 @@ export default {
             type: 'success'
           })
         }).catch(error => {
-          console.error(error)
           self.$message({
             message: 'Error: Unable to update password',
             type: 'error'
@@ -77,7 +76,7 @@ export default {
     },
     deleteAccount () {
       var self = this
-      this.$prompt('Enter your password to proceed. This cannot be undone.', 'Confirm Account Deletion', {
+      this.$confirm('Are you sure you want to delete your account?. This cannot be undone.', 'Warning', {
         confirmButtonText: 'DELETE ACCOUNT',
         confirmButtonClass: 'el-button--danger',
         cancelButtonText: 'Cancel'
@@ -92,14 +91,14 @@ export default {
             type: 'success',
             message: 'Your account deletion request is being processed. Please allow 7 days for the account to be removed.'
           })
+        }).catch((error) => {
+          self.$message({
+            type: 'error',
+            message: 'Unable to delete account, please contact support: <strong>support@driftr.app</strong>',
+            dangerouslyUseHTMLString: true
+          })
         })
       }).catch((error) => {
-        console.error(error)
-        self.$message({
-          type: 'error',
-          message: 'Unable to delete account, please contact support: <strong>support@driftr.app</strong>',
-          dangerouslyUseHTMLString: true
-        })
       })
     }
   }

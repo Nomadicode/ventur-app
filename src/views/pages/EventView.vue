@@ -43,6 +43,7 @@ import moment from 'moment-timezone'
 import EventAddModal from '@/components/modals/EventAddModal'
 import EventList from '@/components/events/EventList'
 import EventFilters from '@/components/events/Filters'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'EventView',
@@ -51,20 +52,20 @@ export default {
       window.EventBus.$emit('load:event', this.$route.params.id)
     }
   },
+  created () {
+    this.filters = Object.assign({}, this.savedFilters)
+  },
   data () {
     return {
       tab: 'all',
       showSaved: false,
       showMyEvents: false,
       hideToggle: false,
-      filters: {
-        startDate: moment().format('YYYY-MM-DD'),
-        endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
-        price: 150.00,
-        duration: null,
-        radius: 10
-      }
+      filters: {}
     }
+  },
+  computed: {
+    ...mapGetters('AppState', ['savedFilters'])
   },
   methods: {
     setTab (value) {
@@ -86,6 +87,12 @@ export default {
       if (to.params && to.params.id) {
         window.EventBus.$emit('load:event', to.params.id)
       }
+    },
+    filters: {
+      handler: function () {
+        this.$store.commit('AppState/SET_FILTERS', this.filters)
+      },
+      deep: true
     }
   },
   components: {

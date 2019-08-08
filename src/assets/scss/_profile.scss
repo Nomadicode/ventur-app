@@ -43,3 +43,28 @@
   border-top: 1px solid #E3E3E3;
   border-bottom: 1px solid #E3E3E3;
 }
+
+.upload-modal-container {
+  text-align: center;
+
+  .theme--light.v-sheet {
+    background: $bg-accent-color;
+  }
+
+  .upload-modal {
+    .croppa-container {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+
+      canvas {
+        border-radius: 50% !important;
+      }
+    }
+
+    .edit-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

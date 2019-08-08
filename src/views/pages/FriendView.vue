@@ -4,20 +4,29 @@
 
     <!-- <search-input v-model="query" :placeholder="'search ' + tab"></search-input> -->
 
-    <div class="tab-group horizontal-center">
-      <v-btn
-        class="tab"
-        :class="{'active': tab === 'friends'}"
-        flat
-        small
-        @click="setTab('friends')">Friends</v-btn> |
-      <v-btn
-        class="tab"
-        :class="{'active': tab === 'groups'}"
-        flat
-        small
-        @click="setTab('groups')">Groups</v-btn>
-    </div>
+    <v-layout 
+      justify-center
+      align-center
+      row
+      class="tab-group horizontal-center">
+      <v-flex xs5>
+        <v-btn
+          class="tab"
+          :class="{'active': tab === 'friends'}"
+          flat
+          small
+          @click="setTab('friends')">Friends</v-btn>
+      </v-flex> 
+      <v-flex class="light-base-text" xs1>|</v-flex>
+      <v-flex xs5>
+        <v-btn
+          class="tab"
+          :class="{'active': tab === 'groups'}"
+          flat
+          small
+          @click="setTab('groups')">Groups</v-btn>
+      </v-flex>
+    </v-layout>
 
     <friends-tab v-if="tab === 'friends'" :filter="query"></friends-tab>
     <groups-tab v-if="tab === 'groups'" :filter="query"></groups-tab>
