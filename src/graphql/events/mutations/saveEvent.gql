@@ -14,7 +14,10 @@ mutation SaveActivity ($activity: ID!) {
         isNsfw
         alcoholPresent
         handicapFriendly
-        nextOccurrence
+        nextOccurrence {
+          startDate
+          endDate
+        }
         saved
         location {
           address

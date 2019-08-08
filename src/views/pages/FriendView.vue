@@ -2,7 +2,7 @@
   <div
     class="fill-width">
 
-    <search-input v-model="query" :placeholder="'search ' + tab"></search-input>
+    <!-- <search-input v-model="query" :placeholder="'search ' + tab"></search-input> -->
 
     <div class="tab-group horizontal-center">
       <v-btn

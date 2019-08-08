@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h5>About Driftr</h5>
+    <h5>About Ventür</h5>
 
     <el-button
       class="fill-width space-top--double"

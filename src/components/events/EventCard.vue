@@ -1,7 +1,7 @@
 <template>
   <v-card
     light
-    class="event-card"
+    class="event-card space-bottom--quarter"
     @click="openEvent">
     <v-card-title class="header">
       <v-container class="pad-none">
@@ -10,24 +10,30 @@
           align-start
           row
           wrap>
-          <v-flex xs9>
-            <h4 class="title">{{ item.name }}</h4>
-            <div class="location">{{ item.distance }}</div>
+          <v-flex xs3>
+            <v-img
+              :src="eventImage"
+              :height="98"
+              :width="'100%'"></v-img>
           </v-flex>
-          <v-flex xs3 class="date-field">
-            <div class="date">{{ date }}</div>
-            <div class="time">{{ time }}</div>
+          <v-flex xs9 class="content">
+            <h4 class="title">{{ item.name }}</h4>
+            <date-scroller class="fix-bottom">
+              <date-scroll-item :startDate="item.nextOccurrence.startDate" :endDate="item.nextOccurrence.endDate"></date-scroll-item>
+            </date-scroller>
+
+            <div class="location">
+              <div>{{ item.distance }}</div>
+              <div class="price">{{ price }}</div>
+            </div>
           </v-flex>
         </v-layout>
       </v-container>
-
-      <div class="price">{{ price }}</div>
 
       <div v-if="loading" class="loading-overlay">
         <loading-icon></loading-icon>
       </div>
     </v-card-title>
-
   </v-card>
 </template>
 
@@ -35,6 +41,8 @@
 import moment from 'moment'
 import LoadingIcon from '@/components/elements/LoadingIcon'
 import RestrictionBox from '@/components/elements/RestrictionBox'
+import { DateScroller, DateScrollItem } from '@/components/elements/date-scroller'
+import DefaultImage from '@/assets/images/default_activity.jpg'
 
 export default {
   name: 'EventCard',
@@ -52,30 +60,15 @@ export default {
       loading: false
     }
   },
-  computed: {
+  computed: {    
+    eventImage () {
+      return this.item && this.item.media ? this.item.media : DefaultImage
+    },
     price () {
       if (this.item.price) {
         return '$' + parseFloat(Math.round(this.item.price * 100) / 100).toFixed(2)
       } else {
         return 'FREE'
-      }
-    },
-    date () {
-      if (this.item.nextOccurrence) {
-        return moment(this.item.nextOccurrence).format('MMM D')
-      } else if (this.item.prevOccurrence) {
-        return moment(this.item.prevOccurrence).format('MMM D')
-      } else {
-        return 'Anytime'
-      }
-    },
-    time () {
-      if (this.item.nextOccurrence) {
-        return moment(this.item.nextOccurrence).format('h:mm a')
-      } else if (this.item.prevOccurrence) {
-        return moment(this.item.prevOccurrence).format('h:mm a')
-      } else {
-        return null
       }
     }
   },
@@ -85,6 +78,8 @@ export default {
     }
   },
   components: {
+    DateScroller,
+    DateScrollItem,
     LoadingIcon,
     RestrictionBox
   }

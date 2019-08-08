@@ -5,12 +5,17 @@
   scroll-behavior: smooth;
 
   .event-card {
-    border-radius: 5px;
-    box-shadow: 0 0 3px #999999;
-    padding: 10px;
-    margin-bottom: 10px;
-    min-height: 90px;
+    position: relative;
+    border-radius: 0;
+    box-shadow: none;
+    background: $accent-color;
+    height: 100px;
     line-height: 1.5em;
+    border-bottom: 1px solid $extra-light-color;
+
+    &:first-child {
+      border-top: 1px solid $extra-light-color;
+    }
 
     .v-card__title {
       padding: 0;
@@ -29,41 +34,35 @@
         }
       }
     }
-    
-    .title {
-      font-size: 16px !important;
-    }
 
-    .location {
-      font-size: 0.7rem;
-      font-weight: 300;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      font-style: italic;
-      margin: 3px 0;
-    }
+    .content {
+      height: 98px;
+      position: relative;
+      padding: 8px 10px;
 
-    .price {
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: #41AAEF;
-    }
-
-    .date-field {
-      line-height: 1.15em;
-      text-align: right;
-
-      .date {
-        font-size: 14px;
-        color: #E61C1C;
-        text-transform: uppercase;
+      .title {
+        font-size: 0.85rem !important;
+        line-height: 2rem;
       }
-      .time {
-        padding-top: 7px;
-        color: $secondary-text-color;
-        font-weight: 200;
-        font-size: 12px;
+      
+      .align-bottom {
+        position: absolute;
+        bottom: 8px;
+      }
+
+      .location {
+        position: absolute;
+        bottom: 5px;
+        right: 10px;
+        font-size: 0.85rem;
+        font-weight: 300;
+        font-style: italic;
+      }
+
+      .price {
+        font-size: 0.88rem;
+        font-weight: 400;
+        color: #41AAEF;
       }
     }
   }
@@ -82,20 +81,6 @@
     line-height: 2rem;
     text-align: center;
     font-style: italic;
-  }
-}
-
-.event {
-  .restriction-box {
-    padding: 4px 0;
-  }
-}
-
-.restriction-box {
-  width: 100%;
-
-  .v-icon {
-    margin-right: 8px;
   }
 }
 
@@ -128,49 +113,63 @@
   z-index: 6 !important;
 
   .event {
-    height: calc(100vh - 56px);
+    max-height: calc(100vh - 56px);
     font-family: 'Roboto', sans-serif !important;
-
+    
     .header {
-      padding: 10px 15px 5px 15px;
-      
-      .title {
-        font-size: 1.05rem !important;
-        font-weight: 500;
-        line-height: 2;
+      .v-toolbar__content {
+        padding: 0;
+      }
+      background: transparent;
+      padding: 0;
+    }
+
+    .header.scrolled {
+      background: rgba(0,0,0,0.6);
+    }
+
+    .v-card__text {
+      padding: 0;
+
+      .header-segment {
+        padding: 10px 0;
+        
+        &:not(:first-child) {
+          border-top: 1px solid $extra-light-color;
+        }
+
+        .title {
+          font-size: 1.05rem !important;
+          font-weight: 500;
+          line-height: 2;
+        }
+
+        .location {
+          font-size: 0.8rem;
+          font-weight: 300;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          font-style: italic;
+
+          .name {
+            font-weight: bold;
+            padding-bottom: 5px;
+            color: $primary-color;
+          }
+        }
       }
 
-      .location {
-        font-size: 0.8rem;
-        font-weight: 300;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        font-style: italic;
-        margin: 5px 0;
-      }
-
-      .date-field {
-        line-height: 1;
-        text-align: right;
-  
-        .date {
-          font-size: 0.95rem;
-          color: #E61C1C;
-          text-transform: uppercase;
-        }
-        .time {
-          padding-top: 7px;
-          color: $secondary-text-color;
-          font-weight: 200;
-          font-size: 0.85rem;
-        }
+      .body {
+        margin-top: 10px;
+        padding: 5px 0 60px;
+        font-size: 0.95rem;
+        font-weight: 200;
+        height: fit-content;
       }
     }
 
     .body {
-      height: calc(100vh - 343px);
-      overflow: auto;
       padding: 5px 15px 60px;
       font-size: 0.95rem;
       font-weight: 200;
@@ -215,6 +214,55 @@
   }
 }
 
+.date-scroller {
+  height: 47px;
+  white-space: nowrap;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .date-scroll-item {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1;
+    text-align: right;
+    border-radius: 5px;
+    border: 1px solid $extra-light-color;
+    padding: 5px 10px;
+    margin-right: 5px;
+    width: fit-content;
+
+    .start, .end {
+      display: inline-block;
+      vertical-align: top;
+      position: relative;
+      text-align: center;
+
+      .date {
+        font-size: 0.75rem;
+        color: #E61C1C;
+        text-transform: uppercase;
+      }
+      .time {
+        padding-top: 8px;
+        color: $secondary-text-color;
+        font-weight: 500;
+        font-size: 0.65rem;
+      }
+    }
+
+    .qualifier {
+      padding: 10px;
+      font-size: 0.85rem;
+      color: $secondary-text-color;
+      display: inline-block;
+      font-weight: lighter;
+    }
+  }
+}
+
 .report-menu {
   position: relative;
   height: 90vh;
@@ -241,10 +289,6 @@
 
       .details {
         padding-left: 30px;
-
-        // h4 {
-        //   font-size: 0.85rem;
-        // }
         
         p {
           font-size: 0.75rem;
@@ -281,5 +325,13 @@
 
   .v-card__actions {
     box-shadow: 0 0 8px $regular-text-color;
+  }
+}
+
+.restriction-box {
+  width: 100%;
+
+  .v-icon {
+    margin-right: 8px;
   }
 }

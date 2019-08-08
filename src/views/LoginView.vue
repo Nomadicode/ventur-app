@@ -13,6 +13,7 @@
       <form class="fill-width" v-if="loginActive">
         <label class="field-label accent-color">Email</label>
         <el-input
+          type="email"
           v-model="login.email"
           placeholder="test@example.com" />
 
@@ -42,6 +43,7 @@
 
         <label class="field-label accent-color block pad-top--half">Email</label>
         <el-input
+          type="email"
           v-model="register.email"
           placeholder="test@example.com" />
 

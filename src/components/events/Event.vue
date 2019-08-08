@@ -5,183 +5,183 @@
     content-class="event-container"
     :z-index=5
     full-width
+    fullscreen
+    scrollable
     hide-overlay
     persistent
     lazy
     v-model="modal">
     <v-card class="event">
-      <v-img
-        :gradient="'rgba(0,0,0,0.4), rgba(0,0,0,0)'"
-        :src="eventImage"
-        :height="175"
-        :width="'100%'">
-        <v-layout fill-height column>
-          <v-flex xs3>
-            <v-layout row>
-              <v-flex xs2>
-                <v-btn
-                  dark
-                  icon
-                  @click="close">
-                  <v-icon>close</v-icon>
-                </v-btn>
-              </v-flex>
-              <v-spacer></v-spacer>
-              <v-flex
-                class="align-right"
-                xs2>
-                <v-menu
-                  light
-                  left
-                  offset-x
-                  z-index="205">
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      flat
-                      icon
-                      color="white"
-                      v-on="on">
-                      <v-icon>more_vert</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list class="more-menu">
-                    <v-list-tile>
-                      <v-list-tile-title
-                        class="secondary-text"
-                        @click="shareActivity">
-                        <v-icon size="14px" class="pad-right--quarter">fa fa-share</v-icon>
-                        share</v-list-tile-title>
-                    </v-list-tile>
-                    <v-divider />
-                    <v-list-tile
-                      class="remove-btn"
-                      @click="toggleReportMenu">
-                      <v-list-tile-title>report</v-list-tile-title>
-                    </v-list-tile>
-                  </v-list>
-                </v-menu>
-              </v-flex>
-            </v-layout>
+      <v-toolbar
+        flat
+        :fixed="true"
+        :height="40"
+        :elevation="0"
+        class="header">
+        <v-layout row>
+          <v-flex xs2>
+            <v-btn
+              dark
+              icon
+              @click="close">
+              <v-icon>close</v-icon>
+            </v-btn>
           </v-flex>
           <v-spacer />
-          <v-flex xs2 class="space-bottom--half">
-            <v-layout
-              align-center
-              row>
-              <v-flex xs4 class="space-left">
-                <div class="white-text">{{ duration }}</div>
-              </v-flex>
-              <v-spacer />
-              <v-flex xs5 class="align-right">
-                <direction-button
-                  class="space-right--half"
-                  v-if="event && event.location"
-                  :address="event.location.address"
-                  :latitude="event.location.latitude"
-                  :longitude="event.location.longitude"></direction-button>
-              </v-flex>
-            </v-layout>
+          <v-flex
+            class="align-right"
+            xs2>
+            <v-menu
+              light
+              left
+              offset-x
+              z-index="205">
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  flat
+                  icon
+                  color="white"
+                  v-on="on">
+                  <v-icon>more_vert</v-icon>
+                </v-btn>
+              </template>
+              <v-list class="more-menu">
+                <v-list-tile>
+                  <v-list-tile-title
+                    class="secondary-text"
+                    @click="shareActivity">
+                    <v-icon size="14px" class="pad-right--quarter">fa fa-share</v-icon>
+                    share</v-list-tile-title>
+                </v-list-tile>
+                <v-divider />
+                <v-list-tile
+                  class="remove-btn"
+                  @click="toggleReportMenu">
+                  <v-list-tile-title>report</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
           </v-flex>
         </v-layout>
-      </v-img>
+      </v-toolbar>
+      <v-card-text ref="eventBody">
+        <v-img
+          :gradient="'rgba(0,0,0,0), rgba(0,0,0,0.4)'"
+          :src="eventImage"
+          :height="200"
+          :width="'100%'">
+        </v-img>
 
-      <v-card-title class="header position--relative">
-        <v-container class="pad-none">
+        <div class="pad-sides--half">
           <v-layout
+            class="header-segment"
             justify-start
-            align-start
+            align-center
             row
             wrap>
-            <v-flex xs9 class="core-fields">
+            <v-flex xs9>
               <h4 class="title" v-if="event.name">{{ event.name }}</h4>
-              <div @click="toggleAddress" v-if="event && event.location" class="location">
-                <span v-if="!viewAddress && event.location.name">{{ event.location.name }}</span>
-                <span v-else>{{ event.location.address }}</span>
-              </div>
             </v-flex>
-            <v-flex xs3 class="date-field">
-              <div class="date">{{ date }}</div>
-              <div class="time">{{ time }}</div>
+            <v-flex 
+              class="align-right"
+              xs3>
+              <v-btn
+                icon
+                @click="toggleSave">
+                <v-icon
+                  v-if="!event.saved"
+                  size="16px">far fa-heart</v-icon>
+                <v-icon
+                  v-if="event.saved"
+                  size="16px"
+                  class="primary-color">fa fa-heart</v-icon>
+              </v-btn>
             </v-flex>
           </v-layout>
-        </v-container>
 
-        <v-layout class="space-top--quarter" row>
-          <v-flex xs9>
-            <restriction-box
-              :isNsfw="event.isNsfw"
-              :alcoholPresent="event.alcoholPresent"
-              :handicapFriendly="event.handicapFriendly"></restriction-box>
-          </v-flex>
-          <v-flex xs4 class="align-right">
-            <el-button
-              :type="event.saved ? 'primary' : 'default'"
-              plain
-              class="save-btn"
-              size="mini"
-              @click="toggleSave">
-              <v-icon
-                v-if="!event.saved"
-                size="16px"
-                class="pad-right--quarter">far fa-heart</v-icon>
-              <v-icon
-                v-if="event.saved"
-                size="16px"
-                class="pad-right--quarter primary-color">fa fa-heart</v-icon>
-              <span v-if="!event.saved">save</span>
-              <span v-if="event.saved">unsave</span>
-              </el-button>
-          </v-flex>
-        </v-layout>
+          <v-layout class="header-segment" row>
+            <v-flex xs6>
+              <div v-if="event && event.location" class="location">
+                <div class="name" v-if="event.location.name">{{ event.location.name }}</div>
+                <div class="address" v-html="formatAddress(event.location.address)"></div>
+              </div>
+            </v-flex>
+            <v-spacer />
+            <v-flex xs5 class="align-right">
+              <restriction-box
+                :isNsfw="event.isNsfw"
+                :alcoholPresent="event.alcoholPresent"
+                :handicapFriendly="event.handicapFriendly"></restriction-box>
+            </v-flex>
+          </v-layout>
 
-      </v-card-title>
+          <date-scroller class="space-top--half">
+            <date-scroll-item
+              v-for="(date, index) of event.upcomingDates"
+              :key="'date-' + index"
+              :startDate="date.startDate"
+              :endDate="date.endDate"></date-scroll-item>
+          </date-scroller>
 
-      <v-card-text class="body" v-html="event.description">
+          <div class="body" v-html="event.description"></div>
+
+          <v-speed-dial
+            v-if="createdByUser"
+            class="settings-btn"
+            v-model="fab"
+            absolute
+            bottom
+            right>
+            <template v-slot:activator>
+              <v-btn
+                v-model="fab"
+                color="blue darken-2"
+                dark
+                small
+                fab
+              >
+                <v-icon>settings</v-icon>
+                <v-icon>close</v-icon>
+              </v-btn>
+            </template>
+            <v-btn
+              fab
+              dark
+              small
+              color="red"
+              @click="deleteActivity">
+              <v-icon>delete</v-icon>
+            </v-btn>
+          </v-speed-dial>
+        </div>
       </v-card-text>
 
-      <v-speed-dial
-        v-if="createdByUser"
-        class="settings-btn"
-        v-model="fab"
-        absolute
-        bottom
-        right
-      >
-        <template v-slot:activator>
-          <v-btn
-            v-model="fab"
-            color="blue darken-2"
-            dark
-            small
-            fab
-          >
-            <v-icon>settings</v-icon>
-            <v-icon>close</v-icon>
-          </v-btn>
-        </template>
-        <!-- <v-btn
-          fab
-          dark
-          small
-          color="green"
-          @click="editActivity">
-          <v-icon>edit</v-icon>
-        </v-btn> -->
-        <v-btn
-          fab
-          dark
-          small
-          color="red"
-          @click="deleteActivity">
-          <v-icon>delete</v-icon>
-        </v-btn>
-      </v-speed-dial>
+      <v-card-actions class="pad-bottom--half">
+        <v-layout row>
+          <v-flex>
+            <el-button
+              v-if="false"
+              plain
+              type="danger"
+              size="small">Buy Tickets</el-button>
+          </v-flex>
+          <v-spacer />
+          <v-flex class="align-right">
+            <direction-button
+              v-if="event.location"
+              :latitude="event.location.latitude"
+              :longitude="event.location.longitude"></direction-button>
+          </v-flex>
+        </v-layout>
+      </v-card-actions>
 
+
+      <!--
       <ul class="footer">
         <li>{{ price }}</li>
         <li></li>
         <li>{{ ageRange }}</li>
-      </ul>
+      </ul> -->
     </v-card>
 
     <report-modal
@@ -204,6 +204,7 @@ import removeEvent from '@/graphql/events/mutations/removeEvent.gql'
 
 import DefaultActivityImage from '@/assets/images/default_activity.jpg'
 import DirectionButton from '@/components/elements/buttons/DirectionButton'
+import { DateScroller, DateScrollItem } from '@/components/elements/date-scroller'
 import EventEditModal from '@/components/modals/EventEditModal'
 import ReportModal from '@/components/modals/ReportModal'
 import RestrictionBox from '@/components/elements/RestrictionBox'
@@ -262,6 +263,11 @@ export default {
         window.EventBus.$emit('loading:event', value, false)
       })
     })
+
+    this.$refs.eventBody.onscroll = (elem) => {
+      var scrollPos = elem.target.scrollTop
+      console.log(scrollPos)
+    }
   },
   data () {
     return {
@@ -304,20 +310,6 @@ export default {
         return 'FREE'
       }
     },
-    date () {
-      if (this.event && this.event.nextOccurrence) {
-        return moment(this.event.nextOccurrence).format('MMM D')
-      } else {
-        return 'Anytime'
-      }
-    },
-    time () {
-      if (this.event && this.event.nextOccurrence) {
-        return moment(this.event.nextOccurrence).format('h:mm a')
-      } else {
-        return null
-      }
-    },
     ageRange () {
       if (this.event.minimumAge === 0 && this.event.maximumAge === 65) {
         return 'all ages'
@@ -341,6 +333,16 @@ export default {
     }
   },
   methods: {
+    formatAddress (address) {
+      var addressHtml = '<div>'
+
+      var addressComp = address.split(',')
+
+      addressHtml += '<div>' + addressComp.splice(0, 1) + '</div>'
+      addressHtml += '<div>' + addressComp.join(', ') + '</div>'
+
+      return addressHtml
+    },
     toggleSave () {
       if (this.event.saved) {
         this.unsaveActivity()
@@ -464,6 +466,8 @@ export default {
     }
   },
   components: {
+    DateScrollItem,
+    DateScroller,
     DirectionButton,
     EventEditModal,
     ReportModal,

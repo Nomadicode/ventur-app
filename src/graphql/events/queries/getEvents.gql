@@ -19,7 +19,14 @@ query Activities ($latitude: Float!, $longitude: Float!, $filters: String, $save
         distance
         price
         media
-        nextOccurrence
+        upcomingDates {
+          startDate
+          endDate
+        }
+        nextOccurrence {
+          startDate
+          endDate
+        }
         location {
           name
           address

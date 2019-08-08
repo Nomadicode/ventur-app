@@ -37,7 +37,8 @@ const apolloProvider = new VueApollo({
     }
   },
   errorHandler (error) {
-    if (error.message === 'GraphQL error: Signature verification failed') {
+    if (error.message === 'GraphQL error: Signature verification failed' ||
+        error.message === 'GraphQL error: Signature has expired') {
       store.commit('UserModule/LOGOUT_USER')
     }
   }

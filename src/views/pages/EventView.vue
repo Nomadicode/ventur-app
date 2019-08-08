@@ -18,7 +18,7 @@
 
     <event-list
       ref="events"
-      class="pad-sides--half pad-top--double space-top--1_5"
+      class="pad-top--double space-top--1_5"
       @on-scroll="onScroll"
       :saved="showSaved"
       :filters="filters"

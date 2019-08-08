@@ -1,6 +1,6 @@
 <template>
   <a
-    class="direction-btn el-button space-right--half el-button--primary el-button--small"
+    class="direction-btn el-button el-button--primary el-button--small"
     :href="geoLink"
     target="_blank">
     Directions

@@ -38,7 +38,7 @@
           <v-divider />
 
           <v-list-tile @click="open('about')">
-            <v-list-tile-title>About Driftr</v-list-tile-title>
+            <v-list-tile-title>About Ventür</v-list-tile-title>
           </v-list-tile>
 
           <v-divider />

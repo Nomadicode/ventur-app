@@ -12,7 +12,14 @@ query activity($pk: ID!){
     minimumAge
     maximumAge
     handicapFriendly
-    nextOccurrence
+    upcomingDates {
+      startDate
+      endDate
+    }
+    nextOccurrence {
+      startDate
+      endDate
+    }
     saved
     createdBy {
       id

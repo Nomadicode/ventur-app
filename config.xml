@@ -21,6 +21,9 @@
     <preference name="orientation" value="portrait" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="SplashScreenDelay" value="2000" />
+    <feature name="Geolocation">
+        <param name="ios-package" value="Geolocation" />
+    </feature>
     <platform name="android">
         <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />
         <icon density="mdpi" src="static/android/mdpi.png" />
@@ -41,6 +44,18 @@
     <platform name="ios">
         <preference name="APP_SECRET" value="33fe45b1-717f-4c77-807b-af13ca261259" />
         <preference name="StatusBarOverlaysWebView" value="false" />
+        
+        <edit-config file="*-Info.plist" mode="merge" target="UIStatusBarHidden">
+            <true />
+        </edit-config>
+        <edit-config file="*-Info.plist" mode="merge" target="UIViewControllerBasedStatusBarAppearance">
+            <false />
+        </edit-config>
+
+        <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+            <string>needs your location to find events nearby</string>
+        </edit-config>
+
         <icon src="static/ios/icons/icon-60.png" width="60" height="60" />
         <icon src="static/ios/icons/icon-60@2x.png" width="120" height="120" />
         <icon src="static/ios/icons/icon-60@3x.png" width="180" height="180" />

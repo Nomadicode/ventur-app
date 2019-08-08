@@ -14,6 +14,7 @@
       <el-input
         class="fill-width space-top space-bottom--quad"
         v-model="email"
+        type="email"
         placeholder="test@example.com"></el-input>
 
       <v-btn
