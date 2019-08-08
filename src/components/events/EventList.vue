@@ -8,7 +8,7 @@
 
     <el-button
       size="mini"
-      v-if="hasMore && !error && !$apollo.loading"
+      v-if="hasMore && !$apollo.loading"
       class="fill-width"
       @click="fetchNext">Load More</el-button>
 
@@ -19,18 +19,14 @@
         {{ emptyMessage }}
     </div>
 
-    <div
-      v-if="!currentLocation || !currentLocation.latitude || !currentLocation.longitude"
-      class="error">
-      Driftr needs access to your location to function properly.
-    </div>
-
     <loading-icon v-if="$apollo.loading"></loading-icon>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+
+import { calculateDistance } from '@/services/helpers'
 
 import getEvents from '@/graphql/events/queries/getEvents.gql'
 
@@ -116,8 +112,7 @@ export default {
       pageSize: 10,
       nextCursor: null,
       cursor: null,
-      hasMore: true,
-      error: true,
+      hasMore: false,
       events: []
     }
   },
@@ -139,7 +134,6 @@ export default {
     },
     toggleQuery () {
       this.$apollo.queries.activities.skip = !this.$apollo.queries.activities.skip
-      this.error = !this.error
     }
   },
   components: {
@@ -155,12 +149,17 @@ export default {
     },
     currentLocation: {
       handler (newValue, oldValue) {
-        if (newValue == null || oldValue == null) {
+        if (newValue == null) {
           this.$apollo.queries.activities.skip = true
-          this.error = true
-        } else {
+        }
+        else if (oldValue == null && newValue != null) {
           this.$apollo.queries.activities.skip = false
-          this.error = false
+        } else {
+          if (calculateDistance(newValue.latitude, newValue.longitude, oldValue.latitude, oldValue.longitude) >= 1) {
+            this.$apollo.queries.activities.skip = false
+          } else {
+            this.$apollo.queries.activities.skip = true
+          }
         }
       },
       deep: true

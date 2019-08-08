@@ -10,3 +10,23 @@ export function parseErrors (error) {
 
   return message
 }
+
+export function calculateDistance(newLat, newLong, oldLat, oldLong) {
+  var R = 3963
+
+  var dLat = deg2rad(oldLat - newLat)
+  var dLong = deg2rad(oldLong - newLong)
+
+  var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(newLat)) * Math.cos(deg2rad(oldLat)) *
+    Math.sin(dLong/2) * Math.sign(dLong/2)
+
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+  var d = R * c
+  return d
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
