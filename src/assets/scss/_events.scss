@@ -184,7 +184,7 @@
 }
 
 .date-scroller {
-  height: 47px;
+  height: 40px;
   white-space: nowrap;
   overflow: auto;
 
@@ -193,6 +193,7 @@
   }
 
   .date-scroll-item {
+    height: 100%;
     display: inline-block;
     vertical-align: top;
     line-height: 1;
@@ -228,6 +229,10 @@
       color: $secondary-text-color;
       display: inline-block;
       font-weight: lighter;
+    }
+
+    .vertical-center {
+      margin-top: 9px;
     }
   }
 }

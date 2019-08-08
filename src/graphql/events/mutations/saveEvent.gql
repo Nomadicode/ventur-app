@@ -11,15 +11,27 @@ mutation SaveActivity ($activity: ID!) {
         price
         duration
         description
-        isNsfw
         alcoholPresent
+        isNsfw
+        minimumAge
+        maximumAge
         handicapFriendly
+        upcomingDates {
+          alwaysAvailable
+          startDate
+          endDate
+        }
         nextOccurrence {
+          alwaysAvailable
           startDate
           endDate
         }
         saved
+        createdBy {
+          id
+        }
         location {
+          name
           address
           latitude
           longitude

@@ -4,7 +4,7 @@
     light>
     <v-content>
       <div
-        v-if="!currentLocation || !currentLocation.latitude || !currentLocation.longitude"
+        v-if="!locationAllowed"
         class="error"
         :class="{
           'top-offset-0': !$auth.isAuthenticated(),
@@ -45,12 +45,9 @@ export default {
       },
 
       onDeviceReady: function () {
-        self.initializeLocation()
-        self.registerWatchLocation()
-
         var push = PushNotification.init({
           browser: { pushServiceURL: 'http://push.api.phonegap.com/v1/push' },
-          android: { senderID: '1:226320092066:android:45cb019aa3275163' },
+          android: { senderID: '1:22402933218:android:c9c1b273e0ef0f2e' },
           ios: { alert: 'true', badge: true, sound: 'true' }
         })
 
@@ -68,7 +65,6 @@ export default {
               }
             }
           }).then(function(data){})
-          console.log(platform, handle)
         })
         
         push.on('notification', function (data) {
@@ -90,10 +86,10 @@ export default {
 
     if (window.cordova) {
       app.initialize()
-    } else {
-      this.initializeLocation()
-      window.setInterval(this.initializeLocation, 15000)
     }
+
+    this.initializeLocation()
+    window.setInterval(this.initializeLocation, 15000)
 
     if (!this.token) {
       this.logout()
@@ -101,7 +97,10 @@ export default {
   },
   computed: {
     ...mapGetters('UserModule', ['token']),
-    ...mapGetters('AppState', ['currentLocation', 'timezone'])
+    ...mapGetters('AppState', ['currentLocation', 'timezone']),
+    locationAllowed () {
+      return (navigator.geolocation)
+    }
   },
   methods: {
     initializeLocation () {

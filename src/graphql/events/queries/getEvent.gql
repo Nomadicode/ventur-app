@@ -13,10 +13,12 @@ query activity($pk: ID!){
     maximumAge
     handicapFriendly
     upcomingDates {
+      alwaysAvailable
       startDate
       endDate
     }
     nextOccurrence {
+      alwaysAvailable
       startDate
       endDate
     }
@@ -29,10 +31,6 @@ query activity($pk: ID!){
       address
       latitude
       longitude
-    }
-    schedule {
-      start
-      end
     }
   }
 }

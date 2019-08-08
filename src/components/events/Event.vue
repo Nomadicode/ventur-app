@@ -151,6 +151,7 @@
             <date-scroll-item
               v-for="(date, index) of event.upcomingDates"
               :key="'date-' + index"
+              :alwaysAvailable="date.alwaysAvailable"
               :startDate="date.startDate"
               :endDate="date.endDate"></date-scroll-item>
           </date-scroller>

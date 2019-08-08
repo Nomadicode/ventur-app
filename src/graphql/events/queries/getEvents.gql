@@ -20,10 +20,12 @@ query Activities ($latitude: Float!, $longitude: Float!, $filters: String, $save
         price
         media
         upcomingDates {
+          alwaysAvailable
           startDate
           endDate
         }
         nextOccurrence {
+          alwaysAvailable
           startDate
           endDate
         }

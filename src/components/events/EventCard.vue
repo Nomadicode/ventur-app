@@ -18,8 +18,11 @@
           </v-flex>
           <v-flex xs9 class="content">
             <h4 class="title">{{ item.name }}</h4>
-            <date-scroller class="fix-bottom">
-              <date-scroll-item :startDate="item.nextOccurrence.startDate" :endDate="item.nextOccurrence.endDate"></date-scroll-item>
+            <date-scroller class="fix-bottom bottom-offset-4">
+              <date-scroll-item
+                :startDate="item.nextOccurrence.startDate"
+                :endDate="item.nextOccurrence.endDate"
+                :alwaysAvailable="item.nextOccurrence.alwaysAvailable"></date-scroll-item>
             </date-scroller>
 
             <div class="location">
