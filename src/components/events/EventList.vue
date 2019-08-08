@@ -8,7 +8,7 @@
 
     <el-button
       size="mini"
-      v-if="hasMore && !error && !$apollo.loading"
+      v-if="hasMore && !$apollo.loading"
       class="fill-width"
       @click="fetchNext">Load More</el-button>
 
@@ -17,12 +17,6 @@
       class="empty"
       :class="{'center--vertical': centered}">
         {{ emptyMessage }}
-    </div>
-
-    <div
-      v-if="!currentLocation || !currentLocation.latitude || !currentLocation.longitude"
-      class="error">
-      Driftr needs access to your location to function properly.
     </div>
 
     <loading-icon v-if="$apollo.loading"></loading-icon>
@@ -116,7 +110,7 @@ export default {
       pageSize: 10,
       nextCursor: null,
       cursor: null,
-      hasMore: true,
+      hasMore: false,
       error: true,
       events: []
     }
@@ -150,21 +144,6 @@ export default {
     filters: {
       handler (newValue, oldValue) {
         this.refresh()
-      },
-      deep: true
-    },
-    currentLocation: {
-      handler (newValue, oldValue) {
-        if (newValue.latitude == null || 
-            newValue.longitude == null || 
-            ((newValue.latitude == oldValue.latitude) &&
-            (newValue.longitude == oldValue.longitude))) {
-          this.$apollo.queries.activities.skip = true
-          this.error = true
-        } else {
-          this.$apollo.queries.activities.skip = false
-          this.error = false
-        }
       },
       deep: true
     }

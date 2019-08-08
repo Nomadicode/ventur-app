@@ -1,12 +1,1 @@
-{
-  "background_color": "#FFF",
-  "display": "standalone",
-  "name": "Ventür",
-  "short_name": "Ventür",
-  "version": "com.nomadicode.ventur",
-  "description": "Ventür is a tool to connect users with events happening in their current area. It aides travellers in finding things to do that may be less tourist focused and\n        fit their criteria. It also aides locals in finding things to do near their home that they may not hear about.",
-  "author": "Nomadicode Dev Team",
-  "icons": [],
-  "orientation": "portrait",
-  "start_url": "index.html"
-}
+{"background_color":"#FFF","display":"standalone","name":"Ventür","short_name":"Ventür","version":"com.nomadicode.ventur","description":"Ventür is a tool to connect users with events happening in their current area. It aides travellers in finding things to do that may be less tourist focused and\n        fit their criteria. It also aides locals in finding things to do near their home that they may not hear about.","author":"Nomadicode Dev Team","icons":[],"orientation":"portrait","start_url":"index.html","gcm_sender_id":"996231231186"}

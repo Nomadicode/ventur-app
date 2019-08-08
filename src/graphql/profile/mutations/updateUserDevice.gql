@@ -1,0 +1,6 @@
+mutation UpdateUserDevice ($deviceId: String!, $deviceType: String!) {
+  updateUserDevice (deviceId: $deviceId, deviceType: $deviceType) {
+    success
+    error
+  }
+}

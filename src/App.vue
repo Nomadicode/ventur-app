@@ -3,6 +3,15 @@
     :class="{'login-screen': !$auth.isAuthenticated()}"
     light>
     <v-content>
+      <div
+        v-if="!currentLocation || !currentLocation.latitude || !currentLocation.longitude"
+        class="error"
+        :class="{
+          'top-offset-0': !$auth.isAuthenticated(),
+          'top-offset-70': $auth.isAuthenticated()
+        }">
+        Ventür needs access to your location to function properly.
+      </div>
       <v-container
         :fill-height="!$auth.isAuthenticated()"
         :class="{'pad-none': $auth.isAuthenticated()}"
@@ -19,17 +28,72 @@ import moment from 'moment-timezone'
 import CordovaApp from '@/services/cordova-init'
 
 import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
+import updateUserDevice from '@/graphql/profile/mutations/updateUserDevice.gql'
 
 export default {
   name: 'App',
   created () {
-    CordovaApp.initialize()
+    var self = this
+    const app = {
+      initialize: function () {
+        this.bindEvents()
+      },
 
-    this.initializeLocation()
+      bindEvents: function () {
+        document.addEventListener('deviceready', this.onDeviceReady, false)
+        document.addEventListener('pause', this.onPause, false)
+      },
 
-    this.registerWatchLocation()
+      onDeviceReady: function () {
+        self.initializeLocation()
+        self.registerWatchLocation()
 
-    // window.setInterval(this.updateLocation, 15000)
+        var push = PushNotification.init({
+          browser: { pushServiceURL: 'http://push.api.phonegap.com/v1/push' },
+          android: { senderID: '1:226320092066:android:45cb019aa3275163' },
+          ios: { alert: 'true', badge: true, sound: 'true' }
+        })
+
+        push.on('registration', function (data) {
+          var platform = device.platform
+          var handle = data.registrationId
+
+          // Add User Device API
+          self.$$apollo.mutate({
+            mutation: updateUserDevice,
+            variables () {
+              return {
+                deviceId: handle,
+                deviceType: platform
+              }
+            }
+          }).then(function(data){})
+          console.log(platform, handle)
+        })
+        
+        push.on('notification', function (data) {
+          alert('Push Received: ' + data.message)
+        })
+
+        push.on('error', function (error) {
+          console.error(error)
+        })
+      },
+
+      onPause: function () {
+        
+      },
+
+      eventDetailPageRequested: function (eventData) {
+      }
+    }
+
+    if (window.cordova) {
+      app.initialize()
+    } else {
+      this.initializeLocation()
+      window.setInterval(this.initializeLocation, 15000)
+    }
 
     if (!this.token) {
       this.logout()
