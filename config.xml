@@ -59,8 +59,15 @@
         <icon src="static/ios/icons/icon-40@3x.png" width="120" height="120" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <splash src="static/ios/Default~iphone.png" width="320" height="480"/>
+        <splash src="static/ios/Default@2x~iphone.png" width="640" height="960"/>
+        <splash src="static/ios/Default-568h@2x~iphone.png" width="640" height="1136"/>
+        <splash src="static/ios/Default-667h.png" width="750" height="1334"/>
+        <splash src="static/ios/Default-736h.png" width="1242" height="2208"/>
+        <splash src="static/ios/Default-2436h.png" width="1125" height="2436"/>
+        <!--<splash src="static/ios/Default"
         <splash src="static/ios/Default@2x~universal~comany.png" />
-        <splash src="static/ios/Default@3x~universal~comany.png" />
+        <splash src="static/ios/Default@3x~universal~comany.png" /> -->
     </platform>
     <plugin name="cordova-plugin-appcenter-analytics" spec="^0.2.0" />
     <plugin name="cordova-plugin-appcenter-crashes" spec="^0.2.0" />
