@@ -34,10 +34,16 @@
 }
 
 .list {
-  padding: 0 10px 80px 10px;
+  padding-bottom: 80px;
 }
 
 .friend-list {
+  h6.section-heading {
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    margin-left: 15px;
+  }
+
   .toggle-btn {
     font-size: 0.7rem;
     text-transform: uppercase;
@@ -119,18 +125,14 @@
   }
 
   .group-card {
-    margin: 10px 0;
-    &:not(:first-child) {
-      margin-top: 25px;
-    }
-
     .v-card__title {
       position: relative;
+      height: 60px;
       padding: 5px 10px;
-      font-weight: 600;
       color: $secondary-color;
-      font-size: 0.8rem;
-      box-shadow: 0 1px 2px #8e8e8e;
+      font-size: 0.9rem;
+      box-shadow: none;
+      border: 1px solid $extra-light-color;
     }
 
     .v-card__text {

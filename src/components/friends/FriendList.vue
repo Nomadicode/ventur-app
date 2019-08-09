@@ -8,7 +8,7 @@
         <v-flex
           xs11
           align-self-center>
-          <h6>Friend Requests</h6>
+          <h6 class="section-heading">Friend Requests</h6>
         </v-flex>
         <v-flex xs1>
           <el-button
@@ -38,7 +38,7 @@
 
     <div
       class="friend-list">
-      <h6 v-if="friends && friends.length !== 0">Friends</h6>
+      <h6 class="section-heading" v-if="friends && friends.length !== 0">Friends</h6>
 
       <v-layout
         row

@@ -13,7 +13,7 @@
       <v-toolbar
         flat
         :fixed="true"
-        :height="40"
+        :height="50"
         :elevation="0"
         class="header"
         :class="{

@@ -16,17 +16,17 @@ export default {
     geoLink () {
       var platform = (typeof device !== 'undefined') ? device.platform : this.getDevice()
 
-      var protocol = 'geo'
+      var protocol = 'geo:0,0?q='
       if (platform === 'iOS') {
-        protocol = 'maps'
+        protocol = 'http://maps.apple.com/?q='
       } 
       
       if (this.name) {
-        return protocol + ':0,0?q=' + this.name
+        return protocol + this.name
       } else if (this.address) {
-        return protocol + ':0,0?q=' + this.address
+        return protocol + this.address
       } else {
-        return protocol + ':0,0?q=' + this.latitude + ',' + this.longitude
+        return protocol + this.latitude + ',' + this.longitude
       }
     }
   },

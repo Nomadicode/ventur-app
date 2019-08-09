@@ -13,15 +13,18 @@ query randomActivity($latitude: Float, $longitude: Float){
     maximumAge
     handicapFriendly
     upcomingDates {
+      alwaysAvailable
       startDate
       endDate
     }
     nextOccurrence {
+      alwaysAvailable
       startDate
       endDate
     }
     saved
     location {
+      name
       address
       latitude
       longitude
