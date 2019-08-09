@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.nomadicode.ventur" version="1.0.0" android-versionCode="51" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.nomadicode.ventur" version="1.0.0" android-versionCode="52" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Ventür</name>
     <description>
         Ventür is a tool to connect users with events happening in their current area. It aides travellers in finding things to do that may be less tourist focused and
@@ -26,16 +26,11 @@
     </feature>
     <platform name="android">
         <preference name="APP_SECRET" value="87987c79-118d-414c-99d9-f6df4426ba96" />
-        <icon density="mdpi" src="static/android/mdpi.png" />
-        <icon density="hdpi" src="static/android/hdpi.png" />
-        <icon density="xhdpi" src="static/android/xhdpi.png" />
-        <icon density="xxhdpi" src="static/android/xxhdpi.png" />
-        <icon density="xxxhdpi" src="static/android/xxxhdpi.png" />
-        <!-- <icon background="static/android/background.xml" density="mdpi" foreground="static/android/foreground.xml" src="static/android/mdpi.png" />
+        <icon background="static/android/background.xml" density="mdpi" foreground="static/android/foreground.xml" src="static/android/mdpi.png" />
         <icon background="static/android/background.xml" density="hdpi" foreground="static/android/foreground.xml" src="static/android/hdpi.png" />
         <icon background="static/android/background.xml" density="xhdpi" foreground="static/android/foreground.xml" src="static/android/xhdpi.png" />
         <icon background="static/android/background.xml" density="xxhdpi" foreground="static/android/foreground.xml" src="static/android/xxhdpi.png" />
-        <icon background="static/android/background.xml" density="xxxhdpi" foreground="static/android/foreground.xml" src="static/android/xxxhdpi.png" /> -->
+        <icon background="static/android/background.xml" density="xxxhdpi" foreground="static/android/foreground.xml" src="static/android/xxxhdpi.png" />
         <allow-intent href="market:*" />
         <splash src="static/android/splash/hdpi.png" density="port-hdpi"/>
         <splash src="static/android/splash/mdpi.png" density="port-mdpi"/>

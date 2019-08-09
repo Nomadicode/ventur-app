@@ -11,18 +11,34 @@
 <script>
 export default {
   name: 'DirectionButton',
-  props: ['address', 'latitude', 'longitude'],
+  props: ['name', 'address', 'latitude', 'longitude'],
   computed: {
     geoLink () {
-      return 'geo:0,0?q=' + this.latitude + ',' + this.longitude
+      var platform = (typeof device !== 'undefined') ? device.platform : this.getDevice()
+
+      var protocol = 'geo'
+      if (platform === 'iOS') {
+        protocol = 'maps'
+      } 
+      
+      if (this.name) {
+        return protocol + ':0,0?q=' + this.name
+      } else if (this.address) {
+        return protocol + ':0,0?q=' + this.address
+      } else {
+        return protocol + ':0,0?q=' + this.latitude + ',' + this.longitude
+      }
+    }
+  },
+  methods: {
+    getDevice () {
+      var platform = navigator.platform
+
+      if (platform === 'iPhone' || platform === 'iPad' || platform === 'iPod') {
+        return 'iOS'
+      }
+      return 'Android'
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .font-small {
-    font-size: inherit;
-    color: #FFFFFF;
-  }
-</style>
