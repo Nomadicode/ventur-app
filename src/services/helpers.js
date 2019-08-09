@@ -11,8 +11,12 @@ export function parseErrors (error) {
   return message
 }
 
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
 export function calculateDistance(newLat, newLong, oldLat, oldLong) {
-  var R = 3963
+  var R = 6371
 
   var dLat = deg2rad(oldLat - newLat)
   var dLong = deg2rad(oldLong - newLong)
@@ -24,9 +28,5 @@ export function calculateDistance(newLat, newLong, oldLat, oldLong) {
 
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
   var d = R * c
-  return d
-}
-
-function deg2rad(deg) {
-  return deg * (Math.PI/180)
+  return d / 1.609344
 }

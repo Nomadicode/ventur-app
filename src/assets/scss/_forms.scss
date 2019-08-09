@@ -69,6 +69,7 @@
       width: 33%;
       overflow: auto;
       color: $placeholder-text-color;
+      list-style-type: none;
       
       &:not(:last-child) {
         border-right: 1px solid $placeholder-text-color;

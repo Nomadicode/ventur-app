@@ -26,6 +26,7 @@
 import { mapGetters } from 'vuex'
 import moment from 'moment-timezone'
 import CordovaApp from '@/services/cordova-init'
+import { calculateDistance } from '@/services/helpers'
 
 import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
 import updateUserDevice from '@/graphql/profile/mutations/updateUserDevice.gql'
@@ -59,13 +60,13 @@ export default {
           var handle = data.registrationId
 
           // Add User Device API
-          self.$$apollo.mutate({
-            mutation: updateUserDevice,
-            variables: {
-              deviceId: handle,
-              deviceType: platform
-            }
-          }).then(function(data){})
+          // self.$apollo.mutate({
+          //   mutation: updateUserDevice,
+          //   variables: {
+          //     deviceId: handle,
+          //     deviceType: platform
+          //   }
+          // }).then(function(data){})
         })
         
         push.on('notification', function (data) {
@@ -108,7 +109,7 @@ export default {
       if (navigator.geolocation) {
         var self = this
         navigator.geolocation.getCurrentPosition(function (location) {
-          if (!self.currentLocation || (self.currentLocation.latitude !== location.coords.latitude && self.currentLocation.longitude !== location.coords.longitude)) {
+          if (!self.currentLocation || calculateDistance(location.coords.latitude, location.coords.longitude, self.currentLocation.latitude, self.currentLocation.longitude) > 1) {
             self.$store.commit('AppState/SET_LOCATION', location.coords)
             if (self.token) {
               self.$apollo.mutate({

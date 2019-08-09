@@ -1,4 +1,4 @@
-query getUser ($pk: Int) {
+query getUser ($pk: ID) {
   user (pk: $pk) {
     settings {
       showAlcohol

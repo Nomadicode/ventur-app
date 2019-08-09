@@ -19,7 +19,7 @@
         {{ emptyMessage }}
     </div>
 
-    <loading-icon v-if="$apollo.loading"></loading-icon>
+    <loading-icon v-if="$apollo.loading || loading"></loading-icon>
   </div>
 </template>
 
@@ -87,6 +87,8 @@ export default {
             this.nextCursor = events[events.length - 1]['cursor']
           }
         }
+
+        this.loading = false
       },
       skip: true
     }
@@ -113,7 +115,8 @@ export default {
       nextCursor: null,
       cursor: null,
       hasMore: false,
-      events: []
+      events: [],
+      loading: false
     }
   },
   computed: {
@@ -122,10 +125,10 @@ export default {
   methods: {
     refresh () {
       if (this.$apollo.queries && this.$apollo.queries.activities) {
-        this.events = []
         this.cursor = null
         this.nextCursor = null
         this.$refs.infiniteScroll.scrollTop = 0
+        this.loading = true
         this.$apollo.queries.activities.refetch()
       }
     },
