@@ -79,7 +79,7 @@ export default {
       this.modal = false
     },
     async save () {
-      if (Object.keys(this.croppaImg).length != 0) {
+      if (this.$refs.uploader.hasImage()) {
         var self = this
         self.loading = true
         this.croppaImg.generateBlob(blob => {

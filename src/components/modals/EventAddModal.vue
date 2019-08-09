@@ -309,7 +309,7 @@ export default {
       this.loading = true
       var self = this
 
-      if (Object.keys(this.croppaImg).length != 0) {
+      if (this.$refs.uploader.hasImage()) {
         this.croppaImg.generateBlob(blob => {
           var params = {
             Bucket: CONSTANTS.aws,
@@ -322,7 +322,6 @@ export default {
             self.saveEvent()
           })
         }, 'image/jpeg', 0.75)
-
       } else {
         this.saveEvent()
       }
