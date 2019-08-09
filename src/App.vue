@@ -45,24 +45,25 @@ export default {
       },
 
       onDeviceReady: function () {
+        self.initializeLocation()
+        window.setInterval(self.initializeLocation, 15000)
+
         var push = PushNotification.init({
           browser: { pushServiceURL: 'http://push.api.phonegap.com/v1/push' },
           android: { senderID: '1:22402933218:android:c9c1b273e0ef0f2e' },
           ios: { alert: 'true', badge: true, sound: 'true' }
         })
 
-        push.on('registration', function (data) {
+        push.on('registration', data => {
           var platform = device.platform
           var handle = data.registrationId
 
           // Add User Device API
           self.$$apollo.mutate({
             mutation: updateUserDevice,
-            variables () {
-              return {
-                deviceId: handle,
-                deviceType: platform
-              }
+            variables: {
+              deviceId: handle,
+              deviceType: platform
             }
           }).then(function(data){})
         })
@@ -86,10 +87,10 @@ export default {
 
     if (window.cordova) {
       app.initialize()
+    } else {
+      this.initializeLocation()
+      window.setInterval(this.initializeLocation, 15000)
     }
-
-    this.initializeLocation()
-    window.setInterval(this.initializeLocation, 15000)
 
     if (!this.token) {
       this.logout()

@@ -69,7 +69,7 @@
         <v-img
           :gradient="'rgba(0,0,0,0), rgba(0,0,0,0.4)'"
           :src="eventImage"
-          :height="200"
+          :height="225"
           :width="'100%'">
           <v-speed-dial
             v-if="createdByUser"
@@ -158,27 +158,29 @@
 
           <div class="body" v-html="event.description"></div>
         </div>
-      </v-card-text>
 
-      <v-card-actions class="pad-bottom--half">
-        <v-layout row>
-          <v-flex>
-            <div class="price-display">{{ price }}</div>
-            <!-- <el-button
-              v-if="false"
-              plain
-              type="danger"
-              size="small">Buy Tickets</el-button> -->
-          </v-flex>
-          <v-spacer />
-          <v-flex class="align-right">
-            <direction-button
-              v-if="event.location"
-              :latitude="event.location.latitude"
-              :longitude="event.location.longitude"></direction-button>
-          </v-flex>
-        </v-layout>
-      </v-card-actions>
+        <div class="footer-actions">
+          <v-layout row>
+            <v-flex>
+              <div class="price-display">{{ price }}</div>
+              <!-- <el-button
+                v-if="false"
+                plain
+                type="danger"
+                size="small">Buy Tickets</el-button> -->
+            </v-flex>
+            <v-spacer />
+            <v-flex class="align-right">
+              <direction-button
+                v-if="event.location"
+                :name="event.location.name"
+                :address="event.location.address"
+                :latitude="event.location.latitude"
+                :longitude="event.location.longitude"></direction-button>
+            </v-flex>
+          </v-layout>
+        </div>
+      </v-card-text>
     </v-card>
 
     <report-modal
