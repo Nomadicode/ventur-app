@@ -1,25 +1,27 @@
 <template>
-  <div ref='infiniteScroll' class="event-list">
-    <event-card
-      v-for="activity of events"
-      :key="activity.title"
-      :item="activity"
-      @refresh="refresh"></event-card>
+  <div>
+    <div ref='infiniteScroll' class="event-list">
+      <event-card
+        v-for="activity of events"
+        :key="activity.title"
+        :item="activity"
+        @refresh="refresh"></event-card>
 
-    <el-button
-      size="mini"
-      v-if="hasMore && !$apollo.loading"
-      class="fill-width"
-      @click="fetchNext">Load More</el-button>
+      <el-button
+        size="mini"
+        v-if="hasMore && !$apollo.loading"
+        class="fill-width"
+        @click="fetchNext">Load More</el-button>
 
-    <div
-      v-if="events && events.length === 0 && !$apollo.loading"
-      class="empty"
-      :class="{'center--vertical': centered}">
-        {{ emptyMessage }}
+      <div
+        v-if="events && events.length === 0 && !$apollo.loading"
+        class="empty"
+        :class="{'center--vertical': centered}">
+          {{ emptyMessage }}
+      </div>
+
+      <loading-icon v-if="$apollo.loading || loading"></loading-icon>
     </div>
-
-    <loading-icon v-if="$apollo.loading || loading"></loading-icon>
   </div>
 </template>
 
@@ -32,6 +34,7 @@ import getEvents from '@/graphql/events/queries/getEvents.gql'
 
 import EventCard from '@/components/events/EventCard'
 import LoadingIcon from '@/components/elements/LoadingIcon'
+import LocationAutocomplete from '@/components/elements/inputs/LocationAutocomplete'
 
 export default {
   name: 'EventList',
@@ -141,7 +144,8 @@ export default {
   },
   components: {
     EventCard,
-    LoadingIcon
+    LoadingIcon,
+    LocationAutocomplete
   },
   watch: {
     filters: {

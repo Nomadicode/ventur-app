@@ -4,6 +4,7 @@ const AppState = {
   namespaced: true,
 
   state: {
+    useDeviceLocation: false,
     location: null,
     timezone: null,
     filters: null
@@ -14,6 +15,9 @@ const AppState = {
         latitude: locationData.latitude,
         longitude: locationData.longitude
       }
+    },
+    SET_DEVICE_LOCATION (state, useDevice) {
+      state.useDeviceLocation = useDevice
     },
     SET_TIMEZONE (state, timezone) {
       state.timezone = timezone
@@ -29,6 +33,9 @@ const AppState = {
   getters: {
     timezone: state => {
       return (state.timezone) ? state.timezone : null
+    },
+    useDeviceLocation: state => {
+      return (state.useDeviceLocation) ? true : false
     },
     currentLocation: state => {
       return (state.location) ? state.location : null

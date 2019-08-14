@@ -135,6 +135,14 @@
               </v-flex>
               <v-spacer />
             </v-layout>
+            <v-layout row wrap class="pad-top--half">
+              <v-flex xs6>
+                <label class="pad-bottom--quarter field-label">Show only saved</label>
+                  <el-switch
+                    v-model="filters.savedOnly"></el-switch>
+              </v-flex>
+              <v-spacer />
+            </v-layout>
           </v-container>
         </v-card-text>
         <v-card-actions>

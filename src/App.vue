@@ -47,7 +47,7 @@ export default {
 
       onDeviceReady: function () {
         self.initializeLocation()
-        window.setInterval(self.initializeLocation, 15000)
+        window.setInterval(self.initializeLocation, 60000)
 
         var push = PushNotification.init({
           browser: { pushServiceURL: 'http://push.api.phonegap.com/v1/push' },
@@ -90,7 +90,7 @@ export default {
       app.initialize()
     } else {
       this.initializeLocation()
-      window.setInterval(this.initializeLocation, 15000)
+      window.setInterval(this.initializeLocation, 60000)
     }
 
     if (!this.token) {
@@ -99,18 +99,20 @@ export default {
   },
   computed: {
     ...mapGetters('UserModule', ['token']),
-    ...mapGetters('AppState', ['currentLocation', 'timezone']),
+    ...mapGetters('AppState', ['currentLocation', 'timezone', 'useDeviceLocation']),
     locationAllowed () {
       return (navigator.geolocation)
     }
   },
   methods: {
     initializeLocation () {
-      if (navigator.geolocation) {
+      if (navigator.geolocation && this.useDeviceLocation) {
         var self = this
         navigator.geolocation.getCurrentPosition(function (location) {
           if (!self.currentLocation || calculateDistance(location.coords.latitude, location.coords.longitude, self.currentLocation.latitude, self.currentLocation.longitude) > 1) {
             self.$store.commit('AppState/SET_LOCATION', location.coords)
+            self.$store.commit('AppState/SET_TIMEZONE', moment.tz.guess())
+            
             if (self.token) {
               self.$apollo.mutate({
                 mutation: updateProfile,
@@ -124,8 +126,6 @@ export default {
           }
         })
       }
-
-      this.$store.commit('AppState/SET_TIMEZONE', moment.tz.guess())
     },
     registerWatchLocation () {
       if (navigator.geolocation) {

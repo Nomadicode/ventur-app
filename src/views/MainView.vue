@@ -7,6 +7,7 @@
     <main-footer></main-footer>
 
     <event></event>
+    <location-modal></location-modal>
   </v-layout>
 </template>
 
@@ -14,13 +15,24 @@
 import Event from '@/components/events/Event.vue'
 import MainHeader from '@/components/layouts/MainHeader.vue'
 import MainFooter from '@/components/layouts/MainFooter.vue'
+import LocationModal from '@/components/modals/LocationModal'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'MainView',
+  mounted () {
+    if (!this.currentLocation || !navigator.geolocation) {
+      window.EventBus.$emit('app:location-set')
+    }
+  },
+  computed: {
+    ...mapGetters('AppState', ['currentLocation'])
+  },
   components: {
     Event,
     MainHeader,
-    MainFooter
+    MainFooter,
+    LocationModal
   }
 }
 </script>

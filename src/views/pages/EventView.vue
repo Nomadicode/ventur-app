@@ -3,24 +3,13 @@
     class="fill-width">
     <div class="position--fixed">
       <event-filters v-model="filters"></event-filters>
-
-      <v-layout v-if="!hideToggle" class="pad-sides--half pad-top--quarter">
-        <v-spacer />
-        <v-flex class="horizontal-right" xs6>
-          <el-switch
-            :width="35"
-            class="font--small"
-            v-model="showSaved"
-            active-text="only saved events"></el-switch>
-        </v-flex>
-      </v-layout>
     </div>
 
     <event-list
       ref="events"
-      class="pad-top--double space-top--1_5"
+      class="space-top--1_5"
       @on-scroll="onScroll"
-      :saved="showSaved"
+      :saved="filters.savedOnly"
       :filters="filters"
       centered></event-list>
 
@@ -52,20 +41,19 @@ export default {
       window.EventBus.$emit('load:event', this.$route.params.id)
     }
   },
-  created () {
-    this.filters = Object.assign({}, this.savedFilters)
-  },
   data () {
     return {
       tab: 'all',
-      showSaved: false,
       showMyEvents: false,
       hideToggle: false,
-      filters: {}
+      filters: {
+        startDate: moment().format('YYYY-MM-DD'),
+        endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
+        price: 150.00,
+        duration: null,
+        radius: 10
+      }
     }
-  },
-  computed: {
-    ...mapGetters('AppState', ['savedFilters'])
   },
   methods: {
     setTab (value) {
@@ -87,12 +75,6 @@ export default {
       if (to.params && to.params.id) {
         window.EventBus.$emit('load:event', to.params.id)
       }
-    },
-    filters: {
-      handler: function () {
-        this.$store.commit('AppState/SET_FILTERS', this.filters)
-      },
-      deep: true
     }
   },
   components: {

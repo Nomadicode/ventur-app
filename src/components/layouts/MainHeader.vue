@@ -6,7 +6,11 @@
     flat
     height="50">
     <div class="header-left">
-
+      <v-icon
+        v-if="$route.name === 'events'"
+        color="white"
+        class="menu-icon"
+        @click="openLocationModal">location_on</v-icon>
     </div>
 
     <img
@@ -34,6 +38,9 @@
 export default {
   name: 'MainHeader',
   methods: {
+    openLocationModal () {
+      window.EventBus.$emit('app:location-set')
+    },
     openSettingsMenu () {
       window.EventBus.$emit('profile:settings')
     },
