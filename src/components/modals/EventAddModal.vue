@@ -234,8 +234,11 @@ export default {
   },
   created () {
     this.event = Object.assign({}, Event)
-    this.selectedAges[0] = this.age - 7
-    this.selectedAges[1] = this.age + 7
+    
+    if (this.age) {
+      this.selectedAges[0] = this.age - 7
+      this.selectedAges[1] = this.age + 7
+    }
   },
   computed: {
     ...mapGetters('UserModule', ['age']),

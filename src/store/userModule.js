@@ -43,7 +43,7 @@ const UserModule = {
       return (state.user) ? state.user.profile_picture : null
     },
     age: state => {
-      return (state.user && state.user.dateOfBirth) ? moment().diff(state.user.dateOfBirth, 'years') : 0
+      return (state.user && state.user.dateOfBirth) ? moment().diff(state.user.dateOfBirth, 'years') : null
     }
   }
 }
