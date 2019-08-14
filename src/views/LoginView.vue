@@ -53,13 +53,13 @@
           placeholder="password"
           show-password />
 
-        <label class="field-label accent-color block pad-top--half">Date of Birth</label>
+        <!-- <label class="field-label accent-color block pad-top--half">Date of Birth</label>
         <el-input
           v-model="register.date_of_birth"
           v-inputmask
           data-inputmask="'mask': '99/99/9999', 'greedy': 'true'"
           placeholder="mm/dd/yyyy">
-        </el-input>
+        </el-input> -->
       </form>
       <v-btn
         depressed
@@ -97,8 +97,7 @@ export default {
       register: {
         name: null,
         email: null,
-        password: null,
-        date_of_birth: null
+        password: null
       }
     }
   },
@@ -131,32 +130,20 @@ export default {
       }
     },
     async processRegistration () {
-      if (this.register.name && this.register.email && this.register.password && this.register.date_of_birth) {
-        if (this.dateValid(this.register.date_of_birth)) {
-          var self = this
+      if (this.register.name && this.register.email && this.register.password) {
+        var self = this
 
-          var register = Object.assign({}, this.register)
-          var dateOfBirth = moment(register.date_of_birth)
-          var age = moment().diff(dateOfBirth, 'years')
+        var register = Object.assign({}, this.register)
 
-          if (age >= 13) {
-            register.date_of_birth = dateOfBirth.format('YYYY-MM-DD')
-
-            this.$auth.register(register).then((result) => {
-              var user = converters.objToCamel(result.data)
-              self.$store.commit('UserModule/LOGIN_USER', user)
-              self.$router.push({ name: 'events' })
-            }).catch((error) => {
-              var errorData = error.response ? error.response.data : error.message
-              var errorMessage = self.parseErrors(errorData)
-              self.displayError(errorMessage)
-            })
-          } else {
-            this.displayError('You must be 13 or older to use Driftr.')
-          }
-        } else {
-          this.displayError('Error: Invalid date set for date of birth.')
-        }
+        this.$auth.register(register).then((result) => {
+          var user = converters.objToCamel(result.data)
+          self.$store.commit('UserModule/LOGIN_USER', user)
+          self.$router.push({ name: 'events' })
+        }).catch((error) => {
+          var errorData = error.response ? error.response.data : error.message
+          var errorMessage = self.parseErrors(errorData)
+          self.displayError(errorMessage)
+        })
       } else {
         this.displayError('Error: All fields required')
       }

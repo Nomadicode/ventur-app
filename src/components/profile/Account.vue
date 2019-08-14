@@ -116,7 +116,7 @@
           </el-input>
         </div>
 
-        <div class="space-top">
+        <!-- <div class="space-top">
           <label class="field-label bold block pad-bottom--quarter">Date of Birth</label>
           <el-input
             v-model="editedUser.dateOfBirth"
@@ -129,7 +129,7 @@
               icon="el-icon-check"
               @click="save('dateOfBirth')"></el-button>
           </el-input>
-        </div>
+        </div> -->
       </v-tab-item>
     </v-tabs>
 
