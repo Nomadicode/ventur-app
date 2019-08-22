@@ -4,5 +4,6 @@ query searchUsers($query: String!){
     name
     handle
     profilePicture
+    friendStatus
   }
 }

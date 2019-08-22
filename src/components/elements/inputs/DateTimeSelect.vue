@@ -89,11 +89,7 @@ export default {
     }
   },
   mounted () {
-    if (this.min) {
-      this.minDate = moment(this.min).tz(this.timezone).subtract(1, 'days').format()
-    } else {
-      this.minDate = moment().tz(this.timezone).subtract(1, 'days').format()
-    }
+    this.setMin()
   },
   data () {
     return {
@@ -122,19 +118,24 @@ export default {
       }
     },
     onChange () {
-      if (this.date) {
-        var time = (this.time) ? this.time : ''
-        var datetime = moment(this.date + ' ' + time).tz(this.timezone)
-        this.$emit('input', datetime.format())
+      this.time = (this.time) ? this.time : moment().format('h:mm A')
+      var datetime = moment(this.date + ' ' + this.time, 'YYYY-MM-DD h:mm A').tz(this.timezone)
+      this.$emit('input', datetime.format())
+    },
+    setMin () {
+      if (this.min) {
+        this.minDate = moment(this.min).tz(this.timezone).subtract(1, 'days').format()
+      } else {
+        this.minDate = moment().tz(this.timezone).subtract(1, 'days').format()
       }
     }
   },
   watch: {
-    value () {
-      var newDate = moment(this.value)
-      this.date = newDate.format('YYYY-MM-DD')
-      this.time = newDate.format('h:mm A')
-    },
+    // value () {
+    //   var newDate = moment(this.value)
+    //   this.date = newDate.format('YYYY-MM-DD')
+    //   this.time = newDate.format('h:mm A')
+    // },
     date () {
       this.onChange()
     },
@@ -142,11 +143,7 @@ export default {
       this.onChange()
     },
     min () {
-      if (this.min) {
-        this.minDate = moment(this.min).tz(this.timezone).subtract(1, 'days').format()
-      } else {
-        this.minDate = moment().tz(this.timezone).subtract(1, 'days').format()
-      }
+      this.setMin()
     }
   },
   components: {

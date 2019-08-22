@@ -19,7 +19,9 @@
           :prevent-white-space="true"
           :show-remove-button="false"
           placeholder="Choose an image">
-          <el-button v-if="imageSelected()" @click="changeImage" type="text" class='edit-btn'>Change Image</el-button></croppa>
+          <el-button v-if="!imageSelected()" @click="changeImage" type="text" class='edit-btn'>Select Image</el-button>
+          <el-button v-if="imageSelected()" @click="changeImage" type="text" class='edit-btn'>Change Image</el-button>
+        </croppa>
       </v-card-text>
       <v-card-actions>
         <v-layout row>

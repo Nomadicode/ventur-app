@@ -28,6 +28,7 @@
               :zoom-speed="3"
               :show-remove-button="false"
               placeholder="Choose an image">
+              <el-button v-if="!imageSelected()" @click="changeImage" type="text" class='edit-btn'>Select Image</el-button>
               <el-button v-if="imageSelected()" @click="changeImage" type="text" class='edit-btn'>Change Image</el-button></croppa>
           </v-flex>
           <!-- <image-uploader style="height:125px" v-model="image"></image-uploader> -->
@@ -262,6 +263,7 @@ export default {
     close () {
       window.EventBus.$emit('events:refresh')
       this.event = Object.assign({}, Event)
+      this.setSchedule = false
       this.croppaImg.remove()
       this.$refs.location.clear()
       this.modal = false

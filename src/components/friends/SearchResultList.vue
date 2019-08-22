@@ -72,6 +72,18 @@ export default {
           }
         }
       }
+    },
+    searchUsers: {
+      query: searchUsers,
+      variables () {
+        return {
+          query: this.query
+        }
+      },
+      result ({ data, loading, networkStatus }) {
+        this.queryResults = data.searchUsers
+      },
+      skip: true
     }
   },
   data () {
@@ -97,23 +109,16 @@ export default {
   },
   methods: {
     fetchResults () {
-      var self = this
       if (this.query) {
-        this.$apollo.query({
-          query: searchUsers,
-          variables: {
-            query: self.query
-          }
-        }).then((response) => {
-          self.queryResults = response.data.searchUsers
-        })
+        this.$apollo.queries.searchUsers.skip = false
       } else {
-        this.$apollo.queries.friendSuggestions.refetch()
+        this.$apollo.queries.searchUsers.skip = true
       }
     },
     refresh () {
       this.$apollo.queries.friendSuggestions.refetch()
       this.$apollo.queries.sentFriendRequests.refetch()
+      this.$apollo.queries.searchUsers.refetch()
     }
   },
   components: {

@@ -5,6 +5,7 @@ query pendingFriendRequests {
       name
       handle
       profilePicture
+      friendStatus
     }
   }
 }

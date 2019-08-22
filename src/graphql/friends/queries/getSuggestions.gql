@@ -4,5 +4,6 @@ query {
     handle
     name
     profilePicture
+    friendStatus
   }
 }

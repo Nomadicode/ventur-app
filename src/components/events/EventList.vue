@@ -150,6 +150,7 @@ export default {
   watch: {
     filters: {
       handler (newValue, oldValue) {
+        delete this.filters['savedOnly']
         this.refresh()
       },
       deep: true
