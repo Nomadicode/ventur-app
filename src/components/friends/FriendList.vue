@@ -57,7 +57,7 @@
           @click="fetchNext">Load More</el-button>
       </v-layout>
 
-      <div v-if="(!friends || friends.length === 0) && !loading" class="empty">
+      <div v-if="(!friends || friends.length === 0) && !$apollo.loading" class="empty">
         <p>No friends found</p>
         <el-button
           class="secondary-text add-btn"
@@ -67,7 +67,7 @@
         </el-button>
       </div>
     </div>
-    <loading-icon v-if="loading"></loading-icon>
+    <loading-icon v-if="$apollo.loading"></loading-icon>
   </div>
 </template>
 
@@ -76,6 +76,7 @@ import getFriendships from '@/graphql/friends/queries/getFriendships.gql'
 import getPendingRequests from '@/graphql/friends/queries/getPendingRequests.gql'
 
 import Friend from './Friend'
+import LoadingIcon from '@/components/elements/LoadingIcon'
 
 export default {
   name: 'FriendList',
@@ -113,7 +114,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       showFriendRequests: true,
       cursor: null,
       nextCursor: null,
@@ -127,6 +128,7 @@ export default {
       window.EventBus.$emit('friend:add')
     },
     refetch () {
+      this.loading = true
       this.$apollo.queries.friendships.refetch()
       this.$apollo.queries.pendingFriendRequests.refetch()
     },
@@ -135,7 +137,8 @@ export default {
     }
   },
   components: {
-    Friend
+    Friend,
+    LoadingIcon
   }
 }
 </script>

@@ -13,9 +13,6 @@
     "cordova-plugin-appcenter-crashes": {
       "PACKAGE_NAME": "com.nomadicode.ventur"
     },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.nomadicode.ventur"
-    },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.nomadicode.ventur"
     },
@@ -35,6 +32,9 @@
     "phonegap-plugin-push": {
       "ANDROID_SUPPORT_V13_VERSION": "27.+",
       "FCM_VERSION": "11.6.2",
+      "PACKAGE_NAME": "com.nomadicode.ventur"
+    },
+    "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.nomadicode.ventur"
     }
   },

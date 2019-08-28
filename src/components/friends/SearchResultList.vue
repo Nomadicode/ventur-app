@@ -36,7 +36,8 @@
       :pendingAcceptFromRecipient="sentActive"
       @refresh="refresh"></friend>
 
-    <div v-if="results && results.length === 0" class="empty">No users found</div>
+    <loading-icon v-if="$apollo.loading"></loading-icon>
+    <div v-if="!$apollo.loading && results && results.length === 0" class="empty">No users found</div>
   </div>
 </template>
 
@@ -47,6 +48,7 @@ import getSentRequests from '@/graphql/friends/queries/getSentRequests.gql'
 import getSuggestions from '@/graphql/friends/queries/getSuggestions.gql'
 
 import Friend from './Friend'
+import LoadingIcon from '@/components/elements/LoadingIcon'
 
 export default {
   name: 'FriendSearchResults',
@@ -122,7 +124,8 @@ export default {
     }
   },
   components: {
-    Friend
+    Friend,
+    LoadingIcon
   },
   watch: {
     query () {

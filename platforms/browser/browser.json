@@ -41,7 +41,7 @@
       "PACKAGE_NAME": "com.nomadicode.ventur"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.nomadicode.ventur"
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },
   "dependent_plugins": {},

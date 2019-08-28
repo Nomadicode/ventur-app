@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.nomadicode.ventur" version="1.0.3" android-versionCode="54" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.nomadicode.ventur" version="1.0.4" android-versionCode="55" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Ventür</name>
     <description>
         Ventür is a tool to connect users with events happening in their current area. It aides travellers in finding things to do that may be less tourist focused and
@@ -46,6 +46,14 @@
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="UIViewControllerBasedStatusBarAppearance">
             <false />
+        </edit-config>
+        
+        <edit-config file ="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+            <string>needs access to your camera to take pictures for event images and profile pictures.</string>
+        </edit-config>
+
+        <edit-config file ="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+            <string>needs photo library access to get pictures for event images and profile pictures</string>
         </edit-config>
 
         <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">

@@ -86,11 +86,11 @@ export default {
       }
     }
 
-    if (window.cordova) {
-      app.initialize()
-    } else {
+    if (!!window.cordova && !!window._cordovaNative) {
       this.initializeLocation()
       window.setInterval(this.initializeLocation, 60000)
+    } else {
+      app.initialize()
     }
 
     if (!this.token) {
