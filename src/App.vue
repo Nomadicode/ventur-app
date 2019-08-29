@@ -1,24 +1,19 @@
 <template>
-  <v-app
-    :class="{'login-screen': !$auth.isAuthenticated()}"
-    light>
+  <v-app light>
     <v-content>
       <div
         v-if="!locationAllowed"
-        class="error"
-        :class="{
-          'top-offset-0': !$auth.isAuthenticated(),
-          'top-offset-70': $auth.isAuthenticated()
-        }">
+        class="error">
         Ventür needs access to your location to function properly.
       </div>
       <v-container
-        :fill-height="!$auth.isAuthenticated()"
-        :class="{'pad-none': $auth.isAuthenticated()}"
+        class="pad-none"
         fluid>
         <router-view></router-view>
       </v-container>
     </v-content>
+
+    <create-account-modal></create-account-modal>
   </v-app>
 </template>
 
@@ -30,6 +25,8 @@ import { calculateDistance } from '@/services/helpers'
 
 import updateProfile from '@/graphql/profile/mutations/updateProfile.gql'
 import updateUserDevice from '@/graphql/profile/mutations/updateUserDevice.gql'
+
+import CreateAccountModal from '@/components/modals/CreateAccountModal'
 
 export default {
   name: 'App',
@@ -162,6 +159,9 @@ export default {
         this.logout()
       }
     }
+  },
+  components: {
+    CreateAccountModal
   }
 }
 </script>

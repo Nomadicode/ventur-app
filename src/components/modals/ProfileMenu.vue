@@ -73,9 +73,8 @@ export default {
     },
     logout () {
       this.$store.commit('UserModule/LOGOUT_USER')
-      this.$store.commit('AppState/RESET')
       this.$auth.logout()
-      this.$router.push({ name: 'login' })
+      this.$router.push({ name: 'events' })
     }
   }
 }

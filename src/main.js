@@ -98,7 +98,7 @@ Vue.directive('mask', VueMaskDirective)
 router.beforeEach((to, from, next) => {
   if (to.meta.auth && !store.getters['UserModule/token']) {
     next({
-      name: 'login'
+      name: 'events'
     })
   } else {
     next()

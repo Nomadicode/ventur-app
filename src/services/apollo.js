@@ -14,11 +14,13 @@ const httpLink = new HttpLink({
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   var token = store.getters['UserModule/token']
-  operation.setContext({
-    headers: {
-      authorization: `JWT ${token}`
-    }
-  })
+  if (token) {
+    operation.setContext({
+      headers: {
+        authorization: `JWT ${token}`
+      }
+    })
+  }
   return forward(operation)
 })
 

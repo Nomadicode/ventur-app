@@ -224,7 +224,8 @@ export default {
   name: 'EventAddModal',
   apollo: {
     friendGroups: {
-      query: getGroups
+      query: getGroups,
+      skip: true
     }
   },
   mounted () {
@@ -240,9 +241,13 @@ export default {
       this.selectedAges[0] = this.age - 7
       this.selectedAges[1] = this.age + 7
     }
+
+    if (this.$auth.isAuthenticated()) {
+      this.$apollo.queries.friendGroups.skip = false
+    }
   },
   computed: {
-    ...mapGetters('UserModule', ['age']),
+    ...mapGetters('UserModule', ['age', 'token']),
     locationAvailable () {
       return (navigator.geolocation)
     }
@@ -333,6 +338,11 @@ export default {
     }
   },
   watch: {
+    token () {
+      if (this.$auth.isAuthenticated()) {
+        this.$apollo.queries.friendGroups.skip = false
+      }
+    },
     selectedAges () {
       this.event.minimumAge = this.selectedAges[0]
       this.event.maximumAge = this.selectedAges[1]

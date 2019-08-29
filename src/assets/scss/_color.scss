@@ -41,6 +41,13 @@ $warning-color: #FF5757;
 .secondary-background { background: $secondary-color !important; }
 .white-background { background: white !important; }
 
+.primary-gradient {
+  background: -webkit-linear-gradient(-45deg, from(#4AC1BB), color-stop(60%, #9DDDB6), to(#D1ECB5));
+  background: linear-gradient(135deg, #4AC1BB 0%, #9DDDB6 60%, #D1ECB5 100%);
+  background-repeat: no-repeat;
+  background-size: cover; 
+}
+
 .base-light-background { background: $base-light-color !important; }
 .light-background { background: $light-color !important; }
 .lighter-background { background: $lighter-color !important; }

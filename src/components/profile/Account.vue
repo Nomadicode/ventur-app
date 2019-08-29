@@ -55,7 +55,7 @@
     </v-layout>
 
     <v-img
-      :src="editedUser.profilePicture"
+      :src="profilePicture"
       :maxHeight="100"
       class="horizontal-center image-uploader"
       :style="{
@@ -147,6 +147,8 @@ import EventList from '@/components/events/EventList'
 import ImageUploader from '@/components/elements/inputs/ImageUploader'
 import UploadModal from '@/components/modals/UploadModal'
 
+import DefaultAvatar from '@/assets/images/avatar.svg'
+
 export default {
   name: 'Account',
   mounted () {
@@ -161,7 +163,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('UserModule', ['fullName', 'data'])
+    ...mapGetters('UserModule', ['fullName', 'data']),
+    profilePicture () {
+      return (this.data.profilePicture) ? this.data.profilePicture : DefaultAvatar
+    }
   },
   methods: {
     displayDate (date) {

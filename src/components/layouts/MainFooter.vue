@@ -12,6 +12,7 @@
         color="primary"
         flat
         value="events"
+        @input="update($event, 'events')"
         @click="navigateTo('events')">
         <span>events</span>
         <v-icon>fas fa-flag</v-icon>
@@ -20,6 +21,7 @@
         color="primary"
         flat
         value="friends"
+        @input="update($event, 'friends')"
         @click="navigateTo('friends')">
         <span>friends</span>
         <v-icon>fas fa-users</v-icon>
@@ -48,6 +50,7 @@
         color="primary"
         flat
         value="profile"
+        @input="update($event, 'profile')"
         @click="navigateTo('profile')">
         <span>profile</span>
         <v-icon>fas fa-user</v-icon>
@@ -60,7 +63,7 @@
 export default {
   name: 'MainFooter',
   mounted () {
-    this.activeLink = this.$route.name
+    this.activeLink = 'events'
   },
   created () {
     var self = this
@@ -70,16 +73,32 @@ export default {
   },
   data () {
     return {
-      activeLink: '',
+      activeLink: 'events',
       loading: false
     }
   },
   methods: {
     navigateTo (name) {
-      this.$router.push({ name: name })
+      var route = this.$router.options.routes[0].children.find(elem => elem.name === name)
+      
+      if (route && route.meta && route.meta.auth && !this.$auth.isAuthenticated()) {
+        this.activeLink = 'events'
+        window.EventBus.$emit('user:create-account')
+      } else {
+        this.$router.push({ name: name })
+      }
     },
     eventButtonClicked () {
       window.EventBus.$emit('load:event-random')
+    },
+    update ($evt, value) {
+      if ($evt) {
+        var route = this.$router.options.routes[0].children.find(elem => elem.name === value)
+        
+        if (route && route.meta && route.meta.auth && !this.$auth.isAuthenticated()) {
+          this.activeLink = 'events'
+        } 
+      }
     }
   }
 }
