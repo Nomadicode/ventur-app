@@ -1,4 +1,5 @@
 import moment from 'moment-timezone'
+import * as DefaultAvatar from '../assets/images/avatar.svg'
 
 const UserModule = {
   namespaced: true,
@@ -40,7 +41,7 @@ const UserModule = {
       return state.user
     },
     profilePicture: state => {
-      return (state.user) ? state.user.profile_picture : null
+      return (state.user && state.user.profilePicture) ? state.user.profilePicture : DefaultAvatar
     },
     age: state => {
       return (state.user && state.user.dateOfBirth) ? moment().diff(state.user.dateOfBirth, 'years') : null

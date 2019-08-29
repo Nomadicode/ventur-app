@@ -116,6 +116,7 @@
               class="align-right"
               xs3>
               <v-btn
+                v-if="$auth.isAuthenticated()"
                 icon
                 @click="toggleSave">
                 <v-icon

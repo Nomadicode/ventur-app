@@ -19,44 +19,17 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/login',
-      name: 'login',
-      component: LoginView,
-      meta: {
-        auth: false
-      }
-    }, {
-      path: '/password/forgot',
-      name: 'forgot-password',
-      component: ForgotPassword,
-      meta: {
-        auth: false
-      }
-    }, {
-      path: '/password/reset/:token',
-      name: 'reset-password',
-      component: ResetPassword,
-      meta: {
-        auth: false
-      }
-    }, {
       path: '/app',
       component: MainView,
       children: [
         {
           path: 'events',
           name: 'events',
-          component: EventView,
-          meta: {
-            auth: true
-          }
+          component: EventView
         }, {
           path: 'events/:id',
           name: 'event',
-          component: EventView,
-          meta: {
-            auth: true
-          }
+          component: EventView
         }, {
           path: 'friends',
           name: 'friends',
@@ -67,10 +40,7 @@ export default new Router({
         }, {
           path: 'messages',
           name: 'messages',
-          component: MessageView,
-          meta: {
-            auth: true
-          }
+          component: MessageView
         }, {
           path: 'profile',
           name: 'profile',
@@ -84,8 +54,8 @@ export default new Router({
         }
       ]
     }, {
-      path: '/',
-      redirect: { name: 'login' }
+      path: '*',
+      redirect: { name: 'events' }
     }
   ]
 })

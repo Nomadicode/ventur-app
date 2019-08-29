@@ -51,7 +51,7 @@ export default {
         endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
         price: 150.00,
         duration: null,
-        radius: 10
+        radius: 50
       }
     }
   },
@@ -60,7 +60,11 @@ export default {
       this.tab = value
     },
     openEventModal () {
-      window.EventBus.$emit('event:add')
+      if (this.$auth.isAuthenticated()) {
+        window.EventBus.$emit('event:add')
+      } else {
+        window.EventBus.$emit('user:create-account')
+      }
     },
     onScroll (scrollPos) {
       if (scrollPos >= 15) {

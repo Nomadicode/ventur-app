@@ -11,6 +11,13 @@ export function parseErrors (error) {
   return message
 }
 
+
+export function displayError () {
+  this.$message({
+    type: 'error',
+    message: message
+  })
+}
 function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
